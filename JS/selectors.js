@@ -1,20 +1,16 @@
 var url = "http://server.local:8080/story"
 var max = 9;
-$.fx.interval = 40;	
+var scrolling = false;
+//$.fx.interval = 40;	
 	var currentID;
 	var art;
 	
+//Cycle the text at the top of the window
+$("#tips").cycle({fx:"scrollHorz"});
 	
 
-$(function() {
-	$( "#container" ).draggable(
-		{
-			axis: "x",
-			snap: "#content",
 
-		});
-});
-
+//Load a single page from DB, rezize images to fit, and move img src to backgorund of div..
 function loadSingle(_id){
 	console.log("incrementID: "+_id)
 	if(_id > max){	currentID = 1}else if (_id < 1){currentID = max}else{currentID = _id};
@@ -54,6 +50,8 @@ function loadSingle(_id){
 			newCss["background-size"] = line;
 //			newCss.height = high;
 //			newCss.width = wide;
+			newCss.visibility = "visible";
+			newCss.opacity = "1";
 			$(this).parent().css(newCss);
 			$(this).remove();
 			$("#lightbox").addClass("active");
@@ -61,12 +59,41 @@ function loadSingle(_id){
 	})
 }
 
-$('body').on('click',".ship_section", function (){
-    var id = $(this).attr("id");
-	$("#container").removeClass("active");
-	loadSingle(id);
-});
+//handles clicking on ships in "gallery" view.
+$('body').on('click',".ship_section", shipclick);
 
+function shipclick(){
+	if(!scrolling){
+		var id = $(this).attr("id");
+		$("#container").removeClass("active");
+		loadSingle(id);
+	}
+}
+
+
+
+var t; //Timer variable to detect scroll End
+//This function detects scroll start and end
+//Sets scrolling var true or false to disable mouse behavious on children elements
+$(".dragon").scroll(function(){
+	if (!scrolling){
+		scrolling = true;
+		console.log("scroll start");
+		
+	} 
+	console.log("scrolling");
+	
+	clearInterval(t);
+	t = window.setInterval(function(){scrollEnd()}, 400);
+	
+	function scrollEnd(){
+		scrolling = false; 
+		console.log("scrollend"); 
+		clearInterval(t);
+	}
+})
+
+//click handler for arrows in individual section
 $('body').on('click',".arr", function (){
 	var dir = ($(this).attr("id") == "prev") ? -1 : 1;
     var id = parseInt(currentID) + dir;
@@ -74,6 +101,7 @@ $('body').on('click',".arr", function (){
 	loadSingle(id);
 });
 
+//click handler for close "X" to close individual window.
 $("body").on('click',"#close",function(){
 	$("#footer").find("p").remove();
 	$("#lightbox").removeClass("active");
@@ -81,21 +109,14 @@ $("body").on('click',"#close",function(){
 	console.log("closing lightbox")
 });
 
-$.fn.redraw = function(){
-  $(this).each(function(){
-    var redraw = this.offsetHeight;
-  });
-};
 
-
-
-//$("#tips").cycle({fx:"scrollHorz"});
-
+//loads content for "gallery", resizing images and moving them to the background.
 $("#content").load(url, function(){
 	pad = parseInt($(".ship_section").css('margin'));
 	var maxWidth = $(this).width()/3-2*pad;
 	var maxHeight = $(this).height()/5;
-	console.log("max: "+maxWidth+"x"+maxHeight)
+	console.log("max: "+maxWidth+"x"+maxHeight);
+	
 	$("img").load(function(i){
 		var newCss = {};
 		var imgsrc = this.src;
@@ -115,7 +136,12 @@ $("#content").load(url, function(){
 		newCss["background-size"] = line;
 		newCss.height = high;
 		newCss.width = wide;
+		newCss.visibility = "visible";
+		newCss.opacity = "1";
 		$(this).parent().css(newCss);
 		$(this).remove();
 	});
-})
+
+
+	
+});

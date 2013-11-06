@@ -41,6 +41,9 @@ body{
 h1{	font-family:oct_std;padding-left:.5em;}
 p{	font-family:uni_con; padding:.5em;}
 .ship_section{
+	-webkit-transition: 1s opacity;
+	opacity:0;
+	visibility:hidden;
 	height:auto;
 	display:inline-block;
 	position:relative;
@@ -86,14 +89,14 @@ p{	font-family:uni_con; padding:.5em;}
 	height:896px;
 	width:auto;
 	.flex-container;
-	overflow:visible;
-	border: 1px solid red;
+
 	
 }
 
 #container{
 
-	overflow:visible;
+	overflow-x:scroll;
+	overflow-y:hidden;
 	opacity:0;
 	pointer-events:none;
 /*	-webkit-transition: opacity .5s; */
@@ -116,11 +119,13 @@ p{	font-family:uni_con; padding:.5em;}
 	top:64px;
 	opacity:0;
 	pointer-events:none;
+
 /*	-webkit-transition: opacity .5s; */
 	& p{
-		.blueBar;
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@blue), color-stop(80%,fade(@bluegreen,50%)), color-stop(100%,fade(@bluegreen,0)));;
 		padding:12px;
 		border-top:1px solid fade(white,50%);
+		box-shadow:0em -1em 3em fade(@bluegreen,80%);
 		height:50%;
 	}
 	&.active{
@@ -302,4 +307,23 @@ svg{
 		    -webkit-align-self: auto;
 		    -ms-flex-item-align: auto;
 		    align-self: auto;
+	}
+	
+	/////////
+	
+	::-webkit-scrollbar {
+	    width: 12px;
+	}
+
+	::-webkit-scrollbar-track {
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	    border-radius: 10px;
+	
+	}
+
+	::-webkit-scrollbar-thumb {
+		box-shadow:.0125em .025em .025em darken(@blue,50), inset .125em .125em .25em fade(white,70%),inset -.25em -.25em .25em fade(black,60%) ;
+		
+	    border-radius: 10px;
+		background-color:darken(@blue, 10%);
 	}
