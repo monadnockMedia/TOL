@@ -6,7 +6,8 @@
 		<script type="text/javascript" src="JS/jquery-ui-1.10.3.custom.js"></script>
 		<script type="text/javascript" src="JS/drag-on.js"></script>
 		<script type="text/javascript" src="JS/jquery.scrollbar.js"></script>
-		
+
+		<link rel="Stylesheet" type="text/css" href="css/smoothDivScroll.css" />
 		
 	</HEAD>
 	
@@ -18,11 +19,55 @@
 				<li class = "tip"> Find out what these men did to be chosen for this honor.</li>
 			</ul>
 		</div>
+
 		<div id ="lightbox" ></div>
-		<div id ="container" class="active dragon" >
-		<div id = "content"></div>
-			
-		</div>
+
+
+			<div id="container">
+				<div id="makeMeScrollable">
+					<img src="IMG/fitzgerald.jpg" />
+					<img src="IMG/ford.jpg" />
+					<img src="IMG/hill.jpg" />
+					<img src="IMG/homer.jpg" />
+					<img src="IMG/hosford.jpg" />
+					<img src="IMG/ketcham.jpg" />
+					<img src="IMG/mccurdy.jpg" />
+					<img src="IMG/upson2.jpg" />
+					<img src="IMG/watson.jpg" />
+					<img src="IMG/wolvin.jpg" />
+				</div>
+			</div>
+
+	<!-- Latest version (3.1.4) of jQuery Mouse Wheel by Brandon Aaron
+	     You will find it here: https://github.com/brandonaaron/jquery-mousewheel -->
+	<script src="js/jquery.mousewheel.min.js" type="text/javascript"></script>
+
+	<!-- jQuery Kinectic (1.8.2) used for touch scrolling -->
+	<!-- https://github.com/davetayls/jquery.kinetic/ -->
+	<script src="js/jquery.kinetic.min.js" type="text/javascript"></script>
+
+	<!-- Smooth Div Scroll 1.3 minified-->
+	<script src="js/source/jquery.smoothdivscroll-1.3.js" type="text/javascript"></script>
+
+	<!-- Plugin initialization -->
+	<script type="text/javascript">
+		// Initialize the plugin with no custom options
+		$(document).ready(function () {
+			// None of the options are set
+			$("div#makeMeScrollable").smoothDivScroll({
+				autoScrollingMode: "onStart",
+				autoScrollingDirection: "endlessLoopRight",
+				hotSpotScrolling: false,
+				touchScrolling: true,
+				manualContinuousScrolling: true,
+				mousewheelScrolling: false,
+				autoScrollingStep: 2,
+			});
+
+
+		});
+	</script>
+
 		<div id = "footer">
 
 		<div id = "ADA" class ="active">

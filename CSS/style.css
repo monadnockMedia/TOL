@@ -101,7 +101,7 @@ p {
 }
 #content {
   height: 896px;
-  width: auto;
+  width: 100%;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-inline-flexbox;
@@ -134,8 +134,7 @@ p {
 #container {
   overflow-x: scroll;
   overflow-y: hidden;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
   /*	-webkit-transition: opacity .5s; */
 
 }
