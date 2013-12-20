@@ -10,6 +10,7 @@ $(function () {
     $.fn.extend({
         dragOn: function (opt) {
             return jQuery.DragOn(this, opt);
+			
         }
     });
 
