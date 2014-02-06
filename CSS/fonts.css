@@ -1,4 +1,10 @@
-@font-face {font-family: 'oct';src: url('FONT/2868F6_0_0.eot');src: url('webfonts/2868F6_0_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2868F6_0_0.woff') format('woff'),url('webfonts/2868F6_0_0.ttf') format('truetype');}
- 
-  
-@font-face {font-family: 'oct';src: url('FONT/2868F6_1_0.eot');src: url('webfonts/2868F6_1_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2868F6_1_0.woff') format('woff'),url('webfonts/2868F6_1_0.ttf') format('truetype');}
+@font-face {
+  font-family: uni;
+  src: url('../FONT/univers_65_bold-webfont.svg') format('svg');
+  font-style: normal;
+}
+@font-face {
+  font-family: uni_con;
+  src: url('../FONT/univers_condensed_medium-webfont.svg') format('svg');
+  font-style: normal;
+}
