@@ -1,0 +1,18 @@
+{
+  "main": "index.html",
+  "name": "TripOfALifetime",
+  "description": "NGLApp",
+  "version": "0.1.0",
+  "keywords": [ "monadnock", "node-webkit" ],
+  "window": {
+    "title": "Trip of a Lifetime",
+    "toolbar": true,
+    "frame": true,
+    "width": 1024,
+    "height": 1280
+  },
+  "webkit": {
+    "plugin": true,
+	"java": true
+  }
+}
