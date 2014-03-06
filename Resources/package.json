@@ -9,7 +9,8 @@
     "toolbar": true,
     "frame": true,
     "width": 1024,
-    "height": 1280
+    "height": 1280,
+	"position": "center"
   },
   "webkit": {
     "plugin": true,

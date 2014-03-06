@@ -256,8 +256,6 @@ function flash(flashInterval) {
 	overlay.appendTo(document.body);
 	
 	$(".overlay").animate({opacity: 1}, 150, function() {
-		//$(".nextBtn").addClass("selected");
-		
 		$(".contentLabel").empty();
 		
 		$(".contentLabel").append("Do you want to keep this picture?");
@@ -277,6 +275,3 @@ function flash(flashInterval) {
 		});
 	});
 }
-
-
-
