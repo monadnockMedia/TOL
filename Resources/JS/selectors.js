@@ -3,6 +3,7 @@
 var phase = 0;
 var users = 0;
 var picsTaken = 0;
+var savedPics = new Array();
 
 function nextPhase (curPhase) {
 	switch (curPhase) {
@@ -90,7 +91,11 @@ function nextPhase (curPhase) {
 				for ( var i = 0; i < users; i++ ) {
 					dragFrame = jQuery('<div class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
-					console.log("add dragFrame");
+				
+					savedPics.push(document.getElementById( 'snap' ).src);
+					$(".dragFrame").append("<img src='" + savedPics[0] + "' width='184' height='200' />");
+					
+					$('#snap').PhotoJShop({color: "b&w"});
 				}
 			
 				$(".draggable").draggable({
@@ -256,6 +261,7 @@ function flash(flashInterval) {
 	overlay.appendTo(document.body);
 	
 	$(".overlay").animate({opacity: 1}, 150, function() {
+		
 		$(".contentLabel").empty();
 		
 		$(".contentLabel").append("Do you want to keep this picture?");
@@ -264,12 +270,20 @@ function flash(flashInterval) {
 		$(".nextLabel").css("margin-top", "-80px");
 		$(".nextBtn").css("margin-top", "-5px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item"></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="805" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		
 		var cameraButton = jQuery('<div class="contentLabel-Interactive retake">Retake</div><div class="contentLabel-Interactive keep">Keep Picture</div>');
 		cameraButton.prependTo("#footer");
+		
 		bindClick();
+		snap();
+		
+		console.log($("#snap"));
+		
+		
+		//savedPics.push($("#snap").)
+		
 		$(".overlay").animate({opacity: 0}, 150, function() {
 			$(".overlay").remove();
 		});

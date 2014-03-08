@@ -205,6 +205,12 @@ body {
   margin-bottom:25px;
 }
 
+#snap {
+	margin-top:-74px;
+	border:none;
+	opacity:0;
+}
+
 
 
 
