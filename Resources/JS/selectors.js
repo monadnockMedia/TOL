@@ -3,7 +3,7 @@
 var phase = 0;
 var users = 0;
 var picsTaken = 0;
-var savedPics = new Array();
+
 
 function nextPhase (curPhase) {
 	switch (curPhase) {
@@ -26,7 +26,7 @@ function nextPhase (curPhase) {
 					users = 3;
 				}
 				
-				console.log("Users: " + users);
+				console.log("Num Users: " + users);
 				
 			    $(".contentLabel").empty();
 				$(".contentLabel").append("Choose Your<br/>Photo");
@@ -73,13 +73,12 @@ function nextPhase (curPhase) {
 				phase = 1;
 				nextPhase(phase);
 			} else {
-			
 				console.log("Phase 2");
 				$('div.contentLabel-Interactive').remove();
 				$(".flex-gallery").remove();
 			
 				$(".nextLabel").css("margin-top", "55px"); //55 33
-				$(".nextBtn").css("margin-top", "15px"); //15
+				$(".nextBtn").css("margin-top", "15px"); //15e
 				$(".contentLabel").empty();
 				$(".contentLabel").append("Drag your face onto<br/>the person you want to be!");
 			
@@ -91,11 +90,10 @@ function nextPhase (curPhase) {
 				for ( var i = 0; i < users; i++ ) {
 					dragFrame = jQuery('<div class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
-				
-					savedPics.push(document.getElementById( 'snap' ).src);
-					$(".dragFrame").append("<img src='" + savedPics[0] + "' width='184' height='200' />");
 					
-					$('#snap').PhotoJShop({color: "b&w"});
+					$(".dragFrame:last").append("<img src='" + savedPics[i] + "' width='184' height='200' />");
+					
+					//$('#snap').PhotoJShop({color: "b&w"});
 				}
 			
 				$(".draggable").draggable({
@@ -139,7 +137,6 @@ function nextPhase (curPhase) {
 			
 			$(".nextLabel").empty().prepend("Done");
 			bindClick();
-			console.log("BindClick + " + phase);
 			phase++;
 			break;
 		case 4:
@@ -191,7 +188,6 @@ $(".galleryImage").click(function(e) {
 });
 
 function bindClick() {
-	console.log("bindClick() called");
 	$('div.contentLabel-Interactive').on('click', function (e) {
 		switch (phase) {
 			case 2:
@@ -205,6 +201,7 @@ function bindClick() {
 					$( ".nextBtn" ).addClass("selected");
 				} else {
 					picsTaken--;
+					savedPics.pop();
 					$( ".nextBtn" ).removeClass("selected");
 					
 					$("div.contentLabel-Interactive").animate({opacity: 0}, 250, function() {
@@ -220,7 +217,6 @@ function bindClick() {
 				}
 				break;
 			case 4:
-				console.log("bindClick(3)");
 				$(".contentLabel-Interactive").removeClass("selected");
 				$(".contentLabel-Interactive").addClass("notselected");
 				$( this ).toggleClass("selected");
@@ -240,9 +236,9 @@ function bindClick() {
 
 function checkAnchored() {
 	if ($(".anchored").length < users) {
-		console.log("Waiting for anchors");
+		//console.log("Waiting for Anchors");
 	} else {
-		console.log("All pics anchored");
+		//console.log("All pics anchored");
 		$( ".nextBtn" ).addClass("selected");
 		$(".contentLabel").empty();
 		$(".contentLabel").append("Touch 'Next' to share<br/>your picture.");
@@ -278,8 +274,6 @@ function flash(flashInterval) {
 		
 		bindClick();
 		snap();
-		
-		console.log($("#snap"));
 		
 		
 		//savedPics.push($("#snap").)

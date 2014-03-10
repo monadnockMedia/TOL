@@ -2,6 +2,7 @@
 //module must be cupofnestor branch
 var Camera = require('gopro').Camera
 var cam = new Camera('10.5.5.9', 'goprongl')
+var savedPics = new Array();
 
 
 //note new node requisites
@@ -44,7 +45,7 @@ var lastImg;
 var lastUrl;
 
 var loadImage = function(){
-	console.log("loadImage()");
+	//("loadImage()");
 	// ls function returns a deffered.
 	cam.ls(imgDir).then(
 		function(dfd){
@@ -55,6 +56,7 @@ var loadImage = function(){
 			
 			//get the image and then load it in to the image div
 			getImage(lastUrl).then(function(d){
+				savedPics.push(d);
 				$("#snap").attr("src",d);
 				$("#snap").load(function(){
 					$("#snap").animate({opacity:1}, 400)
@@ -65,7 +67,7 @@ var loadImage = function(){
 		}),
 		//then() second arg is a callback for error handling
 		function(err){
-			console.log(err);
+			//console.log(err);
 		}
 }
 
