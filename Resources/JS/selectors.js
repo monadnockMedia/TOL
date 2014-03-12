@@ -14,9 +14,9 @@ function nextPhase (curPhase) {
 			  }, 250, function() {
 				$(".numUsersBtn.notselected").remove();
 				$(".numUsersBtn").removeClass("selected");
-				$(".numUsersBtn").css("height", 500);
-				$(".numUsersBtn").css("width", 760);
-				$(".numUsersBtn").css("margin-bottom", 50);
+				$(".numUsersBtn").css("height", 550);
+				$(".numUsersBtn").css("width", 700);
+				$(".numUsersBtn").css("background-size", "700px 550px");
 				
 				if ($(".numUsersBtn").hasClass("one")) {
 					users = 1;
@@ -28,30 +28,27 @@ function nextPhase (curPhase) {
 				
 				console.log("Num Users: " + users);
 				
-			    $(".contentLabel").empty();
-				$(".contentLabel").append("Choose Your<br/>Photo");
+			    $(".popup-interior").empty().prepend("Choose a photo");
+				$(".gallery").addClass("lit");
 				
 				$(".flex-item").animate({opacity: "1"}, 250);
-				$(".galleryImage").css("opacity", 1);
 			  });
 			phase++;
 			break;
 			
 		case 1:
 			var flashInterval = setInterval(function(){
-						flash(flashInterval);	
+						flash(flashInterval);
 					}, 1500);
-			
 			$(".flex-item").animate({
 				opacity: 0
 			  }, 250, function() {
 				$(".galleryImage").removeClass("selected");
-				$(".galleryImage").css("opacity", 0.5);
 				$('.numUsersBtn').remove();
 				$(".snappedImage").remove();
-				$(".contentLabel").empty();
-				$(".contentLabel").append("Look in the mirror.<br/>Smile!");
-				$(".contentLabel").animate({opacity: 1}, 250, function() {});
+				$(".popup-interior").empty().prepend("Look into the mirror.<br/>Smile!");
+				$(".popup-exterior").animate({opacity: 1}, 250, function() {});
+				$(".popup-interior").animate({opacity: 1}, 250, function() {});
 				$(".flex-gallery").animate({opacity: 0}, 250, function() {});
 			  });
 			phase++;
@@ -67,7 +64,6 @@ function nextPhase (curPhase) {
 					$(".gallery").css("height", 270);
 					$(".gallery").css("width", 590);
 					$(".nextLabel").css("margin-top", "55px");
-					$(".nextBtn").css("margin-top", "15px");
 				});
 				
 				phase = 1;
@@ -78,9 +74,7 @@ function nextPhase (curPhase) {
 				$(".flex-gallery").remove();
 			
 				$(".nextLabel").css("margin-top", "55px"); //55 33
-				$(".nextBtn").css("margin-top", "15px"); //15e
-				$(".contentLabel").empty();
-				$(".contentLabel").append("Drag your face onto<br/>the person you want to be!");
+				$(".popup-interior").empty().prepend("Drag your face onto the<br/> person you want to be!");
 			
 				// Add draggable pictures to footer
 				var dragGallery = jQuery('<div class="flex-drag flex-container-wrap"></div>');
@@ -108,8 +102,8 @@ function nextPhase (curPhase) {
 			
 				var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
 				$(dragAnchor).appendTo(".snappedImage");
-				$(".dragAnchor").css("left", 420);
-				$(".dragAnchor").css("top", 220);
+				$(".dragAnchor").css("left", 405);
+				$(".dragAnchor").css("top", 290);
 			
 				$(".dragAnchor").droppable({
 				      drop: function( event, ui ) {
@@ -123,19 +117,20 @@ function nextPhase (curPhase) {
 			
 		case 3:
 			console.log("Phase 3");
-			$(".contentLabel").remove();
+			$(".popup-interior").empty().prepend("Share your photo!")
 			$(".dragAnchor").remove();
 			$(".nextBtn").addClass("selected");
 			
 			$(".flex-drag").empty();
 			
-			var shareButtons = jQuery('<div class="contentLabel-Interactive email">Email</div><div class="contentLabel-Interactive twitter">Twitter</div>');
+			var shareButtons = jQuery('<div class="contentLabel-Interactive email"></div><div class="contentLabel-Interactive twitter"></div>');
 			shareButtons.prependTo(".flex-drag");
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
 			$(".contentLabel-Interactive").css("margin-top", 0);
 			
-			$(".nextLabel").empty().prepend("Done");
+			//$(".nextLabel").empty().prepend("Done");
+			$(".nextLabel").addClass("done");
 			bindClick();
 			phase++;
 			break;
@@ -179,10 +174,26 @@ $(".galleryImage").click(function(e) {
 			$( this ).toggleClass("selected");
 			$( this ).removeClass("notselected");
 			$(".nextBtn").addClass("selected");
-			$(".galleryImage.selected").css("opacity", 1);
-			$(".galleryImage.notselected").css("opacity", 0.5);
-			$(".contentLabel").empty();
-			$(".contentLabel").append("Touch 'Next' to take<br/>your picture.");
+			$(".contentLabel").removeClass("choose");
+			$(".contentLabel").addClass("takePic");
+			
+			var imageId = $(this).attr('id');
+			$(".gallery").removeClass("lit one two three four five six");
+			
+			if (imageId == 1) {
+				$(".gallery").addClass("one");
+			} else if (imageId == 2) {
+				$(".gallery").addClass("two");
+			} else if (imageId == 3) {
+				$(".gallery").addClass("three");
+			} else if (imageId == 4) {
+				$(".gallery").addClass("four");
+			} else if (imageId == 5) {
+				$(".gallery").addClass("five");
+			} else if (imageId == 6) {
+				$(".gallery").addClass("six");
+			}
+			
 			break;
 	}
 });
@@ -209,7 +220,6 @@ function bindClick() {
 						$(".gallery").css("height", 270);
 						$(".gallery").css("width", 590);
 						$(".nextLabel").css("margin-top", "55px");
-						$(".nextBtn").css("margin-top", "15px");
 					});
 					
 					phase = 1;
@@ -229,7 +239,6 @@ function bindClick() {
 					
 				}
 				break;
-		
 		}
 	});
 }
@@ -240,8 +249,7 @@ function checkAnchored() {
 	} else {
 		//console.log("All pics anchored");
 		$( ".nextBtn" ).addClass("selected");
-		$(".contentLabel").empty();
-		$(".contentLabel").append("Touch 'Next' to share<br/>your picture.");
+		//$(".contentLabel").append("Touch 'Next' to share<br/>your picture.");
 	}
 }
 
@@ -258,18 +266,17 @@ function flash(flashInterval) {
 	
 	$(".overlay").animate({opacity: 1}, 150, function() {
 		
-		$(".contentLabel").empty();
+		$(".popup-interior").empty().prepend("Keep this picture?");
 		
-		$(".contentLabel").append("Do you want to keep this picture?");
+		//$(".contentLabel").append("Do you want to keep this picture?");
 		$(".gallery").css("height", 0);
 		$(".gallery").css("width", 0);
 		$(".nextLabel").css("margin-top", "-80px");
-		$(".nextBtn").css("margin-top", "-5px");
 		
 		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="805" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		
-		var cameraButton = jQuery('<div class="contentLabel-Interactive retake">Retake</div><div class="contentLabel-Interactive keep">Keep Picture</div>');
+		var cameraButton = jQuery('<div class="contentLabel-Interactive retake"></div><div class="contentLabel-Interactive keep"></div>');
 		cameraButton.prependTo("#footer");
 		
 		bindClick();
