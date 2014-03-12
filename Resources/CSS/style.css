@@ -1,4 +1,15 @@
 
+@font-face {
+    font-family: 'timesNGL';
+    src: url('../FONT/times-webfont.eot');
+    src: url('../FONT/times-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../FONT/times-webfont.woff') format('woff'),
+         url('../FONT/times-webfont.ttf') format('truetype'),
+         url('../FONT/times-webfont.svg#timesregular') format('svg');
+    font-weight: bolder;
+    font-style: oblique;
+}
+
 body,
 html {
   height: 1280px;
@@ -29,13 +40,16 @@ body {
 }
 
 .popup-interior {
+	font-family:"timesNGL";
     background-color:rgb(197,177,151);
     font-size:0.9em;
     border:1px solid rgba(90,45,19,1);
     display:inline-block;
     padding:10px;
     text-align:center;
-    color:rgba(84,56,18,1);
+    color:rgba(68,45,13,1);
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: rgba(68,45,13,1);
     
     -webkit-box-shadow: inset 0px 0px 10px 0px     rgba(90,45,19,1);
     -moz-box-shadow: inset 0px 0px 10px 0px rgba(90,45,19,1);
@@ -271,6 +285,10 @@ body {
 }
 
 .snappedImage {
+  font-family:"timesNGL";
+  color:rgba(68,45,13,1);
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: rgba(68,45,13,1);
   width: 805px;
   height: 550px;
   background-image: -webkit-linear-gradient(-65deg, #E6D9B1, #7A7A7A);
