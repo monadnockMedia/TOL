@@ -3,6 +3,16 @@
 var phase = 0;
 var users = 0;
 var picsTaken = 0;
+var p, r;
+
+// Init
+$(function init(){
+	console.log("init");
+	p = new photo();
+	
+	r = new replacer();
+	r.open();
+})
 
 
 function nextPhase (curPhase) {
@@ -85,7 +95,7 @@ function nextPhase (curPhase) {
 					dragFrame = jQuery('<div class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
 					
-					$(".dragFrame:last").append("<img src='" + savedPics[i] + "' width='184' height='200' />");
+					$(".dragFrame:last").append("<img src='" + savedPics[i] + "' width='184' height='184' />");
 					
 					//$('#snap').PhotoJShop({color: "b&w"});
 				}
@@ -249,7 +259,6 @@ function checkAnchored() {
 	} else {
 		//console.log("All pics anchored");
 		$( ".nextBtn" ).addClass("selected");
-		//$(".contentLabel").append("Touch 'Next' to share<br/>your picture.");
 	}
 }
 
@@ -273,14 +282,24 @@ function flash(flashInterval) {
 		$(".gallery").css("width", 0);
 		$(".nextLabel").css("margin-top", "-80px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="805" height="550" id = "snap" /></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		
 		var cameraButton = jQuery('<div class="contentLabel-Interactive retake"></div><div class="contentLabel-Interactive keep"></div>');
 		cameraButton.prependTo("#footer");
 		
 		bindClick();
-		snap();
+		
+		p.snap().then(function(d){
+			r.replace(d).then(  function(d){
+				console.log("Snapped d:");
+				console.log(d);
+				savedPics.push(d.processedImage);
+				$("#snap").attr("src", savedPics[0]);
+				$("#snap").animate({opacity: 1}, 150, function() {
+				});
+			});
+		});
 		
 		
 		//savedPics.push($("#snap").)

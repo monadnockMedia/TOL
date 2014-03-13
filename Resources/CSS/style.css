@@ -205,7 +205,7 @@ body {
 
 .gallery {
   margin-left:100px;
-  margin-top:23px;
+  margin-top:14px;
   width:590px;
   height:280px; /*270*/
   float:left;
@@ -259,7 +259,7 @@ body {
 
 .dragFrame {
   width:184px;
-  height:200px;
+  height:184px;
   margin-left:15px;
   float:left;
   background-image: -webkit-linear-gradient(-65deg, #E6D9B1, #7A7A7A);
@@ -286,14 +286,14 @@ body {
 
 .snappedImage {
   font-family:"timesNGL";
+  text-align:center;
   color:rgba(68,45,13,1);
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: rgba(68,45,13,1);
-  width: 805px;
+  width: 550px;
   height: 550px;
   background-image: -webkit-linear-gradient(-65deg, #E6D9B1, #7A7A7A);
   margin-bottom:40px;
-  margin-left:5px;
   margin-top:-40px;
 }
 
