@@ -11,6 +11,13 @@
     "width": 1024,
     "height": 1280,
 	"position": "center"
+  },"dependencies": {
+    "when": "~2.1.0",
+    "request": "~2.21.0",
+    "cheerio": "~0.11.0",
+    "easyimage": "~0.1.3",
+    "temp": "~0.7.0",
+    "gopro" : "cupofnestor/gopro"
   },
   "webkit": {
     "plugin": true,
