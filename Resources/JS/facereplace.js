@@ -5,7 +5,7 @@
 replacer = function(){
 	var self = this;
 	this.dfd =  null;
-	this.startCVServer = true;
+	this.startCVServer = false;
 	var socket = null;
 	this.serverAppPath = "/Applications/tol_face_replaceDebug.app"
 	
