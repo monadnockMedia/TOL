@@ -152,7 +152,7 @@ function nextPhase (curPhase) {
 			
 			$(".flex-drag").empty();
 			
-			var shareButtons = jQuery('<div class="contentLabel-Interactive email"></div><div class="contentLabel-Interactive twitter"></div>');
+			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive twitter"><div class="popup-exterior"><div class="popup-interior">Twitter</div></div></div>');
 			shareButtons.prependTo(".flex-drag");
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
@@ -338,7 +338,8 @@ function flash(flashInterval) {
 		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		
-		var cameraButton = jQuery('<div class="contentLabel-Interactive retake"></div>');
+		var cameraButton = jQuery("<div class='contentLabel-interactive retake'><div class='popup-exterior'><div class='popup-interior'>Retake</div></div></div>");
+		
 		cameraButton.prependTo("#footer");
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");

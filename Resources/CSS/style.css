@@ -405,43 +405,19 @@ body {
 .contentLabel-Interactive.retake {
 	margin-top:105px;
 	width:267px;
-	background-size: 267px 95px;
-	background-image:url('../IMAGES/retake.png');
 }
 
 .contentLabel-Interactive.keep {
 	width:436px;
 	margin-left:180px;
-	background-size: 436px 95px;
-	background-image:url('../IMAGES/keep.png');
-}
-
-.contentLabel-Interactive.retake.selected {
-	background-image:url('../IMAGES/retake_selected.png');
-}
-
-.contentLabel-Interactive.keep.selected {
-	background-image:url('../IMAGES/keep_selected.png');
 }
 
 .contentLabel-Interactive.email {
 	width:299px;
 	height:132px;
-	background-size: 299px 132px;
-	background-image:url('../IMAGES/email.png');
 }
 
 .contentLabel-Interactive.twitter {
 	width:282px;
 	height:126px;
-	background-size: 282px 126px;
-	background-image:url('../IMAGES/twatter.png');
-}
-
-.contentLabel-Interactive.email.selected {
-	background-image:url('../IMAGES/email_selected.png');
-}
-
-.contentLabel-Interactive.twitter.selected {
-	background-image:url('../IMAGES/twatter_selected.png');
 }
