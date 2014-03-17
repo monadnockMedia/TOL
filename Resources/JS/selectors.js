@@ -96,7 +96,7 @@ function nextPhase (curPhase) {
 					//WRN, added a source id
 					dragFrame = jQuery('<div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
-					
+					//WRN added settings function to get img id.
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
 					
 					//$('#snap').PhotoJShop({color: "b&w"});
@@ -117,6 +117,8 @@ function nextPhase (curPhase) {
 				$(".dragAnchor").css("left", 405);
 				$(".dragAnchor").css("top", 290);
 			
+			
+			///WRN
 				$(".dragAnchor").droppable({
 				      drop: function( event, ui ) {
 						$this = $(this);
