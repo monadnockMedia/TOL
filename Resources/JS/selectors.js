@@ -92,10 +92,12 @@ function nextPhase (curPhase) {
 			
 				var dragFrame;
 				for ( var i = 0; i < users; i++ ) {
-					dragFrame = jQuery('<div class="dragFrame ui-widget-content draggable"></div>');
+					
+					//WRN, added a source id
+					dragFrame = jQuery('<div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
 					
-					$(".dragFrame:last").append("<img src='" + savedPics[i] + "' width='184' height='184' />");
+					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
 					
 					//$('#snap').PhotoJShop({color: "b&w"});
 				}
@@ -111,14 +113,37 @@ function nextPhase (curPhase) {
 				});
 			
 				var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
-				$(dragAnchor).appendTo(".snappedImage");
+				dragAnchor.appendTo(".snappedImage");
 				$(".dragAnchor").css("left", 405);
 				$(".dragAnchor").css("top", 290);
 			
 				$(".dragAnchor").droppable({
 				      drop: function( event, ui ) {
-				        $( this ).addClass("anchored");
+						$this = $(this);
+				        $this.addClass("anchored");
+						var faceID = 0;
+					//	WRN, add faceID of drop taret to the settings.request;
+						$dropped = $(ui.helper[0]);
+		
+						var srcID = +$dropped.attr("srcid");
+						console.log("Image with srcID "+srcID+" dropped;");
+						savedPics[srcID].faceID = faceID;
+						settings.request.sources = savedPics;
 						checkAnchored();
+						
+						r.replace(settings.request).then(function(d){
+							$(".dragAnchor").remove();
+							$snap = $("#snap");
+							$snap.attr({
+								width: null,
+								height: null,
+								src: d.processedImage
+							})
+							
+							
+						})
+						
+						
 				      }
 				    });
 				phase++;
@@ -267,8 +292,7 @@ function checkAnchored() {
 function flash(flashInterval) {
 	clearInterval(flashInterval);
 	
-	picsTaken++;
-	console.log("picsTaken: " + picsTaken);
+
 	
 	var overlay = jQuery('<div class="overlay"> </div>');
 	overlay.appendTo(document.body);
@@ -291,6 +315,15 @@ function flash(flashInterval) {
 		bindClick();
 		
 		p.snap().then(function(d){
+			picsTaken++;
+			console.log("picsTaken: " + picsTaken);
+			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
+			$("#snap").attr("src", settings.getImageURL(picsTaken-1))
+				$("#snap").animate({opacity: 1}, 150, function() {
+				});
+		
+			
+			/*
 			r.replace(d).then(  function(d){
 				console.log("Snapped d:");
 				console.log(d);
@@ -299,6 +332,7 @@ function flash(flashInterval) {
 				$("#snap").animate({opacity: 1}, 150, function() {
 				});
 			});
+			*/
 		});
 		
 		
