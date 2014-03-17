@@ -70,7 +70,7 @@ var photo = function(){
 	this.snap = function(){
 		console.log("//SNAP//");
 		this.main_dfd = when.defer();
-		this.cam.mode = "photo";
+	//	this.cam.mode = "photo";
 		//startCapture takes a single image in photo mode.
 		//then is a callback provided by the deffered object
 		this.cam.startCapture().then(
@@ -134,7 +134,7 @@ var photo = function(){
 				var options = settings.ezoption(tmpName, tmpName);
 
 				ezi.crop( options, function(e,i){
-					//console.log(e);
+					console.log(e);
 					console.log(i);
 					self.main_dfd.resolve(settings.request);
 				})
