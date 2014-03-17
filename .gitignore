@@ -215,3 +215,7 @@ pip-log.txt
 .mr.developer.cfg
 
 node-webkit.app
+
+TOL.nw
+
+*.nw
