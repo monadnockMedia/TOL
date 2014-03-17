@@ -131,8 +131,9 @@ var photo = function(){
 			//finally, request the image and pipe it to the file, resolving the defered once the pipe is closed.
 			rq(camUrl).pipe(fs.createWriteStream(tmpName)).on('close', function(){
 				//resolve to return the path of the file we created.
+				cam.deleteLast();
 				var options = settings.ezoption(tmpName, tmpName);
-
+				
 				ezi.crop( options, function(e,i){
 					
 						console.log("error");
