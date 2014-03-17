@@ -134,7 +134,11 @@ var photo = function(){
 				var options = settings.ezoption(tmpName, tmpName);
 
 				ezi.crop( options, function(e,i){
-					console.log(e);
+					
+						console.log("error");
+						console.log(e);
+					//	throw(e);
+				
 					console.log(i);
 					self.main_dfd.resolve(settings.request);
 				})
