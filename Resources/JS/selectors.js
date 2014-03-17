@@ -1,6 +1,6 @@
 
 //  Main  \\
-var phase = 0;
+var phase = 1;
 var users = 0;
 var picsTaken = 0;
 var p, r;
@@ -8,6 +8,7 @@ var p, r;
 // Init
 $(function init(){
 	console.log("init");
+	bindNext();
 	p = new photo();
 	
 	r = new replacer();
@@ -18,10 +19,8 @@ $(function init(){
 function nextPhase (curPhase) {
 	switch (curPhase) {
 		case 0:
-			console.log("Phase 0");
-			$(".flex-item").animate({
-				opacity: 0
-			  }, 250, function() {
+			/*console.log("Phase 0");
+			$(".flex-item").animate({opacity: 0}, 250, function() {
 				$(".numUsersBtn.notselected").remove();
 				$(".numUsersBtn").removeClass("selected");
 				$(".numUsersBtn").css("height", 550);
@@ -38,12 +37,12 @@ function nextPhase (curPhase) {
 				
 				console.log("Num Users: " + users);
 				
-			    $(".popup-interior").empty().prepend("Choose a photo");
+			    $(".popup-interior").empty().prepend("Choose a photograph");
 				$(".gallery").addClass("lit");
 				
 				$(".flex-item").animate({opacity: "1"}, 250);
 			  });
-			phase++;
+			phase++;*/
 			break;
 			
 		case 1:
@@ -56,9 +55,9 @@ function nextPhase (curPhase) {
 				$(".galleryImage").removeClass("selected");
 				$('.numUsersBtn').remove();
 				$(".snappedImage").remove();
-				$(".popup-interior").empty().prepend("Look into the mirror.<br/>Smile!");
-				$(".popup-exterior").animate({opacity: 1}, 250, function() {});
-				$(".popup-interior").animate({opacity: 1}, 250, function() {});
+				$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
+				$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
+				$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
 				$(".flex-gallery").animate({opacity: 0}, 250, function() {});
 			  });
 			phase++;
@@ -73,7 +72,7 @@ function nextPhase (curPhase) {
 					$('div.contentLabel-Interactive').remove();
 					$(".gallery").css("height", 270);
 					$(".gallery").css("width", 590);
-					$(".nextLabel").css("margin-top", "55px");
+					$("#nextLabel-id-ext").css("margin-left", "0px");
 				});
 				
 				phase = 1;
@@ -83,8 +82,8 @@ function nextPhase (curPhase) {
 				$('div.contentLabel-Interactive').remove();
 				$(".flex-gallery").remove();
 			
-				$(".nextLabel").css("margin-top", "55px"); //55 33
-				$(".popup-interior").empty().prepend("Drag your face onto the<br/> person you want to be!");
+				$("#nextLabel-id-ext").css("margin-left", "00px");
+				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
 			
 				// Add draggable pictures to footer
 				var dragGallery = jQuery('<div class="flex-drag flex-container-wrap"></div>');
@@ -92,14 +91,11 @@ function nextPhase (curPhase) {
 			
 				var dragFrame;
 				for ( var i = 0; i < users; i++ ) {
-					
 					//WRN, added a source id
 					dragFrame = jQuery('<div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div>');
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
-					
-					//$('#snap').PhotoJShop({color: "b&w"});
 				}
 			
 				$(".draggable").draggable({
@@ -118,7 +114,7 @@ function nextPhase (curPhase) {
 				$(".dragAnchor").css("top", 290);
 			
 			
-			///WRN
+				///WRN
 				$(".dragAnchor").droppable({
 				      drop: function( event, ui ) {
 						$this = $(this);
@@ -141,11 +137,7 @@ function nextPhase (curPhase) {
 								height: null,
 								src: d.processedImage
 							})
-							
-							
 						})
-						
-						
 				      }
 				    });
 				phase++;
@@ -154,7 +146,7 @@ function nextPhase (curPhase) {
 			
 		case 3:
 			console.log("Phase 3");
-			$(".popup-interior").empty().prepend("Share your photo!")
+			$("#popup-interior-id").empty().prepend("Share your photo!")
 			$(".dragAnchor").remove();
 			$(".nextBtn").addClass("selected");
 			
@@ -167,38 +159,57 @@ function nextPhase (curPhase) {
 			$(".contentLabel-Interactive").css("margin-top", 0);
 			
 			//$(".nextLabel").empty().prepend("Done");
-			$(".nextLabel").addClass("done");
+			$("#nextLabel-id").empty().prepend("Done<br/><div class='nextBtn'></div>");
+			$( ".nextBtn" ).toggleClass("selected");
+			bindNext();
 			bindClick();
 			phase++;
 			break;
+			
 		case 4:
 			location.reload();
 			break;
 	}
-	
-	
 }
 
 
 //  Buttons  \\
-$(".nextBtn").click(function(e) {
-	//nextBtn will only be selected once the visitor has done everything needed on screen
-	if ($(".nextBtn").hasClass("selected")) {
-		$( this ).toggleClass("selected");
-		nextPhase(phase);
-	}
-});
+function bindNext() {
+	$(".nextBtn").click(function(e) {
+		//nextBtn will only be selected once the visitor has done everything needed on screen
+		if ($(".nextBtn").hasClass("selected")) {
+			$( this ).toggleClass("selected");
+			nextPhase(phase);
+		}
+	});
+}
+
 
 $(".numUsersBtn").click(function(e) {
 	switch (phase) {
-		case 0:
+		case 1:
 			$(".numUsersBtn").removeClass("selected");
 			$(".numUsersBtn").addClass("notselected");
 			$( this ).toggleClass("selected");
 			$( this ).removeClass("notselected");
-			$(".nextBtn").addClass("selected");
 			$(".numUsersBtn.selected").css("opacity", 1);
 			$(".numUsersBtn.notselected").css("opacity", 0.5);
+			
+			if ($(".numUsersBtn").hasClass("one")) {
+				users = 1;
+			} else if ($(".numUsersBtn").hasClass("two")) {
+				users = 2;
+			} else if ($(".numUsersBtn").hasClass("three")) {
+				users = 3;
+			}
+			
+			console.log("Num Users: " + users);
+			
+		    $("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+			$(".gallery").addClass("lit");
+			
+			checkReady();
+			
 			break;
 	}
 });
@@ -206,11 +217,11 @@ $(".numUsersBtn").click(function(e) {
 $(".galleryImage").click(function(e) {
 	switch (phase) {
 		case 1:
+			$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
 			$(".galleryImage").removeClass("selected");
 			$(".galleryImage").addClass("notselected");
 			$( this ).toggleClass("selected");
 			$( this ).removeClass("notselected");
-			$(".nextBtn").addClass("selected");
 			$(".contentLabel").removeClass("choose");
 			$(".contentLabel").addClass("takePic");
 			
@@ -220,20 +231,36 @@ $(".galleryImage").click(function(e) {
 			if (imageId == 1) {
 				$(".gallery").addClass("one");
 			} else if (imageId == 2) {
-				$(".gallery").addClass("two");
+				//$(".gallery").addClass("two");
+				$( "#dialog" ).dialog( "open" );
+				imageId = null;
 			} else if (imageId == 3) {
 				$(".gallery").addClass("three");
 			} else if (imageId == 4) {
-				$(".gallery").addClass("four");
+				//$(".gallery").addClass("four");
+				$( "#dialog" ).dialog( "open" );
+				imageId = null;
 			} else if (imageId == 5) {
 				$(".gallery").addClass("five");
 			} else if (imageId == 6) {
-				$(".gallery").addClass("six");
+				//$(".gallery").addClass("six");
+				$( "#dialog" ).dialog( "open" );
+				imageId = null;
 			}
 			
+			checkReady(imageId);
+			
+			//$(".nextBtn").addClass("selected");
 			break;
 	}
 });
+
+function checkReady(imageId) {
+	if (imageId != null && $(".numUsersBtn").hasClass("selected")) {
+		$( ".nextBtn" ).addClass("selected");
+		$("#popup-interior-id").empty().prepend("Touch 'Next' to take <br/>your picture!");
+	}
+}
 
 function bindClick() {
 	$('div.contentLabel-Interactive').on('click', function (e) {
@@ -256,7 +283,7 @@ function bindClick() {
 						$('div.contentLabel-Interactive').remove();
 						$(".gallery").css("height", 270);
 						$(".gallery").css("width", 590);
-						$(".nextLabel").css("margin-top", "55px");
+						$("#nextLabel-id-ext").css("margin-left", "000px");
 					});
 					
 					phase = 1;
@@ -301,19 +328,23 @@ function flash(flashInterval) {
 	
 	$(".overlay").animate({opacity: 1}, 150, function() {
 		
-		$(".popup-interior").empty().prepend("Keep this picture?");
+		$("#popup-interior-id").empty().prepend("Keep this picture?");
 		
 		//$(".contentLabel").append("Do you want to keep this picture?");
 		$(".gallery").css("height", 0);
 		$(".gallery").css("width", 0);
-		$(".nextLabel").css("margin-top", "-80px");
+		$("#nextLabel-id-ext").css("margin-left", "152px");
 		
 		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		
-		var cameraButton = jQuery('<div class="contentLabel-Interactive retake"></div><div class="contentLabel-Interactive keep"></div>');
+		var cameraButton = jQuery('<div class="contentLabel-Interactive retake"></div>');
 		cameraButton.prependTo("#footer");
 		
+		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
+		$( ".nextBtn" ).toggleClass("selected");
+		
+		bindNext();
 		bindClick();
 		
 		p.snap().then(function(d){

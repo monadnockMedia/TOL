@@ -315,12 +315,10 @@ body {
   margin-right:75px;
   font-size:0.9em;
   float:right;
-  background-repeat:none;
-  background-image: url('../IMAGES/next.png');
 }
 
 .nextLabel.done {
-	background-image: url('../IMAGES/done2.png');
+	
 }
 
 .contentLabel {
@@ -342,7 +340,7 @@ body {
 	background-image: url('../IMAGES/touchnext.png');
 }
 
-.contentLabel.smile {
+.contentLabel.smile {nextLabel
 	background-image: url('../IMAGES/lookinmirror.png');
 }
 
@@ -356,9 +354,7 @@ body {
   pointer-events:all;
   height:164px; /* 128 x 128 */
   width:164px;
-  margin:10px;
-  margin-right:80px; /* 100 */
-  margin-top:-20px;
+  margin:0px;
   font-size:2.2em;
   color:#4D3A03;
   float:right;
@@ -407,6 +403,7 @@ body {
 }
 
 .contentLabel-Interactive.retake {
+	margin-top:105px;
 	width:267px;
 	background-size: 267px 95px;
 	background-image:url('../IMAGES/retake.png');
