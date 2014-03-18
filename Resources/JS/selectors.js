@@ -4,6 +4,14 @@ var phase = 1;
 var users = 0;
 var picsTaken = 0;
 var p, r;
+var previewArr = new Array();
+
+previewArr.push("0_lifering");
+previewArr.push("1_chef");
+previewArr.push("2_crew");
+previewArr.push("3_walk");
+previewArr.push("4_couples");
+previewArr.push("5_kids");
 
 // Init
 $(function init(){
@@ -85,6 +93,7 @@ function nextPhase (curPhase) {
 				console.log("Phase 2");
 				$('div.contentLabel-Interactive').remove();
 				$(".flex-gallery").remove();
+				
 			
 				$("#nextLabel-id-ext").css("margin-left", "00px");
 				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
@@ -111,13 +120,40 @@ function nextPhase (curPhase) {
 					start: function() {},
 					stop: function() {}
 				});
-			
+				
 				var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
 				dragAnchor.appendTo(".snappedImage");
-				$(".dragAnchor").css("left", 405);
-				$(".dragAnchor").css("top", 290);
-			
-			
+				
+				// Set drag anchor over pictures face (ring: L 405 T 270 / girls: L 350 T 175 / kids: L 370 T 235)
+				//$(".dragAnchor").css("left", 370);
+				//$(".dragAnchor").css("top", 235);
+				
+				if (settings.request.tgImageID == 0) {
+					$(".dragAnchor").css("left", 405);
+					$(".dragAnchor").css("top", 270);
+				} else if (settings.request.tgImageID == 2) {
+					$(".dragAnchor").css("left", 350);
+					$(".dragAnchor").css("top", 175);
+				} else if (settings.request.tgImageID == 5) {
+					$(".dragAnchor").css("left", 370);
+					$(".dragAnchor").css("top", 235);
+				}
+				
+				$snap = $("#snap");
+				$snap.attr({
+					width: null,
+					height: null,
+					src: "IMAGES/"+previewArr[settings.request.tgImageID]+".jpg"
+				})
+				
+				if (settings.request.tgImageID == 0 || settings.request.tgImageID == 2 || settings.request.tgImageID == 5) {
+					$("#snap").addClass("portrait");
+				} else {
+					$("#snap").addClass("landscape");
+				}
+				
+				$(".snappedImage").addClass("developed");
+				
 				///WRN
 				$(".dragAnchor").droppable({
 				      drop: function( event, ui ) {
@@ -126,7 +162,7 @@ function nextPhase (curPhase) {
 						var faceID = 0;
 					//	WRN, add faceID of drop taret to the settings.request;
 						$dropped = $(ui.helper[0]);
-		
+						
 						var srcID = +$dropped.attr("srcid");
 						console.log("Image with srcID "+srcID+" dropped;");
 						savedPics[srcID].faceID = faceID;
@@ -134,7 +170,14 @@ function nextPhase (curPhase) {
 						checkAnchored();
 						
 						r.replace(settings.request).then(function(d){
-							$(".snappedImage").addClass("developed");
+							//$(".snappedImage").addClass("developed");
+							
+							if (settings.request.tgImageID == 0 || settings.request.tgImageID == 2 || settings.request.tgImageID == 5) {
+								$("#snap").addClass("portrait");
+							} else {
+								$("#snap").addClass("landscape");
+							}
+							console.log(d.processedImage);
 							$(".dragAnchor").remove();
 							$snap = $("#snap");
 							$snap.attr({
@@ -249,16 +292,15 @@ $(".galleryImage").click(function(e) {
 				$( "#dialog" ).dialog( "open" );
 				imageId = null;
 			} else if (imageId == 4) {
-				$(".gallery").addClass("five");
-			} else if (imageId == 5) {
-				//$(".gallery").addClass("six");
+				//$(".gallery").addClass("four");
 				$( "#dialog" ).dialog( "open" );
 				imageId = null;
+			} else if (imageId == 5) {
+				$(".gallery").addClass("five");
 			}
 			
 			checkReady(imageId);
 			
-			//$(".nextBtn").addClass("selected");
 			break;
 	}
 });

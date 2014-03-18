@@ -313,6 +313,13 @@ body {
 	margin-top:-74px;
 	border:none;
 	opacity:0;
+}
+
+.landscape{
+	width:100%;
+}
+
+.portrait{
 	height:100%;
 }
 

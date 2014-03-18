@@ -819,7 +819,7 @@ body .ui-tooltip {
 .ui-widget-content a {
 	color: #1f1f1f;
 }
-.ui-widget-header {
+.ui-dialog.ui-widget-header {
 	border: 1px solid #d4d1bf;
 	background: #ffffff url(images/ui-bg_fine-grain_15_ffffff_60x60.png) 50% 50% repeat;
 	color: #453821;
