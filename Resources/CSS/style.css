@@ -60,6 +60,12 @@ body {
     border-radius: 5px;
 }
 
+.popup-interior.selected {
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color:rgba(68,45,13,1);
+	color:#DAA520;
+}
+
 .popup-exterior {
 	margin-top:-20px;
     display:inline-block;

@@ -42,7 +42,11 @@ function nextPhase (curPhase) {
 				
 				$(".flex-item").animate({opacity: "1"}, 250);
 			  });
-			phase++;*/
+			phase++;
+			
+			
+			
+			*/
 			break;
 			
 		case 1:
@@ -228,21 +232,23 @@ $(".galleryImage").click(function(e) {
 			var imageId = $(this).attr('id');
 			$(".gallery").removeClass("lit one two three four five six");
 			
-			if (imageId == 1) {
+			settings.request.tgImageID = imageId;
+			
+			if (imageId == 0) {
 				$(".gallery").addClass("one");
-			} else if (imageId == 2) {
+			} else if (imageId == 1) {
 				//$(".gallery").addClass("two");
 				$( "#dialog" ).dialog( "open" );
 				imageId = null;
-			} else if (imageId == 3) {
+			} else if (imageId == 2) {
 				$(".gallery").addClass("three");
-			} else if (imageId == 4) {
+			} else if (imageId == 3) {
 				//$(".gallery").addClass("four");
 				$( "#dialog" ).dialog( "open" );
 				imageId = null;
-			} else if (imageId == 5) {
+			} else if (imageId == 4) {
 				$(".gallery").addClass("five");
-			} else if (imageId == 6) {
+			} else if (imageId == 5) {
 				//$(".gallery").addClass("six");
 				$( "#dialog" ).dialog( "open" );
 				imageId = null;
@@ -277,7 +283,10 @@ function bindClick() {
 				} else {
 					picsTaken--;
 					savedPics.pop();
+					//$( ".retake .popup-interior" ).css("color", "#DAA520");
+					//$( ".retake .popup-interior" ).css("-webkit-text-stroke-color", "#DAA520");
 					$( ".nextBtn" ).removeClass("selected");
+					$( ".retake .popup-interior" ).addClass("selected");
 					
 					$("div.contentLabel-Interactive").animate({opacity: 0}, 250, function() {
 						$('div.contentLabel-Interactive').remove();
@@ -291,16 +300,14 @@ function bindClick() {
 				}
 				break;
 			case 4:
-				$(".contentLabel-Interactive").removeClass("selected");
-				$(".contentLabel-Interactive").addClass("notselected");
-				$( this ).toggleClass("selected");
-				$( this ).removeClass("notselected");
 
 				//Email and Twitter Sharing
 				if ($( this ).hasClass("twitter")) {
-					
+					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
+					$(".twitter .popup-interior").addClass("selected");
 				} else if ($( this ).hasClass("email")) {
-					
+					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
+					$(".email .popup-interior").addClass("selected");
 				}
 				break;
 		}
