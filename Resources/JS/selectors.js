@@ -96,7 +96,7 @@ function nextPhase (curPhase) {
 				var dragFrame;
 				for ( var i = 0; i < users; i++ ) {
 					//WRN, added a source id
-					dragFrame = jQuery('<div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div>');
+					dragFrame = jQuery('<div class="popup-exterior"><div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div></div>');
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
@@ -134,6 +134,7 @@ function nextPhase (curPhase) {
 						checkAnchored();
 						
 						r.replace(settings.request).then(function(d){
+							$(".snappedImage").addClass("developed");
 							$(".dragAnchor").remove();
 							$snap = $("#snap");
 							$snap.attr({
@@ -153,6 +154,7 @@ function nextPhase (curPhase) {
 			$("#popup-interior-id").empty().prepend("Share your photo!")
 			$(".dragAnchor").remove();
 			$(".nextBtn").addClass("selected");
+			
 			
 			$(".flex-drag").empty();
 			
@@ -350,7 +352,7 @@ function flash(flashInterval) {
 		cameraButton.prependTo("#footer");
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
-		$( ".nextBtn" ).toggleClass("selected");
+		
 		
 		bindNext();
 		bindClick();
@@ -360,7 +362,8 @@ function flash(flashInterval) {
 			console.log("picsTaken: " + picsTaken);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
 			$("#snap").attr("src", settings.getImageURL(picsTaken-1))
-				$("#snap").animate({opacity: 1}, 150, function() {
+				$("#snap").animate({opacity: 1}, 250, function() {
+					$( ".nextBtn" ).toggleClass("selected");
 				});
 		
 			

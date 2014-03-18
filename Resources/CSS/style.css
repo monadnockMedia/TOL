@@ -266,10 +266,9 @@ body {
 .dragFrame {
   width:184px;
   height:184px;
-  margin-left:15px;
   float:left;
   background-image: -webkit-linear-gradient(-65deg, #E6D9B1, #7A7A7A);
-  border:15px solid #360D02;
+  border:2px solid #360D02;
   opacity:1;
 }
 
@@ -303,10 +302,18 @@ body {
   margin-top:-40px;
 }
 
+.snappedImage.developed {
+	background-image:none;
+	background-color:transparent;
+	color:transparent;
+	-webkit-text-stroke-color: transparent;
+}
+
 #snap {
 	margin-top:-74px;
 	border:none;
 	opacity:0;
+	height:100%;
 }
 
 
