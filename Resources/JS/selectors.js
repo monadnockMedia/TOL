@@ -185,6 +185,7 @@ function nextPhase (curPhase) {
 								height: null,
 								src: d.processedImage
 							})
+							p.cam.deleteLast();
 						})
 				      }
 				    });
