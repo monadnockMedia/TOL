@@ -221,7 +221,8 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 4:
-			location.reload();
+			//location.reload();
+			require('nw.gui').Window.get().reload(3);
 			break;
 	}
 }
