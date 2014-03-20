@@ -282,26 +282,32 @@ $(".galleryImage").click(function(e) {
 			var imageId = $(this).attr('id');
 			$(".gallery").removeClass("lit one two three four five six");
 			
-			settings.request.tgImageID = imageId;
+			
 			
 			if (imageId == 0) {
 				$(".gallery").addClass("one");
+				settings.request.tgImageID = imageId;
 			} else if (imageId == 1) {
 				//$(".gallery").addClass("two");
 				$( "#dialog" ).dialog( "open" );
+				$( ".nextBtn" ).removeClass("selected");
 				imageId = null;
 			} else if (imageId == 2) {
 				$(".gallery").addClass("three");
+				settings.request.tgImageID = imageId;
 			} else if (imageId == 3) {
 				//$(".gallery").addClass("four");
 				$( "#dialog" ).dialog( "open" );
+				$( ".nextBtn" ).removeClass("selected");
 				imageId = null;
 			} else if (imageId == 4) {
 				//$(".gallery").addClass("four");
 				$( "#dialog" ).dialog( "open" );
+				$( ".nextBtn" ).removeClass("selected");
 				imageId = null;
 			} else if (imageId == 5) {
 				$(".gallery").addClass("five");
+				settings.request.tgImageID = imageId;
 			}
 			
 			checkReady(imageId);
