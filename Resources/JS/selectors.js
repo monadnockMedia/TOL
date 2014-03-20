@@ -5,6 +5,7 @@ var users = 0;
 var picsTaken = 0;
 var p, r;
 var previewArr = new Array();
+var elipsisInterval;
 
 previewArr.push("0_lifering");
 previewArr.push("1_chef");
@@ -159,6 +160,8 @@ function nextPhase (curPhase) {
 				      drop: function( event, ui ) {
 						$this = $(this);
 				        $this.addClass("anchored");
+						$this.append("<br/><br/>Developing<span class='elipsis'></span>");
+						elipsisTimer();
 						var faceID = 0;
 					//	WRN, add faceID of drop taret to the settings.request;
 						$dropped = $(ui.helper[0]);
@@ -171,13 +174,14 @@ function nextPhase (curPhase) {
 						
 						r.replace(settings.request).then(function(d){
 							//$(".snappedImage").addClass("developed");
-							
+							$( ".nextBtn" ).addClass("selected");
 							if (settings.request.tgImageID == 0 || settings.request.tgImageID == 2 || settings.request.tgImageID == 5) {
 								$("#snap").addClass("portrait");
 							} else {
 								$("#snap").addClass("landscape");
 							}
 							console.log(d.processedImage);
+							clearInterval(elipsisInterval);
 							$(".dragAnchor").remove();
 							$snap = $("#snap");
 							$snap.attr({
@@ -364,7 +368,7 @@ function checkAnchored() {
 		//console.log("Waiting for Anchors");
 	} else {
 		//console.log("All pics anchored");
-		$( ".nextBtn" ).addClass("selected");
+		
 	}
 }
 
@@ -387,8 +391,9 @@ function flash(flashInterval) {
 		$(".gallery").css("width", 0);
 		$("#nextLabel-id-ext").css("margin-left", "152px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item">Developing Photo... <img width="550" height="550" id = "snap" /></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item"><span class="indent">Developing Photo<span class="elipsis"></span></span><img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
+		elipsisTimer();
 		
 		var cameraButton = jQuery("<div class='contentLabel-interactive retake'><div class='popup-exterior'><div class='popup-interior'>Retake</div></div></div>");
 		
@@ -405,8 +410,11 @@ function flash(flashInterval) {
 			console.log("picsTaken: " + picsTaken);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
 			$("#snap").attr("src", settings.getImageURL(picsTaken-1))
+			$(".snappedImage .indent").remove();
 				$("#snap").animate({opacity: 1}, 250, function() {
 					$( ".nextBtn" ).toggleClass("selected");
+					clearInterval(elipsisInterval);
+					
 				});
 		
 			
@@ -430,3 +438,21 @@ function flash(flashInterval) {
 		});
 	});
 }
+
+
+//Make the ... animate while developing
+function elipsisTimer() {
+	var elipsisCnt = 0;
+	
+	elipsisInterval = setInterval(function(){
+		if (elipsisCnt < 3) {
+			$(".elipsis").append(".");
+			elipsisCnt++;
+		} else {
+			$(".elipsis").empty();
+			elipsisCnt = 0;
+		}
+	},500);
+}
+
+

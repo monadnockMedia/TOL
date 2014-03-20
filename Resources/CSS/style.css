@@ -282,6 +282,8 @@ body {
 	-moz-box-shadow: 0px 0px 9px 3px rgba(255,251,100,0.75);
 	box-shadow: 0px 0px 9px 3px rgba(255,251,100,0.75);
 	background-color:transparent;
+	color:black;
+	font-size:0.4em;
 }
 
 .dragAnchor.anchored {
@@ -302,6 +304,11 @@ body {
   margin-top:-40px;
 }
 
+.indent {
+	margin-left:15px;
+	text-align:left;
+}
+
 .snappedImage.developed {
 	background-image:none;
 	background-color:transparent;
@@ -310,7 +317,7 @@ body {
 }
 
 #snap {
-	margin-top:-74px;
+	/*margin-top:-74px;*/
 	border:none;
 	opacity:0;
 }
