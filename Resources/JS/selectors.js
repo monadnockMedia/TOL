@@ -61,7 +61,7 @@ function nextPhase (curPhase) {
 		case 1:
 			var flashInterval = setInterval(function(){
 						flash(flashInterval);
-					}, 1500);
+					}, 3000);
 			$(".flex-item").animate({
 				opacity: 0
 			  }, 250, function() {
