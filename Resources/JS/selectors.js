@@ -244,23 +244,31 @@ $(".numUsersBtn").click(function(e) {
 		case 1:
 			$(".numUsersBtn").removeClass("selected");
 			$(".numUsersBtn").addClass("notselected");
-			$( this ).toggleClass("selected");
-			$( this ).removeClass("notselected");
-			$(".numUsersBtn.selected").css("opacity", 1);
-			$(".numUsersBtn.notselected").css("opacity", 0.5);
+			$("#dialog").empty().append("Only one user is currently supported, check back soon!");
 			
-			if ($(".numUsersBtn").hasClass("one")) {
+			if ($(this).hasClass("one")) {
+				$( ".one" ).toggleClass("selected");
+				$( ".one" ).removeClass("notselected");
+				$(".numUsersBtn.selected").css("opacity", 1);
+				$(".numUsersBtn.notselected").css("opacity", 0.5);
+				$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+				$(".gallery").addClass("lit");
 				users = 1;
-			} else if ($(".numUsersBtn").hasClass("two")) {
-				users = 2;
-			} else if ($(".numUsersBtn").hasClass("three")) {
-				users = 3;
+			} else if ($(this).hasClass("two")) {
+				$( "#dialog" ).dialog( "open" );
+				console.log("Herro 2");
+				//users = 2;
+				users = 1;
+			} else if ($(this).hasClass("three")) {
+				$( "#dialog" ).dialog( "open" );
+				users = 1;
+				console.log("Herro 3");
+				//users = 3;
 			}
 			
 			console.log("Num Users: " + users);
 			
-		    $("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-			$(".gallery").addClass("lit");
+		    
 			
 			checkReady();
 			
@@ -283,7 +291,7 @@ $(".galleryImage").click(function(e) {
 			$(".gallery").removeClass("lit one two three four five six");
 			
 			
-			
+			$("#dialog").empty().append("This picture isn't supported yet, check back soon!");
 			if (imageId == 0) {
 				$(".gallery").addClass("one");
 				settings.request.tgImageID = imageId;
