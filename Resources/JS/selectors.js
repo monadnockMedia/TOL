@@ -462,4 +462,40 @@ function elipsisTimer() {
 	},500);
 }
 
+///
+var nwKiosk = function(){
+	var mouseHidden =true;
+	var kioskMode=true;
+	var gui =require('nw.gui');
+	//setInterval(focus_window,5000);
+
+	var win = gui.Window.get();
+	
+	this.setup = function(){$(document).keypress(function(d){
+		switch(d.keyCode)
+		{
+		case 107:
+		  (kioskMode) ? win.enterKioskMode() : win.leaveKioskMode() ;
+		kioskMode = !kioskMode;
+		  break;
+		case 109:
+		  (mouseHidden) ? $("body").css("cursor","none") : $("body").css("cursor","pointer") ;
+		mouseHidden=!mouseHidden;
+		  break;
+	
+		}
+
+
+	})}
+	this.hideMouse = function(){
+		$("body").css("cursor","none")
+	}
+	this.showMouse = function(){
+		$("body").css("cursor","pointer")
+	}
+	
+}
+$(nwK = new nwKiosk();
+nwK.hideMouse();
+nwK.setup();)
 
