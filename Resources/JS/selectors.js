@@ -17,7 +17,11 @@ previewArr.push("5_kids");
 // Init
 $(function init(){
 	console.log("init");
+	
 	bindNext();
+	bindNumUsers();
+	bindGallery();
+	
 	p = new photo();
 	
 	r = new replacer();
@@ -221,10 +225,38 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 4:
-			//location.reload();
-			require('nw.gui').Window.get().reload(3);
+			restartApp();
 			break;
 	}
+}
+
+var restartApp = function(){
+	//require('nw.gui').Window.get().reload(3);
+	$(".flex-drag").remove();
+	$(".snappedImage").remove();
+	
+	
+	
+	$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
+	
+	$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
+	
+	var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
+	reset1.prependTo("#footer");
+	
+	var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
+	reset2.appendTo(".content");
+	
+	phase = 1;
+	users = 0;
+	picsTaken = 0;
+	
+	bindNumUsers();
+	bindNext();
+	bindClick();
+	bindGallery();
+	
+	
 }
 
 //  Buttons  \\
@@ -238,91 +270,94 @@ function bindNext() {
 	});
 }
 
+var bindNumUsers = function() {
+	$(".numUsersBtn").click(function(e) {
+		switch (phase) {
+			case 1:
+				$(".numUsersBtn").removeClass("selected");
+				$(".numUsersBtn").addClass("notselected");
+				$("#dialog").empty().append("Only one user is currently supported, check back soon!");
 
-$(".numUsersBtn").click(function(e) {
-	switch (phase) {
-		case 1:
-			$(".numUsersBtn").removeClass("selected");
-			$(".numUsersBtn").addClass("notselected");
-			$("#dialog").empty().append("Only one user is currently supported, check back soon!");
-			
-			if ($(this).hasClass("one")) {
-				$( ".one" ).toggleClass("selected");
-				$( ".one" ).removeClass("notselected");
-				$(".numUsersBtn.selected").css("opacity", 1);
-				$(".numUsersBtn.notselected").css("opacity", 0.5);
+				if ($(this).hasClass("one")) {
+					$( ".one" ).toggleClass("selected");
+					$( ".one" ).removeClass("notselected");
+					$(".numUsersBtn.selected").css("opacity", 1);
+					$(".numUsersBtn.notselected").css("opacity", 0.5);
+					$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+					$(".gallery").addClass("lit");
+					users = 1;
+				} else if ($(this).hasClass("two")) {
+					$( "#dialog" ).dialog( "open" );
+					console.log("Herro 2");
+					//users = 2;
+					users = 1;
+				} else if ($(this).hasClass("three")) {
+					$( "#dialog" ).dialog( "open" );
+					users = 1;
+					console.log("Herro 3");
+					//users = 3;
+				}
+
+				console.log("Num Users: " + users);
+
+
+
+				checkReady();
+
+				break;
+		}
+	});
+}
+
+var bindGallery = function(){
+	$(".galleryImage").click(function(e) {
+		switch (phase) {
+			case 1:
 				$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-				$(".gallery").addClass("lit");
-				users = 1;
-			} else if ($(this).hasClass("two")) {
-				$( "#dialog" ).dialog( "open" );
-				console.log("Herro 2");
-				//users = 2;
-				users = 1;
-			} else if ($(this).hasClass("three")) {
-				$( "#dialog" ).dialog( "open" );
-				users = 1;
-				console.log("Herro 3");
-				//users = 3;
-			}
-			
-			console.log("Num Users: " + users);
-			
-		    
-			
-			checkReady();
-			
-			break;
-	}
-});
+				$(".galleryImage").removeClass("selected");
+				$(".galleryImage").addClass("notselected");
+				$( this ).toggleClass("selected");
+				$( this ).removeClass("notselected");
+				$(".contentLabel").removeClass("choose");
+				$(".contentLabel").addClass("takePic");
 
-$(".galleryImage").click(function(e) {
-	switch (phase) {
-		case 1:
-			$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-			$(".galleryImage").removeClass("selected");
-			$(".galleryImage").addClass("notselected");
-			$( this ).toggleClass("selected");
-			$( this ).removeClass("notselected");
-			$(".contentLabel").removeClass("choose");
-			$(".contentLabel").addClass("takePic");
-			
-			var imageId = $(this).attr('id');
-			$(".gallery").removeClass("lit one two three four five six");
-			
-			
-			$("#dialog").empty().append("This picture isn't supported yet, check back soon!");
-			if (imageId == 0) {
-				$(".gallery").addClass("one");
-				settings.request.tgImageID = imageId;
-			} else if (imageId == 1) {
-				//$(".gallery").addClass("two");
-				$( "#dialog" ).dialog( "open" );
-				$( ".nextBtn" ).removeClass("selected");
-				imageId = null;
-			} else if (imageId == 2) {
-				$(".gallery").addClass("three");
-				settings.request.tgImageID = imageId;
-			} else if (imageId == 3) {
-				//$(".gallery").addClass("four");
-				$( "#dialog" ).dialog( "open" );
-				$( ".nextBtn" ).removeClass("selected");
-				imageId = null;
-			} else if (imageId == 4) {
-				//$(".gallery").addClass("four");
-				$( "#dialog" ).dialog( "open" );
-				$( ".nextBtn" ).removeClass("selected");
-				imageId = null;
-			} else if (imageId == 5) {
-				$(".gallery").addClass("five");
-				settings.request.tgImageID = imageId;
-			}
-			
-			checkReady(imageId);
-			
-			break;
-	}
-});
+				var imageId = $(this).attr('id');
+				$(".gallery").removeClass("lit one two three four five six");
+
+
+				$("#dialog").empty().append("This picture isn't supported yet, check back soon!");
+				if (imageId == 0) {
+					$(".gallery").addClass("one");
+					settings.request.tgImageID = imageId;
+				} else if (imageId == 1) {
+					//$(".gallery").addClass("two");
+					$( "#dialog" ).dialog( "open" );
+					$( ".nextBtn" ).removeClass("selected");
+					imageId = null;
+				} else if (imageId == 2) {
+					$(".gallery").addClass("three");
+					settings.request.tgImageID = imageId;
+				} else if (imageId == 3) {
+					//$(".gallery").addClass("four");
+					$( "#dialog" ).dialog( "open" );
+					$( ".nextBtn" ).removeClass("selected");
+					imageId = null;
+				} else if (imageId == 4) {
+					//$(".gallery").addClass("four");
+					$( "#dialog" ).dialog( "open" );
+					$( ".nextBtn" ).removeClass("selected");
+					imageId = null;
+				} else if (imageId == 5) {
+					$(".gallery").addClass("five");
+					settings.request.tgImageID = imageId;
+				}
+
+				checkReady(imageId);
+
+				break;
+		}
+	});
+}
 
 function checkReady(imageId) {
 	if (imageId != null && $(".numUsersBtn").hasClass("selected")) {
