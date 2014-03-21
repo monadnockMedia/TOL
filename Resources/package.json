@@ -25,5 +25,6 @@
     "plugin": true,
 	"java": true
 	
-  }
+  },
+"chromium-args":"--remote-debugging-port=9999"
 }
