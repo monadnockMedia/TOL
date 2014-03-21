@@ -206,8 +206,8 @@ function nextPhase (curPhase) {
 			
 			$(".flex-drag").empty();
 			
-			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive twitter"><div class="popup-exterior"><div class="popup-interior">Twitter</div></div></div>');
-			shareButtons.prependTo(".flex-drag");
+			//var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive twitter"><div class="popup-exterior"><div class="popup-interior">Twitter</div></div></div>');
+			//shareButtons.prependTo(".flex-drag");
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
 			$(".contentLabel-Interactive").css("margin-top", 0);
@@ -226,7 +226,6 @@ function nextPhase (curPhase) {
 			break;
 	}
 }
-
 
 //  Buttons  \\
 function bindNext() {
@@ -482,7 +481,6 @@ var nwKiosk = function(){
 		  (mouseHidden) ? $("body").css("cursor","none") : $("body").css("cursor","pointer") ;
 		mouseHidden=!mouseHidden;
 		  break;
-	
 		}
 
 

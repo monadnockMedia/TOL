@@ -6,8 +6,8 @@
   "keywords": [ "monadnock", "node-webkit" ],
   "window": {
     "title": "Trip of a Lifetime",
-    "toolbar": true,
-    "frame": true,
+    "toolbar": false,
+    "frame": false,
 	"fullscreen":false,
     "width": 1024,
     "height": 1280,
