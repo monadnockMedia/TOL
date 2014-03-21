@@ -28,6 +28,10 @@ $(function init(){
 	r.open();
 })
 
+var idleTimeout = function() {
+	//setInterval(restartApp);
+}
+
 
 function nextPhase (curPhase) {
 	switch (curPhase) {
@@ -255,7 +259,7 @@ var restartApp = function(){
 	bindNext();
 	bindClick();
 	bindGallery();
-	
+	savedPics.length = 0;
 	
 }
 
