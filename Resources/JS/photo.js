@@ -14,11 +14,7 @@ var child = require("child_process");
 var ezi = require('easyimage');
 
 var tmpName;
-
-
 var settings = {};
-
-
 
 settings.getImageURL = function(ID){
 	return settings.request.dir+settings.request.sources[ID].filename+"."+settings.request.ext;
@@ -150,8 +146,6 @@ var photo = function(){
 		});
 	//	return gi_dfd.promise;
 	}
-	
-	
 	
 }
 
