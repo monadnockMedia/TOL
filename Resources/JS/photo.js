@@ -18,6 +18,8 @@ var tmpName;
 
 var settings = {};
 
+
+
 settings.getImageURL = function(ID){
 	return settings.request.dir+settings.request.sources[ID].filename+"."+settings.request.ext;
 }

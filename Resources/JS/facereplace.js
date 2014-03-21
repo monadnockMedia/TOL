@@ -36,7 +36,7 @@ replacer = function(){
 	var openSocket = function(){
 		
 		focus_window();
-	//	win.enterKioskMode();
+		win.enterKioskMode();
 		
 		console.log("opening");
 		socket = new WebSocket("ws://localhost:9092");

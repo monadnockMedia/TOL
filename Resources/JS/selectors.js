@@ -495,7 +495,7 @@ var nwKiosk = function(){
 	}
 	
 }
-$(nwK = new nwKiosk();
+$(function(){nwK = new nwKiosk();
 nwK.hideMouse();
-nwK.setup();)
+nwK.setup();})
 
