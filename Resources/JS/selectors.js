@@ -280,7 +280,7 @@ var bindNumUsers = function() {
 			case 1:
 				$(".numUsersBtn").removeClass("selected");
 				$(".numUsersBtn").addClass("notselected");
-				$("#dialog").empty().append("Only one user is currently supported, check back soon!");
+				$("#dialog").empty().append("Currently only one person can be in each picture, check back soon!");
 
 				if ($(this).hasClass("one")) {
 					$( ".one" ).toggleClass("selected");
