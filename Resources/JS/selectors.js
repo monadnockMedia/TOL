@@ -36,34 +36,7 @@ var idleTimeout = function() {
 function nextPhase (curPhase) {
 	switch (curPhase) {
 		case 0:
-			/*console.log("Phase 0");
-			$(".flex-item").animate({opacity: 0}, 250, function() {
-				$(".numUsersBtn.notselected").remove();
-				$(".numUsersBtn").removeClass("selected");
-				$(".numUsersBtn").css("height", 550);
-				$(".numUsersBtn").css("width", 700);
-				$(".numUsersBtn").css("background-size", "700px 550px");
-				
-				if ($(".numUsersBtn").hasClass("one")) {
-					users = 1;
-				} else if ($(".numUsersBtn").hasClass("two")) {
-					users = 2;
-				} else if ($(".numUsersBtn").hasClass("three")) {
-					users = 3;
-				}
-				
-				console.log("Num Users: " + users);
-				
-			    $(".popup-interior").empty().prepend("Choose a photograph");
-				$(".gallery").addClass("lit");
-				
-				$(".flex-item").animate({opacity: "1"}, 250);
-			  });
-			phase++;
 			
-			
-			
-			*/
 			break;
 			
 		case 1:
@@ -402,7 +375,6 @@ function bindClick() {
 				}
 				break;
 			case 4:
-
 				//Email and Twitter Sharing
 				if ($( this ).hasClass("twitter")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
