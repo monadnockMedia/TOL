@@ -73,13 +73,11 @@ function nextPhase (curPhase) {
 				nextPhase(phase);
 			} else {
 				console.log("Phase 2");
-				$('div.contentLabel-Interactive').remove();
-				$(".flex-gallery").remove();
 				
-			
-				$("#nextLabel-id-ext").css("margin-left", "00px");
-				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
-			
+				//lets just see:
+				//$('div.contentLabel-Interactive').remove();
+				//$(".flex-gallery").remove();
+				
 				// Add draggable pictures to footer
 				var dragGallery = jQuery('<div class="flex-drag flex-container-wrap"></div>');
 				dragGallery.prependTo("#footer");
@@ -92,6 +90,11 @@ function nextPhase (curPhase) {
 					//WRN added settings function to get img id.
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
 				}
+				
+				
+				$("#nextLabel-id-ext").css("margin-left", "00px");
+				
+				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
 			
 				$(".draggable").draggable({
 					helper: "clone",
@@ -106,10 +109,7 @@ function nextPhase (curPhase) {
 				var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
 				dragAnchor.appendTo(".snappedImage");
 				
-				// Set drag anchor over pictures face (ring: L 405 T 270 / girls: L 350 T 175 / kids: L 370 T 235)
-				//$(".dragAnchor").css("left", 370);
-				//$(".dragAnchor").css("top", 235);
-				
+				// Set drag anchor over pictures face
 				if (settings.request.tgImageID == 0) {
 					$(".dragAnchor").css("left", 405);
 					$(".dragAnchor").css("top", 270);
@@ -186,6 +186,9 @@ function nextPhase (curPhase) {
 			
 		case 3:
 			console.log("Phase 3");
+			$('div.contentLabel-Interactive').remove();
+			$(".flex-gallery").remove();
+			
 			$("#popup-interior-id").empty().prepend("Share your photo!")
 			$(".dragAnchor").remove();
 			$(".nextBtn").addClass("selected");
@@ -280,13 +283,11 @@ var bindNumUsers = function() {
 					users = 1;
 				} else if ($(this).hasClass("two")) {
 					$( "#dialog" ).dialog( "open" );
-					console.log("Herro 2");
 					//users = 2;
 					users = 1;
 				} else if ($(this).hasClass("three")) {
 					$( "#dialog" ).dialog( "open" );
 					users = 1;
-					console.log("Herro 3");
 					//users = 3;
 				}
 
@@ -348,20 +349,22 @@ var bindGallery = function(){
 					settings.request.tgImageID = imageId;
 				}
 
-				checkReady(imageId);
+				checkReady();
 
 				break;
 		}
 	});
 }
 
-function checkReady(imageId) {
-	if (imageId != null && $(".numUsersBtn").hasClass("selected")) {
+function checkReady() {
+	if (settings.request.tgImageID != null && $(".numUsersBtn").hasClass("selected")) {
+		
 		$( ".nextBtn" ).addClass("selected");
 			$("#nextLabel-id-ext").addClass("glow");
 			setTimeout(function(){
 				$("#nextLabel-id-ext").removeClass("glow");
 			},120);
+			
 		$("#popup-interior-id").empty().prepend("Touch 'Next' to take <br/>your picture!");
 	}
 }
