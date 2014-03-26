@@ -138,10 +138,12 @@ function nextPhase (curPhase) {
 				
 				///WRN
 				$(".dragAnchor").droppable({
+					  hoverClass: "dragAnchor-hover",
 				      drop: function( event, ui ) {
+						$(".ui-draggable-dragging").remove();
 						$this = $(this);
 				        $this.addClass("anchored");
-						$this.append("<br/><br/>Developing<span class='elipsis'></span>");
+						$this.append("<br/><br/>&#160;&#160;&#160;&#160;&#160;Developing<span class='elipsis'></span>");
 						elipsisTimer();
 						var faceID = 0;
 					//	WRN, add faceID of drop taret to the settings.request;
@@ -156,6 +158,10 @@ function nextPhase (curPhase) {
 						r.replace(settings.request).then(function(d){
 							//$(".snappedImage").addClass("developed");
 							$( ".nextBtn" ).addClass("selected");
+							$("#nextLabel-id-ext").addClass("glow");
+							setTimeout(function(){
+								$("#nextLabel-id-ext").removeClass("glow");
+							},120);
 							if (settings.request.tgImageID == 0 || settings.request.tgImageID == 2 || settings.request.tgImageID == 5) {
 								$("#snap").addClass("portrait");
 							} else {
@@ -183,6 +189,14 @@ function nextPhase (curPhase) {
 			$("#popup-interior-id").empty().prepend("Share your photo!")
 			$(".dragAnchor").remove();
 			$(".nextBtn").addClass("selected");
+			$("#nextLabel-id-ext").addClass("glow");
+			setTimeout(function(){
+				$("#nextLabel-id-ext").removeClass("glow");
+			},120);
+			
+			//Test make image bigger
+			$(".snappedImage").addClass("grow");
+			$("#popup-exterior-id").remove();
 			
 			
 			$(".flex-drag").empty();
@@ -195,6 +209,7 @@ function nextPhase (curPhase) {
 			
 			//$(".nextLabel").empty().prepend("Done");
 			$("#nextLabel-id").empty().prepend("Done<br/><div class='nextBtn'></div>");
+			
 			$( ".nextBtn" ).toggleClass("selected");
 			bindNext();
 			bindClick();
@@ -212,16 +227,13 @@ var restartApp = function(){
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
 	
-	
-	
 	$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
-	
 	$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
 	
 	var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
 	reset1.prependTo("#footer");
 	
-	var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
+	var reset2 = jQuery('<div id="popup-exterior-id" class="popup-exterior flex-item"><div id="popup-interior-id" class="popup-interior">How many people<br/>will be in your photo?</div></div><div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
 	reset2.appendTo(".content");
 	
 	phase = 1;
@@ -232,8 +244,7 @@ var restartApp = function(){
 	bindNext();
 	bindClick();
 	bindGallery();
-	savedPics.length = 0;
-	
+	savedPics.length = 0;	
 }
 
 //  Buttons  \\
@@ -251,6 +262,10 @@ var bindNumUsers = function() {
 	$(".numUsersBtn").click(function(e) {
 		switch (phase) {
 			case 1:
+				$("#popup-exterior-id").addClass("glow");
+				setTimeout(function(){
+					$("#popup-exterior-id").removeClass("glow");
+				},120);
 				$(".numUsersBtn").removeClass("selected");
 				$(".numUsersBtn").addClass("notselected");
 				$("#dialog").empty().append("Currently only one person can be in each picture, check back soon!");
@@ -290,6 +305,10 @@ var bindGallery = function(){
 	$(".galleryImage").click(function(e) {
 		switch (phase) {
 			case 1:
+				$("#popup-exterior-id").addClass("glow");
+				setTimeout(function(){
+					$("#popup-exterior-id").removeClass("glow");
+				},120);
 				$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
 				$(".galleryImage").removeClass("selected");
 				$(".galleryImage").addClass("notselected");
@@ -339,6 +358,10 @@ var bindGallery = function(){
 function checkReady(imageId) {
 	if (imageId != null && $(".numUsersBtn").hasClass("selected")) {
 		$( ".nextBtn" ).addClass("selected");
+			$("#nextLabel-id-ext").addClass("glow");
+			setTimeout(function(){
+				$("#nextLabel-id-ext").removeClass("glow");
+			},120);
 		$("#popup-interior-id").empty().prepend("Touch 'Next' to take <br/>your picture!");
 	}
 }
@@ -355,6 +378,10 @@ function bindClick() {
 				//Keep picture or retake?
 				if ($( this ).hasClass("keep")) {
 					$( ".nextBtn" ).addClass("selected");
+					$("#nextLabel-id-ext").addClass("glow");
+					setTimeout(function(){
+						$("#nextLabel-id-ext").removeClass("glow");
+					},120);
 				} else {
 					picsTaken--;
 					savedPics.pop();
@@ -416,7 +443,7 @@ function flash(flashInterval) {
 		$(".gallery").css("width", 0);
 		$("#nextLabel-id-ext").css("margin-left", "152px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item"><span class="indent">Developing Photo<span class="elipsis"></span></span><img width="550" height="550" id = "snap" /></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent">Developing Photo<span class="elipsis"></span></div><img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
 		elipsisTimer();
 		
@@ -438,6 +465,10 @@ function flash(flashInterval) {
 			$(".snappedImage .indent").remove();
 				$("#snap").animate({opacity: 1}, 250, function() {
 					$( ".nextBtn" ).toggleClass("selected");
+					$("#nextLabel-id-ext").addClass("glow");
+					setTimeout(function(){
+						$("#nextLabel-id-ext").removeClass("glow");
+					},120);
 					clearInterval(elipsisInterval);
 					
 				});
@@ -458,7 +489,7 @@ function flash(flashInterval) {
 		
 		//savedPics.push($("#snap").)
 		
-		$(".overlay").animate({opacity: 0}, 150, function() {
+		$(".overlay").animate({opacity: 0}, 350, function() {
 			$(".overlay").remove();
 		});
 	});
@@ -484,6 +515,7 @@ function elipsisTimer() {
 var nwKiosk = function(){
 	var mouseHidden =true;
 	var kioskMode=true;
+	var devTools=true;
 	var gui =require('nw.gui');
 	//setInterval(focus_window,5000);
 
@@ -494,11 +526,15 @@ var nwKiosk = function(){
 		{
 		case 107:
 		  (kioskMode) ? win.enterKioskMode() : win.leaveKioskMode() ;
-		kioskMode = !kioskMode;
+		  kioskMode = !kioskMode;
 		  break;
 		case 109:
 		  (mouseHidden) ? $("body").css("cursor","none") : $("body").css("cursor","pointer") ;
-		mouseHidden=!mouseHidden;
+		  mouseHidden=!mouseHidden;
+		  break;
+		case 100:
+		  (devTools) ? gui.Window.get().showDevTools() : gui.Window.get().closeDevTools();
+		  devTools=!devTools;
 		  break;
 		}
 
