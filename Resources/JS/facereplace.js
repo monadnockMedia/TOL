@@ -1,11 +1,18 @@
 
 
+var gui = require('nw.gui');
+//setInterval(focus_window,5000);
+var win = gui.Window.get();
 
+function focus_window(){
+	console.log("fox");
+	win.show();
+}
 
 replacer = function(){
 	var self = this;
 	this.dfd =  null;
-	this.startCVServer = false;
+	this.startCVServer = true;
 	var socket = null;
 	this.serverAppPath = "/Applications/tol_face_replaceDebug.app"
 	
@@ -23,9 +30,14 @@ replacer = function(){
 		var command = "open "+self.serverAppPath;
 		open = child.exec(command, function(e,sout,serr){});
 		setTimeout(openSocket,2000);
+		
 	}
 	
 	var openSocket = function(){
+		
+		focus_window();
+		//win.enterKioskMode();
+		
 		console.log("opening");
 		socket = new WebSocket("ws://localhost:9092");
 		socket.onmessage = function(e){

@@ -12,11 +12,14 @@ var tmp = require('tmp');
 var when = require('when');
 var child = require("child_process");
 var ezi = require('easyimage');
+var dg = require('dgram');
 
 var tmpName;
-
-
 var settings = {};
+var AMX = {};
+AMX.ip = "192.168.1.200";
+//AMX.ip = "127.0.0.1"
+AMX.port = 8899;
 
 settings.getImageURL = function(ID){
 	return settings.request.dir+settings.request.sources[ID].filename+"."+settings.request.ext;
@@ -58,6 +61,9 @@ var photo = function(){
 	
 	var self = this;
 	this.cam = new Camera('10.5.5.9', 'goprongl');
+	var flash = new Buffer("flash\r");
+	var client = dg.createSocket("udp4");
+	
 	//Setup the camera
 	with (this.cam){  //with changes the scope, all functions or props in the brackets are cam's
 		powerOn()
@@ -70,7 +76,10 @@ var photo = function(){
 	this.snap = function(){
 		console.log("//SNAP//");
 		this.main_dfd = when.defer();
-		this.cam.mode = "photo";
+	//	this.cam.mode = "photo";
+		client.send(flash, 0, flash.length, AMX.port, AMX.ip, function(err, bytes) {
+		  //client.close();
+		});
 		//startCapture takes a single image in photo mode.
 		//then is a callback provided by the deffered object
 		this.cam.startCapture().then(
@@ -131,10 +140,15 @@ var photo = function(){
 			//finally, request the image and pipe it to the file, resolving the defered once the pipe is closed.
 			rq(camUrl).pipe(fs.createWriteStream(tmpName)).on('close', function(){
 				//resolve to return the path of the file we created.
+				//cam.deleteLast();
 				var options = settings.ezoption(tmpName, tmpName);
-
+				
 				ezi.crop( options, function(e,i){
-					//console.log(e);
+					
+						console.log("error");
+						console.log(e);
+					//	throw(e);
+				
 					console.log(i);
 					self.main_dfd.resolve(settings.request);
 				})
@@ -143,8 +157,6 @@ var photo = function(){
 		});
 	//	return gi_dfd.promise;
 	}
-	
-	
 	
 }
 

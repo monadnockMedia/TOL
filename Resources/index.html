@@ -1,20 +1,25 @@
 <HTML>
 	<HEAD>
+		<link rel="stylesheet" href="CSS/pepper-grinder/jquery-ui-1.10.3.custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="CSS/style.css">
-		<script src="JS/photo.js"></script>
-		<script src="JS/facereplace.js"></script>
+	
 		<script type="text/javascript" src="JS/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="JS/jquery-ui-1.10.3.custom.js"></script>
+		<script type="text/javascript" src="JS/jquery-ui-1.10.4.custom.js"></script>
+			<script src="JS/photo.js"></script>
+			<script src="JS/facereplace.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 		<script src="JS/photojshop.jquery.min.js"></script>
 	</HEAD>
 	
 	<BODY>
+		<div id="dialog" title="">
+		  This picture isn't supported yet, check back soon!
+		</div>
 		
 		<div id="contentFrame" class="body">
 			
 			<div class="content flex-container-wrap">
-				<div class="popup-exterior flex-item"><div class="popup-interior">How many people<br/>will be in your photo?</div></div>
+				<div id="popup-exterior-id" class="popup-exterior flex-item"><div id="popup-interior-id" class="popup-interior">How many people<br/>will be in your photo?</div></div>
 				<div class="numUsersBtn two flex-item"></div>
 				<div class="numUsersBtn three flex-item"></div>
 				<div class="numUsersBtn one flex-item"></div>
@@ -25,17 +30,30 @@
 			<div class="gallery flex-gallery">
 				<div class="galleryImage" id="4">Image4</div>
 				<div class="galleryImage" id="5">Image5</div>
-				<div class="galleryImage" id="6">Image6</div>
-				<div class="galleryImage" id="1">Image1</div>
-				<div class="galleryImage" id="2">Image2</div>
-				<div class="galleryImage" id="3">Image3</div>
+				<div class="galleryImage" id="3">Image6</div>
+				<div class="galleryImage" id="0">Image1</div>
+				<div class="galleryImage" id="1">Image2</div>
+				<div class="galleryImage" id="2">Image3</div>
 			</div>
 			
-			<div class="nextLabel"></div>
-			<div class="nextBtn"></div>
+			<div id="nextLabel-id-ext" class="popup-exterior"><div id="nextLabel-id" class="popup-interior">Next<br/><div class="nextBtn"></div></div></div>	
 		</div>
 
-		
+		<script>
+		 $(function() {
+		    $( "#dialog" ).dialog({
+			  autoOpen: false,
+		      resizable: false,
+			  width: 400,
+		      modal: true,
+		      buttons: {
+		        Cancel: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+		  });
+		</script>
 		<script type="text/javascript" src="JS/selectors.js"></script>
 	</BODY>
 </HTML>
