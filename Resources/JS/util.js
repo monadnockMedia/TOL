@@ -1,5 +1,6 @@
 var fs = require('fs');
 var wp = require("wpmedia");
+var when = require("when")
 
 w = new wp();
 var upload = function(url, name){
@@ -27,18 +28,21 @@ var mailer = function(){
 		to: " ",
 		subject: "Greetings from Toledo",
 		text:" ",
-		html:" "
+		html:" ",
+		generateTextFromHTML: true
 	}
 	this.sendmail = function(to,body){
+		dfd = when.defer();
 		options.to = to;
-		options.text = body;
+		options.html = body;
 		smtp.sendMail(options, function(e,r){
 			if(e){
-				console.log(e)
+				dfd.reject(e);
 			}else{
-				console.log("Message Sent:"+r.message);
+				dfd.resolve(r);
 			}
 		})
+		return dfd.promise;
 	}
 
 }
