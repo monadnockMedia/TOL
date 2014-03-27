@@ -66,7 +66,7 @@ function nextPhase (curPhase) {
 					$('div.contentLabel-Interactive').remove();
 					$(".gallery").css("height", 270);
 					$(".gallery").css("width", 590);
-					$("#nextLabel-id-ext").css("margin-left", "0px");
+					//$("#nextLabel-id-ext").css("margin-left", "0px");
 				});
 				
 				phase = 1;
@@ -79,6 +79,8 @@ function nextPhase (curPhase) {
 				//$(".flex-gallery").remove();
 				
 				// Add draggable pictures to footer
+				//$("#nextLabel-id-ext").css("margin-left", "00px"); 
+				
 				var dragGallery = jQuery('<div class="flex-drag flex-container-wrap"></div>');
 				dragGallery.prependTo("#footer");
 			
@@ -92,7 +94,7 @@ function nextPhase (curPhase) {
 				}
 				
 				
-				$("#nextLabel-id-ext").css("margin-left", "00px");
+				
 				
 				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
 			
@@ -247,7 +249,8 @@ var restartApp = function(){
 	bindNext();
 	bindClick();
 	bindGallery();
-	savedPics.length = 0;	
+	savedPics.length = 0;
+	settings.request.tgImageID = null;
 }
 
 //  Buttons  \\
@@ -385,7 +388,7 @@ function bindClick() {
 					setTimeout(function(){
 						$("#nextLabel-id-ext").removeClass("glow");
 					},120);
-				} else {
+				} else if ($( ".retake .popup-interior" ).hasClass("selected") == false){
 					picsTaken--;
 					savedPics.pop();
 					//$( ".retake .popup-interior" ).css("color", "#DAA520");
@@ -397,7 +400,7 @@ function bindClick() {
 						$('div.contentLabel-Interactive').remove();
 						$(".gallery").css("height", 270);
 						$(".gallery").css("width", 590);
-						$("#nextLabel-id-ext").css("margin-left", "000px");
+						//$("#nextLabel-id-ext").css("margin-left", "000px");
 					});
 					
 					phase = 1;
@@ -444,7 +447,7 @@ function flash(flashInterval) {
 		//$(".contentLabel").append("Do you want to keep this picture?");
 		$(".gallery").css("height", 0);
 		$(".gallery").css("width", 0);
-		$("#nextLabel-id-ext").css("margin-left", "152px");
+		//$("#nextLabel-id-ext").css("margin-left", "152px");
 		
 		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent">Developing Photo<span class="elipsis"></span></div><img width="550" height="550" id = "snap" /></div>');
 		snappedImage.appendTo(".content");
@@ -457,8 +460,7 @@ function flash(flashInterval) {
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
 		
 		
-		bindNext();
-		bindClick();
+		
 		
 		p.snap().then(function(d){
 			picsTaken++;
@@ -473,6 +475,8 @@ function flash(flashInterval) {
 						$("#nextLabel-id-ext").removeClass("glow");
 					},120);
 					clearInterval(elipsisInterval);
+					bindNext();
+					bindClick();
 					
 				});
 		

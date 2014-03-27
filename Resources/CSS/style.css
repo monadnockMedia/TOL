@@ -404,15 +404,22 @@ body {
 .nextLabel {
   height:80px;
   width:185px;
-  margin:10px;
+  
+  /*margin:10px;
   margin-top:55px;
-  margin-right:75px;
+  margin-right:75px;*/
   font-size:0.9em;
   float:right;
 }
 
 .nextLabel.done {
 	
+}
+
+#nextLabel-id-ext {
+	position:absolute;
+	top:1015px;
+	left:750px;
 }
 
 .contentLabel {
