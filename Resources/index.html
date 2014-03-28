@@ -2,7 +2,8 @@
 	<HEAD>
 		<link rel="stylesheet" href="CSS/pepper-grinder/jquery-ui-1.10.3.custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="CSS/style.css">
-	
+		<link rel="stylesheet" type="text/css" href="CSS/onScreenKeyboard.css">
+		
 		<script type="text/javascript" src="JS/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="JS/jquery-ui-1.10.4.custom.js"></script>
 			<script src="JS/photo.js"></script>
@@ -38,9 +39,21 @@
 			
 			<div id="nextLabel-id-ext" class="popup-exterior"><div id="nextLabel-id" class="popup-interior">Next<br/><div class="nextBtn"></div></div></div>	
 		</div>
-
+		
+		<div class="inputForm"><div class="formInterior">
+			<form>
+				<br/>First Name:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="firstname"><br/>
+				Last Name:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="lastname"><br/>
+				Email Address:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="emailaddress"><br/><br/>
+				<input type="checkbox" name="mailinglist" value="false">&#160;&#160;Would you like to sign up for our mailing list?<br/>
+			</form>
+		</div></div>
+		
+		<script src="JS/jquery.onScreenKeyboard.js"></script>
 		<script>
 		 $(function() {
+			$(".inputIndent").onScreenKeyboard();
+			
 		    $( "#dialog" ).dialog({
 			  autoOpen: false,
 		      resizable: false,
@@ -55,5 +68,6 @@
 		  });
 		</script>
 		<script type="text/javascript" src="JS/selectors.js"></script>
+		
 	</BODY>
 </HTML>

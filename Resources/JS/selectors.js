@@ -4,9 +4,9 @@ var phase = 1;
 var users = 0;
 var picsTaken = 0;
 var p, r;
-var previewArr = new Array();
 var elipsisInterval;
 
+var previewArr = new Array();
 previewArr.push("0_lifering");
 previewArr.push("1_chef");
 previewArr.push("2_crew");
@@ -206,8 +206,9 @@ function nextPhase (curPhase) {
 			
 			$(".flex-drag").empty();
 			
-			//var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive twitter"><div class="popup-exterior"><div class="popup-interior">Twitter</div></div></div>');
-			//shareButtons.prependTo(".flex-drag");
+			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive giftshop"><div class="popup-exterior"><div class="popup-interior">Giftshop</div></div></div>');
+			shareButtons.prependTo(".flex-drag");
+			
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
 			$(".contentLabel-Interactive").css("margin-top", 0);
@@ -222,6 +223,10 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 4:
+			// $("input[name='firstname']").val();
+			// $("input[name='lastname']").val();
+			// $("input[name='emailaddress']").val();
+			// $("input[name='mailinglist']").prop('checked');
 			restartApp();
 			break;
 	}
@@ -257,6 +262,7 @@ var restartApp = function(){
 function bindNext() {
 	$(".nextBtn").click(function(e) {
 		//nextBtn will only be selected once the visitor has done everything needed on screen
+		
 		if ($(".nextBtn").hasClass("selected")) {
 			$( this ).toggleClass("selected");
 			nextPhase(phase);
@@ -408,13 +414,18 @@ function bindClick() {
 				}
 				break;
 			case 4:
-				//Email and Twitter Sharing
-				if ($( this ).hasClass("twitter")) {
+				//Email and Giftshop Sharing
+				if ($( this ).hasClass("giftshop")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
-					$(".twitter .popup-interior").addClass("selected");
+					$(".giftshop .popup-interior").addClass("selected");
+					$(".inputForm").css("top" , "20%");
+					$(".inputForm").css("left" , "25%");
+					
 				} else if ($( this ).hasClass("email")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".email .popup-interior").addClass("selected");
+					$(".inputForm").css("top" , "20%");
+					$(".inputForm").css("left" , "25%");
 				}
 				break;
 		}
@@ -426,7 +437,6 @@ function checkAnchored() {
 		//console.log("Waiting for Anchors");
 	} else {
 		//console.log("All pics anchored");
-		
 	}
 }
 
