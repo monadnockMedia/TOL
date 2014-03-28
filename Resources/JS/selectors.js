@@ -3,7 +3,7 @@
 var phase = 1;
 var users = 0;
 var picsTaken = 0;
-var p, r;
+var p, r, m;
 var elipsisInterval;
 
 var previewArr = new Array();
@@ -26,6 +26,8 @@ $(function init(){
 	
 	r = new replacer();
 	r.open();
+	
+	m = new mailer();
 })
 
 var idleTimeout = function() {
@@ -227,7 +229,15 @@ function nextPhase (curPhase) {
 			// $("input[name='lastname']").val();
 			// $("input[name='emailaddress']").val();
 			// $("input[name='mailinglist']").prop('checked');
-			restartApp();
+			if ($(".popup-interior").hasClass("selected") == true) {
+				var email = $("input[name='emailaddress']").val();
+				var emailBody = $("input[name='firstname']").val() + $("input[name='lastname']").val();
+				m.sendmail(email, emailBody);
+				console.log("sendEmail");
+			} else {
+				//restartApp();
+			}
+			
 			break;
 	}
 }
@@ -419,13 +429,13 @@ function bindClick() {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".giftshop .popup-interior").addClass("selected");
 					$(".inputForm").css("top" , "20%");
-					$(".inputForm").css("left" , "25%");
+					$(".inputForm").css("left" , "20.5%");
 					
 				} else if ($( this ).hasClass("email")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".email .popup-interior").addClass("selected");
 					$(".inputForm").css("top" , "20%");
-					$(".inputForm").css("left" , "25%");
+					$(".inputForm").css("left" , "20.5%");
 				}
 				break;
 		}
