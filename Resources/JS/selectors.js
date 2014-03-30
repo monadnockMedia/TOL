@@ -6,7 +6,7 @@ var picsTaken = 0;
 var p, r, m;
 var elipsisInterval;
 var emailing = false;
-var giftShopping = false;
+var giftshopping = false;
 
 var previewArr = new Array();
 previewArr.push("0_lifering");
@@ -246,20 +246,24 @@ function nextPhase (curPhase) {
 				$pubKeyboardTriggers.removeClass('osk-focused');
 				
 				$(".selected").removeClass("selected");
-				$(".nextBtn").toggleClass("selected");
+				$(".nextBtn").addClass("selected");
 				emailing = false;
 			}else if(giftshopping) {
 				
 				$(".inputForm-gift").css("top" , "200%");
 				$(".inputForm-gift").css("left" , "250%");
 				
-				$pubKeyboard.fadeOut(250);
-				$pubInput.blur();
-				$pubKeyboardTriggers.removeClass('osk-focused');
+			/*	if ($pubKeybard != null) {
+					$pubKeyboard.fadeOut(250);
+					$pubInput.blur();
+					$pubKeyboardTriggers.removeClass('osk-focused');
+				}*/
 				
 				$(".selected").removeClass("selected");
-				$(".nextBtn").toggleClass("selected");
+				$(".nextBtn").addClass("selected");
 				giftshopping = false;
+			}else if (!giftshopping && !emailing) {
+				restartApp();
 			} else {
 				//restartApp();
 			}
@@ -300,8 +304,16 @@ function bindNext() {
 		//nextBtn will only be selected once the visitor has done everything needed on screen
 		
 		if ($(".nextBtn").hasClass("selected")) {
-			$( this ).toggleClass("selected");
-			nextPhase(phase);
+			if (emailing) {
+				nextPhase(phase);
+			} else if (giftshopping) {
+				nextPhase(phase);
+			} else {
+				$( this ).toggleClass("selected");
+				nextPhase(phase);
+			}
+			
+			
 		}
 	});
 }
@@ -452,11 +464,12 @@ function bindClick() {
 			case 4:
 				//Email and Giftshop Sharing
 				if ($( this ).hasClass("giftshop")) {
+					$(".nextBtn").addClass("selected");
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".giftshop .popup-interior").addClass("selected");
-					//$pubKeyboard.fadeOut(250);
-					//$pubInput.blur();
-					//$pubKeyboardTriggers.removeClass('osk-focused');
+					
+				
+
 					$(".inputForm").css("top" , "200%");
 					$(".inputForm").css("left" , "250%");
 					$(".inputForm-gift").css("top" , "7%");
@@ -464,8 +477,12 @@ function bindClick() {
 					emailing = false;
 					giftshopping = true;
 				} else if ($( this ).hasClass("email")) {
+					$(".nextBtn").addClass("selected");
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".email .popup-interior").addClass("selected");
+					
+					
+
 					$(".inputForm").css("top" , "7%");
 					$(".inputForm").css("left" , "20.5%");
 					$(".inputForm-gift").css("top" , "200%");
