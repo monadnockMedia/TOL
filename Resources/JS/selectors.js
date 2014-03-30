@@ -5,6 +5,8 @@ var users = 0;
 var picsTaken = 0;
 var p, r, m;
 var elipsisInterval;
+var emailing = false;
+var giftShopping = false;
 
 var previewArr = new Array();
 previewArr.push("0_lifering");
@@ -229,11 +231,35 @@ function nextPhase (curPhase) {
 			// $("input[name='lastname']").val();
 			// $("input[name='emailaddress']").val();
 			// $("input[name='mailinglist']").prop('checked');
-			if ($(".popup-interior").hasClass("selected") == true) {
+			if (emailing) {
 				var email = $("input[name='emailaddress']").val();
 				var emailBody = $("input[name='firstname']").val() + $("input[name='lastname']").val();
+				
 				m.sendmail(email, emailBody);
 				console.log("sendEmail");
+				
+				$(".inputForm").css("top" , "200%");
+				$(".inputForm").css("left" , "250%");
+				
+				$pubKeyboard.fadeOut(250);
+				$pubInput.blur();
+				$pubKeyboardTriggers.removeClass('osk-focused');
+				
+				$(".selected").removeClass("selected");
+				$(".nextBtn").toggleClass("selected");
+				emailing = false;
+			}else if(giftshopping) {
+				
+				$(".inputForm-gift").css("top" , "200%");
+				$(".inputForm-gift").css("left" , "250%");
+				
+				$pubKeyboard.fadeOut(250);
+				$pubInput.blur();
+				$pubKeyboardTriggers.removeClass('osk-focused');
+				
+				$(".selected").removeClass("selected");
+				$(".nextBtn").toggleClass("selected");
+				giftshopping = false;
 			} else {
 				//restartApp();
 			}
@@ -428,14 +454,24 @@ function bindClick() {
 				if ($( this ).hasClass("giftshop")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".giftshop .popup-interior").addClass("selected");
-					$(".inputForm").css("top" , "20%");
-					$(".inputForm").css("left" , "20.5%");
-					
+					//$pubKeyboard.fadeOut(250);
+					//$pubInput.blur();
+					//$pubKeyboardTriggers.removeClass('osk-focused');
+					$(".inputForm").css("top" , "200%");
+					$(".inputForm").css("left" , "250%");
+					$(".inputForm-gift").css("top" , "7%");
+					$(".inputForm-gift").css("left" , "20.5%");
+					emailing = false;
+					giftshopping = true;
 				} else if ($( this ).hasClass("email")) {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".email .popup-interior").addClass("selected");
-					$(".inputForm").css("top" , "20%");
+					$(".inputForm").css("top" , "7%");
 					$(".inputForm").css("left" , "20.5%");
+					$(".inputForm-gift").css("top" , "200%");
+					$(".inputForm-gift").css("left" , "250%");
+					emailing = true;
+					giftshopping = false;
 				}
 				break;
 		}

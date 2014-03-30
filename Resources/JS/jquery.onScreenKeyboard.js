@@ -3,6 +3,10 @@
  * Chris Cook - chris@chris-cook.co.uk
  */
 
+var $pubKeyboard;
+var $pubInput;
+var $pubKeyboardTriggers;
+
 (function ($) {
 
 	'use strict';
@@ -35,6 +39,10 @@
 		 * @param {jQueryObject}                 The input object to focus on.
 		 */
 		function activateInput($input) {
+			$pubKeyboard = $keyboard;
+			$pubInput = $input;
+			$pubKeyboardTriggers = $keyboardTriggers;
+			console.log("pubKeyboard");
 			var inputOptionsString = $input.attr('data-osk-options');
 			$keys.removeClass('osk-disabled');
 			$keyboardTriggers.removeClass('osk-focused');
