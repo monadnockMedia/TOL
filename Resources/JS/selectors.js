@@ -232,44 +232,46 @@ function nextPhase (curPhase) {
 			// $("input[name='emailaddress']").val();
 			// $("input[name='mailinglist']").prop('checked');
 			if (emailing) {
-				var email = $("input[name='emailaddress']").val();
-				var emailBody = $("input[name='firstname']").val() + $("input[name='lastname']").val();
-				
-				m.sendmail(email, emailBody);
-				console.log("sendEmail");
-				
-				$(".inputForm").css("top" , "200%");
-				$(".inputForm").css("left" , "250%");
-				
-				if (oskOnScreen) {
-					$pubKeyboard.fadeOut(250);
-					$pubInput.blur();
-					$pubKeyboardTriggers.removeClass('osk-focused');
-					oskOnScreen = false;
+				if (validateEmailSubmit()) {
+					console.log("sendEmail");
+					$(".inputForm").css("top" , "200%");
+					$(".inputForm").css("left" , "250%");
+
+					if (oskOnScreen) {
+						$pubKeyboard.fadeOut(250);
+						$pubInput.blur();
+						$pubKeyboardTriggers.removeClass('osk-focused');
+						oskOnScreen = false;
+					}
+
+					$(".selected").removeClass("selected");
+					$(".nextBtn").addClass("selected");
+					emailing = false;
+				} else {
+					console.log("email fail");
 				}
 				
-				$(".selected").removeClass("selected");
-				$(".nextBtn").addClass("selected");
-				emailing = false;
+				
 			}else if(giftshopping) {
-				
-				$(".inputForm-gift").css("top" , "200%");
-				$(".inputForm-gift").css("left" , "250%");
-				
-				if (oskOnScreen) {
-					$pubKeyboard.fadeOut(250);
-					$pubInput.blur();
-					$pubKeyboardTriggers.removeClass('osk-focused');
-					oskOnScreen = false;
+				if (validateGiftshopSubmit()) {
+					$(".inputForm-gift").css("top" , "200%");
+					$(".inputForm-gift").css("left" , "250%");
+
+					if (oskOnScreen) {
+						$pubKeyboard.fadeOut(250);
+						$pubInput.blur();
+						$pubKeyboardTriggers.removeClass('osk-focused');
+						oskOnScreen = false;
+					}
+
+					$(".selected").removeClass("selected");
+					$(".nextBtn").addClass("selected");
+					giftshopping = false;
+				} else {
+					console.log("giftshop fail");
 				}
-				
-				$(".selected").removeClass("selected");
-				$(".nextBtn").addClass("selected");
-				giftshopping = false;
 			}else if (!giftshopping && !emailing) {
 				restartApp();
-			} else {
-				//restartApp();
 			}
 			
 			break;
@@ -307,6 +309,48 @@ var restartApp = function(){
 	bindGallery();
 	savedPics.length = 0;
 	settings.request.tgImageID = null;
+}
+
+var validateEmailText = function(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+var validateEmailSubmit = function (){
+  var email = $("input[name='emailaddress']").val();
+  var emailBody = $("input[name='firstname']").val() + $("input[name='lastname']").val();
+  var firstName = $("input[name='firstname']").val();
+  var lastName = $("input[name='lastname']").val();
+
+  //Make sure there are no empty fields, if not check email syntax and send the email
+  if (firstName.length == 0 || lastName.length == 0 || email.length == 0) {
+	$("#dialog").empty().append("Please don't leave any field blank!");
+    $( "#dialog" ).dialog( "open" );
+  } else {
+	if (validateEmailText(email)) {
+	    m.sendmail(email, emailBody);
+		return true;
+	  } else {
+		$("#dialog").empty().append("That is not a valid email address!");
+	    $( "#dialog" ).dialog( "open" );
+		return false;
+	  }
+  }
+}
+
+var validateGiftshopSubmit = function (){
+  var firstName = $("input[name='firstname_g']").val();
+  var lastName = $("input[name='lastname_g']").val();
+
+  //Make sure there are no empty fields, if not check email syntax and send the email
+  if (firstName.length == 0 || lastName.length == 0) {
+	$("#dialog").empty().append("Please don't leave any field blank!");
+    $( "#dialog" ).dialog( "open" );
+	return false;
+  } else {
+	//Print Picture Here
+	return true;
+  }
 }
 
 //  Buttons  \\
