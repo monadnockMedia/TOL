@@ -8,6 +8,7 @@ var elipsisInterval;
 var emailing = false;
 var giftshopping = false;
 
+//This array holds the filename for each possible image selection
 var previewArr = new Array();
 previewArr.push("0_lifering");
 previewArr.push("1_chef");
@@ -36,7 +37,7 @@ var idleTimeout = function() {
 	//setInterval(restartApp);
 }
 
-
+// MAIN Function controlling app's behavior
 function nextPhase (curPhase) {
 	switch (curPhase) {
 		case 0:
@@ -44,6 +45,7 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 1:
+			//Start taking the picture
 			var flashInterval = setInterval(function(){
 						flash(flashInterval);
 					}, 3000);
@@ -62,6 +64,7 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 2:
+			//If not every user has had their picture taken, keep taking pictures
 			if (picsTaken < users) {
 				
 				$( ".nextBtn" ).removeClass("selected");
@@ -78,13 +81,7 @@ function nextPhase (curPhase) {
 			} else {
 				console.log("Phase 2");
 				
-				//lets just see:
-				//$('div.contentLabel-Interactive').remove();
-				//$(".flex-gallery").remove();
-				
 				// Add draggable pictures to footer
-				//$("#nextLabel-id-ext").css("margin-left", "00px"); 
-				
 				var dragGallery = jQuery('<div class="flex-drag flex-container-wrap"></div>');
 				dragGallery.prependTo("#footer");
 			
@@ -97,11 +94,9 @@ function nextPhase (curPhase) {
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
 				}
 				
-				
-				
-				
 				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
-			
+				
+				//Setup draggable faces and drag anchors for them to drop on
 				$(".draggable").draggable({
 					helper: "clone",
 					opacity: 0.7,
@@ -192,6 +187,7 @@ function nextPhase (curPhase) {
 			
 		case 3:
 			console.log("Phase 3");
+			//Show the final composite image
 			$('div.contentLabel-Interactive').remove();
 			$(".flex-gallery").remove();
 			
@@ -203,21 +199,18 @@ function nextPhase (curPhase) {
 				$("#nextLabel-id-ext").removeClass("glow");
 			},120);
 			
-			//Test make image bigger
+			//Make composite image bigger
 			$(".snappedImage").addClass("grow");
-			$("#popup-exterior-id").remove();
-			
-			
+			$("#popup-exterior-id").remove();		
 			$(".flex-drag").empty();
 			
+			//Add giftshop and email buttons
 			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive giftshop"><div class="popup-exterior"><div class="popup-interior">Giftshop</div></div></div>');
 			shareButtons.prependTo(".flex-drag");
-			
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
 			$(".contentLabel-Interactive").css("margin-top", 0);
 			
-			//$(".nextLabel").empty().prepend("Done");
 			$("#nextLabel-id").empty().prepend("Done<br/><div class='nextBtn'></div>");
 			
 			$( ".nextBtn" ).toggleClass("selected");
@@ -227,11 +220,8 @@ function nextPhase (curPhase) {
 			break;
 			
 		case 4:
-			// $("input[name='firstname']").val();
-			// $("input[name='lastname']").val();
-			// $("input[name='emailaddress']").val();
-			// $("input[name='mailinglist']").prop('checked');
 			if (emailing) {
+				//Check email submission form for errors and send email if valid
 				if (validateEmailSubmit()) {
 					console.log("sendEmail");
 					$(".inputForm").css("top" , "200%");
@@ -250,8 +240,7 @@ function nextPhase (curPhase) {
 				} else {
 					console.log("email fail");
 				}
-				
-				
+			//Check giftshop submission form for errors and print if valid
 			}else if(giftshopping) {
 				if (validateGiftshopSubmit()) {
 					$(".inputForm-gift").css("top" , "200%");
@@ -271,6 +260,7 @@ function nextPhase (curPhase) {
 					console.log("giftshop fail");
 				}
 			}else if (!giftshopping && !emailing) {
+				//Restart app from beginning
 				restartApp();
 			}
 			
@@ -311,6 +301,7 @@ var restartApp = function(){
 	settings.request.tgImageID = null;
 }
 
+// REGULAR EXPRESSION CHECKERS \\
 var validateEmailText = function(email) { 
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -414,6 +405,7 @@ var bindNumUsers = function() {
 	});
 }
 
+//Sets up image choosing gallery in phase 1
 var bindGallery = function(){
 	$(".galleryImage").click(function(e) {
 		switch (phase) {
@@ -468,6 +460,7 @@ var bindGallery = function(){
 	});
 }
 
+//Make sure an image and number of users has been selected
 function checkReady() {
 	if (settings.request.tgImageID != null && $(".numUsersBtn").hasClass("selected")) {
 		
@@ -517,7 +510,7 @@ function bindClick() {
 				}
 				break;
 			case 4:
-				//Email and Giftshop Sharing
+				//Add Email and Giftshop submission forms to screen
 				if ($( this ).hasClass("giftshop")) {
 					$(".nextBtn").addClass("selected");
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
@@ -573,8 +566,6 @@ function checkAnchored() {
 function flash(flashInterval) {
 	clearInterval(flashInterval);
 	
-
-	
 	var overlay = jQuery('<div class="overlay"> </div>');
 	overlay.appendTo(document.body);
 	
@@ -597,9 +588,6 @@ function flash(flashInterval) {
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
 		
-		
-		
-		
 		p.snap().then(function(d){
 			picsTaken++;
 			console.log("picsTaken: " + picsTaken);
@@ -617,23 +605,8 @@ function flash(flashInterval) {
 					bindClick();
 					
 				});
-		
-			
-			/*
-			r.replace(d).then(  function(d){
-				console.log("Snapped d:");
-				console.log(d);
-				savedPics.push(d.processedImage);
-				$("#snap").attr("src", savedPics[0]);
-				$("#snap").animate({opacity: 1}, 150, function() {
-				});
-			});
-			*/
 		});
-		
-		
-		//savedPics.push($("#snap").)
-		
+				
 		$(".overlay").animate({opacity: 0}, 350, function() {
 			$(".overlay").remove();
 		});
@@ -641,7 +614,7 @@ function flash(flashInterval) {
 }
 
 
-//Make the ... animate while developing
+//Make the "..." animate while developing
 function elipsisTimer() {
 	var elipsisCnt = 0;
 	
