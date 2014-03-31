@@ -241,9 +241,12 @@ function nextPhase (curPhase) {
 				$(".inputForm").css("top" , "200%");
 				$(".inputForm").css("left" , "250%");
 				
-				$pubKeyboard.fadeOut(250);
-				$pubInput.blur();
-				$pubKeyboardTriggers.removeClass('osk-focused');
+				if (oskOnScreen) {
+					$pubKeyboard.fadeOut(250);
+					$pubInput.blur();
+					$pubKeyboardTriggers.removeClass('osk-focused');
+					oskOnScreen = false;
+				}
 				
 				$(".selected").removeClass("selected");
 				$(".nextBtn").addClass("selected");
@@ -253,11 +256,12 @@ function nextPhase (curPhase) {
 				$(".inputForm-gift").css("top" , "200%");
 				$(".inputForm-gift").css("left" , "250%");
 				
-			/*	if ($pubKeybard != null) {
+				if (oskOnScreen) {
 					$pubKeyboard.fadeOut(250);
 					$pubInput.blur();
 					$pubKeyboardTriggers.removeClass('osk-focused');
-				}*/
+					oskOnScreen = false;
+				}
 				
 				$(".selected").removeClass("selected");
 				$(".nextBtn").addClass("selected");
@@ -276,6 +280,13 @@ var restartApp = function(){
 	//require('nw.gui').Window.get().reload(3);
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
+	
+	if (oskOnScreen) {
+		$pubKeyboard.fadeOut(250);
+		$pubInput.blur();
+		$pubKeyboardTriggers.removeClass('osk-focused');
+		oskOnScreen = false;
+	}
 	
 	$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
 	$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
@@ -468,7 +479,12 @@ function bindClick() {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".giftshop .popup-interior").addClass("selected");
 					
-				
+					if (oskOnScreen) {
+						$pubKeyboard.fadeOut(250);
+						$pubInput.blur();
+						$pubKeyboardTriggers.removeClass('osk-focused');
+						oskOnScreen = false;
+					}
 
 					$(".inputForm").css("top" , "200%");
 					$(".inputForm").css("left" , "250%");
@@ -481,7 +497,12 @@ function bindClick() {
 					$(".contentLabel-Interactive .popup-interior").removeClass("selected");
 					$(".email .popup-interior").addClass("selected");
 					
-					
+					if (oskOnScreen) {
+						$pubKeyboard.fadeOut(250);
+						$pubInput.blur();
+						$pubKeyboardTriggers.removeClass('osk-focused');
+						oskOnScreen = false;
+					}
 
 					$(".inputForm").css("top" , "7%");
 					$(".inputForm").css("left" , "20.5%");

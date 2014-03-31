@@ -6,6 +6,7 @@
 var $pubKeyboard;
 var $pubInput;
 var $pubKeyboardTriggers;
+var oskOnScreen = false;
 
 (function ($) {
 
@@ -39,6 +40,7 @@ var $pubKeyboardTriggers;
 		 * @param {jQueryObject}                 The input object to focus on.
 		 */
 		function activateInput($input) {
+			oskOnScreen = true;
 			$pubKeyboard = $keyboard;
 			$pubInput = $input;
 			$pubKeyboardTriggers = $keyboardTriggers;
@@ -133,6 +135,7 @@ var $pubKeyboardTriggers;
 
 			// 'Hide Keyboard' key
 			if ($key.hasClass('osk-hide')) {
+				oskOnScreen = false;
 				$keyboard.fadeOut(250);
 				$input.blur();
 				$keyboardTriggers.removeClass('osk-focused');
