@@ -182,13 +182,25 @@ var oskOnScreen = false;
 			// 'Tab' key - either enter an indent (default) or switch to next form element
 			if ($key.hasClass('osk-tab')) {
 				if (settings.rewireTab) {
-					indexOfNextInput = $keyboardTriggers.index($input) + 1;
-					if (indexOfNextInput < $keyboardTriggers.length) {
-						$input = $($keyboardTriggers[indexOfNextInput]);
-					} else {
-						$input = $($keyboardTriggers[0]);
+					if (emailing) {
+						var inputLimit = 3;
+						indexOfNextInput = $keyboardTriggers.index($input) + 1;
+						if (indexOfNextInput < inputLimit) {
+							$input = $($keyboardTriggers[indexOfNextInput]);
+						} else {
+							$input = $($keyboardTriggers[0]);
+						}
+						activateInput($input);
+					} else if (giftshopping) {
+						var inputLimit = 5;
+						indexOfNextInput = $keyboardTriggers.index($input) + 1;
+						if (indexOfNextInput < inputLimit) {
+							$input = $($keyboardTriggers[indexOfNextInput]);
+						} else {
+							$input = $($keyboardTriggers[3]);
+						}
+						activateInput($input);
 					}
-					activateInput($input);
 					return false;
 				} else {
 					character = '\t';
@@ -201,7 +213,26 @@ var oskOnScreen = false;
 					$keyboardTriggers.parent('form').submit();
 					return false;
 				} else {
-					character = '\n';
+					if (emailing) {
+						var inputLimit = 3;
+						indexOfNextInput = $keyboardTriggers.index($input) + 1;
+						if (indexOfNextInput < inputLimit) {
+							$input = $($keyboardTriggers[indexOfNextInput]);
+						} else {
+							$input = $($keyboardTriggers[0]);
+						}
+						activateInput($input);
+					} else if (giftshopping) {
+						var inputLimit = 5;
+						indexOfNextInput = $keyboardTriggers.index($input) + 1;
+						if (indexOfNextInput < inputLimit) {
+							$input = $($keyboardTriggers[indexOfNextInput]);
+						} else {
+							$input = $($keyboardTriggers[3]);
+						}
+						activateInput($input);
+					}
+					
 				}
 			}
 
@@ -300,8 +331,8 @@ var oskOnScreen = false;
 					'<span class="osk-off">=</span>' +
 					'<span class="osk-on">+</span>' +
 				'</li>' +
-				'<li class="osk-backspace osk-last-item">backspace</li>' +
-				'<li class="osk-tab">tab</li>' +
+				'<li class="osk-backspace osk-last-item">Backspace</li>' +
+				'<li class="osk-tab">Tab</li>' +
 				'<li class="osk-letter">q</li>' +
 				'<li class="osk-letter">w</li>' +
 				'<li class="osk-letter">e</li>' +
@@ -324,7 +355,7 @@ var oskOnScreen = false;
 					'<span class="osk-off">\\</span>' +
 					'<span class="osk-on">|</span>' +
 				'</li>' +
-				'<li class="osk-capslock">caps lock</li>' +
+				'<li class="osk-capslock">Caps Lock</li>' +
 				'<li class="osk-letter">a</li>' +
 				'<li class="osk-letter">s</li>' +
 				'<li class="osk-letter">d</li>' +
@@ -342,8 +373,8 @@ var oskOnScreen = false;
 					'<span class="osk-off">\'</span>' +
 					'<span class="osk-on">@</span>' +
 				'</li>' +
-				'<li class="osk-return osk-last-item">return</li>' +
-				'<li class="osk-shift">shift</li>' +
+				'<li class="osk-return osk-last-item"></li>' +
+				'<li class="osk-shift">Shift</li>' +
 				'<li class="osk-letter">z</li>' +
 				'<li class="osk-letter">x</li>' +
 				'<li class="osk-letter">c</li>' +
@@ -363,8 +394,8 @@ var oskOnScreen = false;
 					'<span class="osk-off">/</span>' +
 					'<span class="osk-on">?</span>' +
 				'</li>' +
-				'<li class="osk-hide osk-last-item">hide keyboard</li>' +
-				'<li class="osk-space osk-last-item">space</li>' +
+				'<li class="osk-hide osk-last-item">Hide Keyboard</li>' +
+				'<li class="osk-space osk-last-item">Space</li>' +
 			'</ul>'
 		);
 

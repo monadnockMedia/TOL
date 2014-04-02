@@ -45,7 +45,7 @@
 				First Name:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="firstname"><br/>
 				Last Name:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="lastname"><br/>
 				Email Address:&#160;&#160;&#160;&#160;<input class="inputIndent" type="text" name="emailaddress"><br/>
-				<input type="checkbox" name="mailinglist" value="false">&#160;&#160;Would you like to sign up for our mailing list?
+				I would like to be put on the NGL Museum mailing list:&#160;&#160;<input type="checkbox" name="mailinglist" value="false">
 			</form>
 		</div></div>
 		
@@ -60,7 +60,7 @@
 		<script src="JS/jquery.onScreenKeyboard.js"></script>
 		<script>
 		 $(function() {
-			$(".inputIndent").onScreenKeyboard();
+			$(".inputIndent").onScreenKeyboard({'rewireTab' : true});
 			
 		    $( "#dialog" ).dialog({
 			  autoOpen: false,
