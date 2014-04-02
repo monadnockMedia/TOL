@@ -126,7 +126,7 @@
 	border-radius: 10%;
 	-moz-transition: 0.5s;
 	
-	background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.03, rgb(224,196,130)), color-stop(0.03, rgb(224,196,130)), color-stop(0.5, rgb(90,45,19)), color-stop(0.83, rgb(158,115,79)));
+	background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, rgb(224,196,130)), color-stop(0.5, rgb(90,45,19)), color-stop(0.83, rgb(158,115,79)));
 	
 	-webkit-box-shadow: inset 0px 0px 10px 3px rgba(158,115,79,1);
 	-moz-box-shadow: inset 0px 0px 10px 3px rgba(158,115,79,1);
