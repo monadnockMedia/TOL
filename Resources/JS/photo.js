@@ -27,7 +27,7 @@ settings.getImageURL = function(ID){
 
 //the request object, as described in req_structure.json
 settings.request = {origin:"client",ext:"jpg",command:"replace",tgImageID:null,dir:tmp.tmpdir,processedImage : null, sources:[]};
-settings.dbrequest = {origin:"client",ext:"jpg",command:"replace",tgImageID:null,dir:tmp.tmpdir,processedImage : null, sources:[{filename: "sara1", faceID: null}]};
+settings.dbrequest = {origin:"client",ext:"jpg",command:"replace",tgImageID:null,dir:tmp.tmpdir,processedImage : null, sources:[{filename: "sara1", faceID: 1},{filename: "sara2", faceID: 2},{filename: "boo", faceID: 0}]};
 //get tmp dir for the request.
 settings.ezoption = function(_s,_d){
 	return {
