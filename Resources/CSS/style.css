@@ -387,6 +387,10 @@ body {
 	/*margin-top:-74px;*/
 	border:none;
 	opacity:0;
+	width:550px;
+	height:550px;
+	background-repeat:no-repeat;
+	
 }
 
 .landscape{

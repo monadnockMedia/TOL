@@ -8,6 +8,9 @@ var elipsisInterval;
 var emailing = false;
 var giftshopping = false;
 
+var canvas;
+var data;
+
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
 previewArr.push("0_lifering");
@@ -96,6 +99,22 @@ function nextPhase (curPhase) {
 				
 				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
 				
+				/*//Adds preview image to the stage
+				$snap = $("#snap");
+				$snap.attr({
+					width: null,
+					height: null,
+					src: "IMAGES/"+previewArr[settings.request.tgImageID]+".jpg"
+				})*/
+				
+				//Get coordinates for anchors based on image ID
+				$.getJSON("JS/targets.json",function(d){
+					data = d;
+					console.log("Get JSON");
+					console.log(d);
+					draw(settings.request.tgImageID);
+				})
+				
 				//Setup draggable faces and drag anchors for them to drop on
 				$(".draggable").draggable({
 					helper: "clone",
@@ -107,10 +126,10 @@ function nextPhase (curPhase) {
 					stop: function() {}
 				});
 				
-				var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
+				/*var dragAnchor = jQuery('<div class="dragAnchor ui-widget-header"></div>');
 				dragAnchor.appendTo(".snappedImage");
 				
-				// Set drag anchor over pictures face
+				// Add drag anchor over pictures face
 				if (settings.request.tgImageID == 0) {
 					$(".dragAnchor").css("left", 405);
 					$(".dragAnchor").css("top", 270);
@@ -120,25 +139,12 @@ function nextPhase (curPhase) {
 				} else if (settings.request.tgImageID == 5) {
 					$(".dragAnchor").css("left", 370);
 					$(".dragAnchor").css("top", 235);
-				}
-				
-				$snap = $("#snap");
-				$snap.attr({
-					width: null,
-					height: null,
-					src: "IMAGES/"+previewArr[settings.request.tgImageID]+".jpg"
-				})
-				
-				if (settings.request.tgImageID == 0 || settings.request.tgImageID == 2 || settings.request.tgImageID == 5) {
-					$("#snap").addClass("portrait");
-				} else {
-					$("#snap").addClass("landscape");
-				}
+				}*/
 				
 				$(".snappedImage").addClass("developed");
 				
 				///WRN
-				$(".dragAnchor").droppable({
+				/*$(".dragAnchor").droppable({
 					  hoverClass: "dragAnchor-hover",
 				      drop: function( event, ui ) {
 						$(".ui-draggable-dragging").remove();
@@ -180,7 +186,7 @@ function nextPhase (curPhase) {
 							p.cam.deleteLast();
 						})
 				      }
-				    });
+				    });*/
 				phase++;
 			}
 			break;
@@ -266,6 +272,93 @@ function nextPhase (curPhase) {
 			
 			break;
 	}
+}
+
+var draw = function( id ){
+	thisData = data[id];
+	
+	var l = thisData.length;
+	$c = $("#snap");
+	
+	if (thisData[0].img_size.height > thisData[0].img_size.width) {
+		$c.css({
+			"background-image":"url(IMAGES/"+thisData[0].img_uri+")",
+			width: 550,
+			height: 550,
+			"background-size": "auto 100%",
+			"margin-left":"14%"
+		})
+	} else {
+		$c.css({
+			"background-image":"url(IMAGES/"+thisData[0].img_uri+")",
+			width: 550,
+			height: 550,
+			"background-size": "100% auto",
+			"margin-top":"14%"
+		})
+	}
+	
+	
+	
+	//width: thisData[0].img_size.width,
+	//height: thisData[0].img_size.height
+	
+	for(var i = 0; i<l;i++){
+	
+		$c.append("<div />");
+	}
+	
+	$c.find("div").each(function(i,d){
+		$t = $(this);
+		//Add anchor points here
+		$t.addClass("dragAnchor");
+		$t.css({
+			width: thisData[i].boundary.width,
+			height: thisData[i].boundary.width,
+			left: thisData[i].boundary.x,
+			top: thisData[i].boundary.y,
+		})
+		console.log(i)
+		$t.html(i)
+	})
+	
+	$(".dragAnchor").droppable({
+		  hoverClass: "dragAnchor-hover",
+	      drop: function( event, ui ) {
+			$(".ui-draggable-dragging").remove();
+			$this = $(this);
+	        $this.addClass("anchored");
+			$this.append("<br/><br/>&#160;&#160;&#160;&#160;&#160;Developing<span class='elipsis'></span>");
+			elipsisTimer();
+			var faceID = 0;
+		//	WRN, add faceID of drop taret to the settings.request;
+			$dropped = $(ui.helper[0]);
+			
+			var srcID = +$dropped.attr("srcid");
+			console.log("Image with srcID "+srcID+" dropped;");
+			savedPics[srcID].faceID = faceID;
+			settings.request.sources = savedPics;
+			checkAnchored();
+			
+			r.replace(settings.request).then(function(d){
+				//$(".snappedImage").addClass("developed");
+				$( ".nextBtn" ).addClass("selected");
+				$("#nextLabel-id-ext").addClass("glow");
+				setTimeout(function(){
+					$("#nextLabel-id-ext").removeClass("glow");
+				},120);
+				
+				console.log(d.processedImage);
+				clearInterval(elipsisInterval);
+				$(".dragAnchor").remove();
+				$snap = $("#snap");
+				$snap.css({
+					"background-image": "url("+d.processedImage+")"
+				})
+				p.cam.deleteLast();
+			})
+	      }
+	    });
 }
 
 var restartApp = function(){
@@ -428,27 +521,33 @@ var bindGallery = function(){
 
 				$("#dialog").empty().append("This picture isn't supported yet, check back soon!");
 				if (imageId == 0) {
+					console.log("Image 0 Clicked: " + imageId);
 					$(".gallery").addClass("one");
 					settings.request.tgImageID = imageId;
 				} else if (imageId == 1) {
+					console.log("Image 1 Clicked: " + imageId);
 					//$(".gallery").addClass("two");
 					$( "#dialog" ).dialog( "open" );
 					$( ".nextBtn" ).removeClass("selected");
 					imageId = null;
 				} else if (imageId == 2) {
+					console.log("Image 2 Clicked: " + imageId);
 					$(".gallery").addClass("three");
 					settings.request.tgImageID = imageId;
 				} else if (imageId == 3) {
+					console.log("Image 3 Clicked: " + imageId);
 					//$(".gallery").addClass("four");
 					$( "#dialog" ).dialog( "open" );
 					$( ".nextBtn" ).removeClass("selected");
 					imageId = null;
 				} else if (imageId == 4) {
+					console.log("Image 4 Clicked: " + imageId);
 					//$(".gallery").addClass("four");
 					$( "#dialog" ).dialog( "open" );
 					$( ".nextBtn" ).removeClass("selected");
 					imageId = null;
 				} else if (imageId == 5) {
+					console.log("Image 5 Clicked: " + imageId);
 					$(".gallery").addClass("five");
 					settings.request.tgImageID = imageId;
 				}
@@ -578,7 +677,7 @@ function flash(flashInterval) {
 		$(".gallery").css("width", 0);
 		//$("#nextLabel-id-ext").css("margin-left", "152px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent">Developing Photo<span class="elipsis"></span></div><img width="550" height="550" id = "snap" /></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent">Developing Photo<span class="elipsis"></span></div><div width="550" height="550" id = "snap"></div></div>');
 		snappedImage.appendTo(".content");
 		elipsisTimer();
 		
@@ -592,7 +691,8 @@ function flash(flashInterval) {
 			picsTaken++;
 			console.log("picsTaken: " + picsTaken);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
-			$("#snap").attr("src", settings.getImageURL(picsTaken-1))
+			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")";
+			$("#snap").css("background-image", loadUrl);
 			$(".snappedImage .indent").remove();
 				$("#snap").animate({opacity: 1}, 250, function() {
 					$( ".nextBtn" ).toggleClass("selected");
