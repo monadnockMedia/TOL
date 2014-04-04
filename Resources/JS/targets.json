@@ -2,6 +2,10 @@
 
 [{"boundary":{"height":112.3330993652344,"width":111.1425170898438,"x":331.8446960449219,"y":425.4370422363281},"img_size":{"height":1024.0,"width":768.0},"img_uri":"0_lifering.jpg","mesh_uri":"0_lifering0.ply"}],
 
+[{"boundary":{"height":98.31723022460938,"width":102.4161987304688,"x":199.9732055664062,"y":124.8044433593750},"img_size":{"height":1280.0,"width":768.0},"img_uri":"1_fishing.jpg","mesh_uri":"1_fishing0.ply"}
+,{"boundary":{"height":106.7200164794922,"width":113.9403686523438,"x":525.1560058593750,"y":138.0848693847656},"img_size":{"height":1280.0,"width":768.0},"img_uri":"1_fishing.jpg","mesh_uri":"1_fishing1.ply"}
+],
+
 [{"boundary":{"height":89.29566955566406,"width":88.41581726074219,"x":219.2189178466797,"y":243.2506866455078},"img_size":{"height":1216.0,"width":768.0},"img_uri":"2_crew.jpg","mesh_uri":"2_crew0.ply"},{"boundary":{"height":83.80624389648438,"width":84.20635986328125,"x":619.2694702148438,"y":240.9641418457031},"img_size":{"height":1216.0,"width":768.0},"img_uri":"2_crew.jpg","mesh_uri":"2_crew1.ply"}],
 
 [{"boundary":{"height":63.51473999023438,"width":59.74846649169922,"x":84.28862762451172,"y":117.3846435546875},"img_size":{"height":768.0,"width":1024.0},"img_uri":"3_walk.jpg","mesh_uri":"3_walk0.ply"},{"boundary":{"height":66.34900665283203,"width":61.43911743164062,"x":264.5826110839844,"y":103.5359878540039},"img_size":{"height":768.0,"width":1024.0},"img_uri":"3_walk.jpg","mesh_uri":"3_walk1.ply"},{"boundary":{"height":61.69168090820312,"width":59.58489990234375,"x":483.5498657226562,"y":137.309082031250},"img_size":{"height":768.0,"width":1024.0},"img_uri":"3_walk.jpg","mesh_uri":"3_walk2.ply"},{"boundary":{"height":68.08926391601562,"width":62.61816406250,"x":670.0163574218750,"y":81.04142761230469},"img_size":{"height":768.0,"width":1024.0},"img_uri":"3_walk.jpg","mesh_uri":"3_walk3.ply"}],
