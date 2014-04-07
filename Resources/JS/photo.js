@@ -134,7 +134,6 @@ var photo = function(){
 
 			//slice the directory path off of the tmpName to give a base filename to the server
 			var fname = (debug) ? "sara1" : p.slice(settings.request.dir.length);
-			
 			settings.request.sources.push(new settings.source(fname));
 
 			//finally, request the image and pipe it to the file, resolving the defered once the pipe is closed.

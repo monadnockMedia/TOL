@@ -10,6 +10,16 @@
     font-style: oblique;
 }
 
+/* Prevents highlighting on anything */
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 body,
 html {
   height: 1280px;
@@ -273,6 +283,10 @@ body {
 	background-image:url('../IMAGES/pic6.png');
 }
 
+.faceDragger {
+	margin-left:15px;
+}
+
 /* Photos */
 .galleryImage {
   width:189px;
@@ -391,6 +405,24 @@ body {
 	height:550px;
 	background-repeat:no-repeat;
 	
+	-webkit-transition: all 0.12s ease-in-out;
+	  -o-transition: all 0.12s ease-in-out;
+	  -moz-transition: all 0.12s ease-in-out;
+	  -ms-transition: all 0.12s ease-in-out;
+	  -kthtml-transition: all 0.12s ease-in-out;
+	  transition: all 0.12s ease-in-out;
+	
+}
+
+#snap.grow {
+	width: 750px !important;
+	height: 750px !important;	
+	-webkit-transition: all 0.12s ease-in-out;
+	  -o-transition: all 0.12s ease-in-out;
+	  -moz-transition: all 0.12s ease-in-out;
+	  -ms-transition: all 0.12s ease-in-out;
+	  -kthtml-transition: all 0.12s ease-in-out;
+	  transition: all 0.12s ease-in-out;
 }
 
 .landscape{
