@@ -49,20 +49,8 @@ function nextPhase (curPhase) {
 			
 		case 1:
 			//Start taking the picture
-			var flashInterval = setInterval(function(){
-						flash(flashInterval);
-					}, 3000);
-			$(".flex-item").animate({
-				opacity: 0
-			  }, 250, function() {
-				$(".galleryImage").removeClass("selected");
-				$('.numUsersBtn').remove();
-				$(".snappedImage").remove();
-				$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
-				$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
-				$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
-				$(".flex-gallery").animate({opacity: 0}, 250, function() {});
-			  });
+			userReady();
+			
 			phase++;
 			break;
 			
@@ -76,7 +64,6 @@ function nextPhase (curPhase) {
 					$('div.contentLabel-Interactive').remove();
 					$(".gallery").css("height", 270);
 					$(".gallery").css("width", 590);
-					//$("#nextLabel-id-ext").css("margin-left", "0px");
 				});
 				
 				phase = 1;
@@ -216,6 +203,18 @@ function nextPhase (curPhase) {
 	}
 }
 
+var userReady = function() {
+	var activeUser = picsTaken + 1;
+	
+	if (users == 1) {
+		$("#readyDialog").empty().append("When you are ready,<br/> press 'Okay'.");
+	} else {
+		$("#readyDialog").empty().append("When visitor " + activeUser + " is ready,<br/> press 'Okay'.");
+	}
+	
+    $( "#readyDialog" ).dialog( "open" );
+}
+
 var draw = function( id ){
 	thisData = data[id];
 	
@@ -333,15 +332,15 @@ var validateEmailSubmit = function (){
 
   //Make sure there are no empty fields, if not check email syntax and send the email
   if (firstName.length == 0 || lastName.length == 0 || email.length == 0) {
-	$("#dialog").empty().append("Please don't leave any field blank!");
-    $( "#dialog" ).dialog( "open" );
+	$("#warning").empty().append("Please don't leave any field blank!");
+    $( "#warning" ).dialog( "open" );
   } else {
 	if (validateEmailText(email)) {
 	    m.sendmail(email, emailBody);
 		return true;
 	  } else {
-		$("#dialog").empty().append("That is not a valid email address!");
-	    $( "#dialog" ).dialog( "open" );
+		$("#warning").empty().append("That is not a valid email address!");
+	    $( "#warning" ).dialog( "open" );
 		return false;
 	  }
   }
@@ -353,8 +352,8 @@ var validateGiftshopSubmit = function (){
 
   //Make sure there are no empty fields, if not check email syntax and send the email
   if (firstName.length == 0 || lastName.length == 0) {
-	$("#dialog").empty().append("Please don't leave any field blank!");
-    $( "#dialog" ).dialog( "open" );
+	$("#warning").empty().append("Please don't leave any field blank!");
+    $( "#warning" ).dialog( "open" );
 	return false;
   } else {
 	//Print Picture Here
@@ -392,7 +391,7 @@ var bindNumUsers = function() {
 				},120);
 				$(".numUsersBtn").removeClass("selected");
 				$(".numUsersBtn").addClass("notselected");
-				$("#dialog").empty().append("Currently only one person can be in each picture, check back soon!");
+				$("#warning").empty().append("Currently only one person can be in each picture, check back soon!");
 
 				if ($(this).hasClass("one")) {
 					$( this ).toggleClass("selected");
@@ -452,7 +451,7 @@ var bindGallery = function(){
 				$(".gallery").removeClass("lit one two three four five six");
 
 
-				$("#dialog").empty().append("This picture isn't supported yet, check back soon!");
+				$("#warning").empty().append("This picture isn't supported yet, check back soon!");
 				if (imageId == 0) {
 					$(".gallery").addClass("one");
 					settings.request.tgImageID = imageId;
