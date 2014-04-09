@@ -1,4 +1,4 @@
-
+var child = require("child_process");
 
 var gui = require('nw.gui');
 //setInterval(focus_window,5000);
@@ -62,6 +62,20 @@ replacer = function(){
 		this.dfd = when.defer();
 		socket.send(JSON.stringify(_req));
 		return this.dfd.promise;
+	}
+	
+	this.watermark = function(_url){
+		dfd = when.defer();
+		child.exec('composite -gravity southeast IMAGES/watermarksm.png '+_url+" "+_url,
+		  function (error, stdout, stderr) {
+		    console.log('stdout: ' + stdout);
+		    console.log('stderr: ' + stderr);
+		    if (error !== null) {
+		      console.log('exec error: ' + error);
+		    }
+			dfd.resolve({"image":_url})
+		});
+		return dfd.promise;
 	}
 	
 }

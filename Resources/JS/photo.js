@@ -10,7 +10,6 @@ var rq = require('request');
 var fs = require('fs');
 var tmp = require('tmp');
 var when = require('when');
-var child = require("child_process");
 var ezi = require('easyimage');
 var dg = require('dgram');
 
