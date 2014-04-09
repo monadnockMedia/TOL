@@ -20,8 +20,11 @@ previewArr.push("3_walk");
 previewArr.push("4_couples");
 previewArr.push("5_kids");
 
+var shutterSnd;
+
 // Init
 $(function init(){
+	
 	console.log("init");
 	
 	bindNext();
@@ -34,6 +37,10 @@ $(function init(){
 	r.open();
 	
 	m = new mailer();
+	
+	shutterSnd = document.createElement('audio');
+	shutterSnd.setAttribute('src', 'JS/shutter.wav');
+	shutterSnd.load();
 })
 
 var idleTimeout = function() {
@@ -82,6 +89,7 @@ function nextPhase (curPhase) {
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
 					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
+					$("img").attr("draggable", "false");
 				}
 				
 				$("#popup-interior-id").empty().prepend("Drag your face onto the<br/> person you want to be!");
@@ -264,12 +272,14 @@ var draw = function( id ){
 	$(".dragAnchor").droppable({
 		  hoverClass: "dragAnchor-hover",
 	      drop: function( event, ui ) {
-			console.log(event);
 			$(".ui-draggable-dragging").remove();
+			
+			console.log("draggable:");
+			console.log(ui.draggable);
+			ui.draggable.draggable( 'disable' );
+			
 			$this = $(this);
 	        $this.addClass("anchored");
-			$this.append("<span class='elipsis'></span>");
-			elipsisTimer();
 		//	WRN, add faceID of drop taret to the settings.request;
 			$dropped = $(ui.helper[0]);
 			var faceID = $(event.target).attr("faceID");
@@ -287,6 +297,7 @@ var draw = function( id ){
 
 var restartApp = function(){
 	//require('nw.gui').Window.get().reload(3);
+	p.cam.deleteAll();
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
 	
@@ -592,8 +603,8 @@ function checkAnchored() {
 				"background-image": "url("+d.processedImage+")"
 			})
 			console.log("Set background-image");
-			p.cam.deleteLast();
-			$(".anchored").remove();
+			
+			$(".dragAnchor").remove();
 		})
 	}
 }
@@ -632,6 +643,7 @@ function flash(flashInterval) {
 			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")";
 			$("#snap").css("background-image", loadUrl);
 			$(".snappedImage .indent").remove();
+			$(".elipsis").remove();
 				$("#snap").animate({opacity: 1}, 250, function() {
 					$( ".nextBtn" ).toggleClass("selected");
 					$("#nextLabel-id-ext").addClass("glow");
@@ -644,6 +656,8 @@ function flash(flashInterval) {
 					
 				});
 		});
+		
+		shutterSnd.play();
 				
 		$(".overlay").animate({opacity: 0}, 350, function() {
 			$(".overlay").remove();
@@ -654,6 +668,7 @@ function flash(flashInterval) {
 
 //Make the "..." animate while developing
 function elipsisTimer() {
+	console.log("elipsisTimer tic");
 	var elipsisCnt = 0;
 	
 	elipsisInterval = setInterval(function(){
