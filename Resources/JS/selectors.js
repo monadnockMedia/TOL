@@ -11,6 +11,7 @@ var giftshopping = false;
 var canvas;
 var data;
 var usersSupported = 3;
+var finalURL;
 
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
@@ -186,6 +187,8 @@ function nextPhase (curPhase) {
 					$(".selected").removeClass("selected");
 					$(".nextBtn").addClass("selected");
 					emailing = false;
+					
+					
 				} else {
 					console.log("email fail");
 				}
@@ -341,9 +344,9 @@ var validateEmailText = function(email) {
 
 var validateEmailSubmit = function (){
   var email = $("input[name='emailaddress']").val();
-  var emailBody = $("input[name='firstname']").val() + $("input[name='lastname']").val();
   var firstName = $("input[name='firstname']").val();
   var lastName = $("input[name='lastname']").val();
+  var emailBody = $("input[name='firstname']").val() + " " + $("input[name='lastname']").val();
 
   //Make sure there are no empty fields, if not check email syntax and send the email
   if (firstName.length == 0 || lastName.length == 0 || email.length == 0) {
@@ -351,6 +354,8 @@ var validateEmailSubmit = function (){
     $( "#warning" ).dialog( "open" );
   } else {
 	if (validateEmailText(email)) {
+		var p = {first:firstName, last:lastName, email:email};
+		wordpress.uploadAnnotated(finalURL, p);
 	    m.sendmail(email, emailBody);
 		return true;
 	  } else {
@@ -627,15 +632,21 @@ function checkAnchored() {
 			},120);
 			
 			console.log(d.processedImage);
-			clearInterval(elipsisInterval);
-			$snap = $("#snap");
-			$snap.css({
-				"background-image": "url("+d.processedImage+")"
-			})
-			console.log("Set background-image");
 			
-			$(".dragAnchor").remove();
-		})
+			r.watermark(d.processedImage).then(function(d) {
+				finalURL = d.image;
+				clearInterval(elipsisInterval);
+				$snap = $("#snap");
+				$snap.css({
+					"background-image": "url("+d.image+")"
+				})
+				console.log("Set background-image");
+				
+				$(".dragAnchor").remove();
+			});
+			
+			
+		});
 	}
 }
 
