@@ -22,6 +22,7 @@ previewArr.push("4_couples");
 previewArr.push("5_kids");
 
 var shutterSnd;
+var confirmSnd;
 
 // Init
 $(function init(){
@@ -42,6 +43,10 @@ $(function init(){
 	shutterSnd = document.createElement('audio');
 	shutterSnd.setAttribute('src', 'JS/shutter.wav');
 	shutterSnd.load();
+	
+	confirmSnd = document.createElement('audio');
+	confirmSnd.setAttribute('src', 'JS/confirm.wav');
+	confirmSnd.load();
 })
 
 var idleTimeout = function() {
@@ -273,6 +278,7 @@ var draw = function( id ){
 	$(".dragAnchor").droppable({
 		  hoverClass: "dragAnchor-hover",
 	      drop: function( event, ui ) {
+			confirmSnd.play();
 			$(".ui-draggable-dragging").remove();
 			ui.draggable.draggable( 'disable' );
 			
@@ -317,6 +323,7 @@ var restartApp = function(){
 	phase = 1;
 	users = 0;
 	picsTaken = 0;
+	usersSupported = 3;
 	
 	bindNumUsers();
 	bindNext();
@@ -664,7 +671,7 @@ function flash(flashInterval) {
 			console.log("picsTaken: " + picsTaken);
 			console.log(d);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
-			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")";
+			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")"; // picsTaken-1
 			$("#snap").css("background-image", loadUrl);
 			$(".snappedImage .indent").remove();
 			$(".elipsis").remove();
