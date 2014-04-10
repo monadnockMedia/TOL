@@ -355,8 +355,13 @@ var validateEmailSubmit = function (){
   } else {
 	if (validateEmailText(email)) {
 		var p = {first:firstName, last:lastName, email:email};
-		wordpress.uploadAnnotated(finalURL, p);
-	    m.sendmail(email, emailBody);
+		wordpress.uploadAnnotated(finalURL, p).then(function(d) {
+			console.log("uploadAnnotated");
+			console.log(d);
+			emailBody = "Greetings from the National Great Lakes Museum! <br/><br/> Click this link to see your Trip of a Lifetime: " + d;
+			m.sendmail(email, emailBody);
+		});
+	    
 		return true;
 	  } else {
 		$("#warning").empty().append("That is not a valid email address!");
