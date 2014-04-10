@@ -30,19 +30,17 @@ replacer = function(){
 		var command = "open "+self.serverAppPath;
 		open = child.exec(command, function(e,sout,serr){});
 		setTimeout(openSocket,2000);
-		
 	}
 	
 	var openSocket = function(){
-		
 		focus_window();
 		//win.enterKioskMode();
 		
 		console.log("opening");
 		socket = new WebSocket("ws://localhost:9092");
 		socket.onmessage = function(e){
-			console.log("received");
-			console.log(e);
+			console.log("e.data.error");
+			console.log(e.data.error);
 			if(e.data){
 				mess = JSON.parse(e.data);
 				self.dfd.resolve( mess );
