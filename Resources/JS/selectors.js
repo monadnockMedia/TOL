@@ -10,6 +10,7 @@ var giftshopping = false;
 
 var canvas;
 var data;
+var usersSupported = 3;
 
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
@@ -273,9 +274,6 @@ var draw = function( id ){
 		  hoverClass: "dragAnchor-hover",
 	      drop: function( event, ui ) {
 			$(".ui-draggable-dragging").remove();
-			
-			console.log("draggable:");
-			console.log(ui.draggable);
 			ui.draggable.draggable( 'disable' );
 			
 			$this = $(this);
@@ -285,7 +283,6 @@ var draw = function( id ){
 			var faceID = $(event.target).attr("faceID");
 			
 			var srcID = +$dropped.attr("srcid");
-			console.log("Image with srcID "+srcID+" dropped;");
 			savedPics[srcID].faceID = faceID;
 			settings.request.sources = savedPics;
 			
@@ -396,45 +393,61 @@ var bindNumUsers = function() {
 	$(".numUsersBtn").click(function(e) {
 		switch (phase) {
 			case 1:
-				$("#popup-exterior-id").addClass("glow");
-				setTimeout(function(){
-					$("#popup-exterior-id").removeClass("glow");
-				},120);
-				$(".numUsersBtn").removeClass("selected");
-				$(".numUsersBtn").addClass("notselected");
-				$("#warning").empty().append("Currently only one person can be in each picture, check back soon!");
-
+				//Checks which number of users was clicked, check against capacity of chosen photo
+				var pastUsers = users;
 				if ($(this).hasClass("one")) {
-					$( this ).toggleClass("selected");
-					$( this ).removeClass("notselected");
-					$(".numUsersBtn.selected").css("opacity", 1);
-					$(".numUsersBtn.notselected").css("opacity", 0.5);
-					$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-					$(".gallery").addClass("lit");
 					users = 1;
 				} else if ($(this).hasClass("two")) {
-					$( this ).toggleClass("selected");
-					$( this ).removeClass("notselected");
-					$(".numUsersBtn.selected").css("opacity", 1);
-					$(".numUsersBtn.notselected").css("opacity", 0.5);
-					$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-					$(".gallery").addClass("lit");
 					users = 2;
 				} else if ($(this).hasClass("three")) {
-					$( this ).toggleClass("selected");
-					$( this ).removeClass("notselected");
-					$(".numUsersBtn.selected").css("opacity", 1);
-					$(".numUsersBtn.notselected").css("opacity", 0.5);
-					$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-					$(".gallery").addClass("lit");
 					users = 3;
 				}
+				
+				if (usersSupported < users) {
+					$("#warning").empty().append("You have too many people for this image!<br/><br/>Please select a photo with more faces.")
+					$( "#warning" ).dialog( "open" );
+					users = pastUsers;
+				} else {
+					$("#popup-exterior-id").addClass("glow");
+					setTimeout(function(){
+						$("#popup-exterior-id").removeClass("glow");
+					},120);
+					$(".numUsersBtn").removeClass("selected");
+					$(".numUsersBtn").addClass("notselected");
+					$("#warning").empty().append("Currently only one person can be in each picture, check back soon!");
 
-				console.log("Num Users: " + users);
+					if ($(this).hasClass("one")) {
+						$( this ).toggleClass("selected");
+						$( this ).removeClass("notselected");
+						$(".numUsersBtn.selected").css("opacity", 1);
+						$(".numUsersBtn.notselected").css("opacity", 0.5);
+						$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+						$(".gallery").addClass("lit");
+						users = 1;
+					} else if ($(this).hasClass("two")) {
+						$( this ).toggleClass("selected");
+						$( this ).removeClass("notselected");
+						$(".numUsersBtn.selected").css("opacity", 1);
+						$(".numUsersBtn.notselected").css("opacity", 0.5);
+						$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+						$(".gallery").addClass("lit");
+						users = 2;
+					} else if ($(this).hasClass("three")) {
+						$( this ).toggleClass("selected");
+						$( this ).removeClass("notselected");
+						$(".numUsersBtn.selected").css("opacity", 1);
+						$(".numUsersBtn.notselected").css("opacity", 0.5);
+						$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+						$(".gallery").addClass("lit");
+						users = 3;
+					}
 
+					console.log("Num Users: " + users);
 
-
-				checkReady();
+					checkReady();
+				}
+			
+				
 
 				break;
 		}
@@ -446,44 +459,53 @@ var bindGallery = function(){
 	$(".galleryImage").click(function(e) {
 		switch (phase) {
 			case 1:
-				$("#popup-exterior-id").addClass("glow");
-				setTimeout(function(){
-					$("#popup-exterior-id").removeClass("glow");
-				},120);
-				$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
-				$(".galleryImage").removeClass("selected");
-				$(".galleryImage").addClass("notselected");
-				$( this ).toggleClass("selected");
-				$( this ).removeClass("notselected");
-				$(".contentLabel").removeClass("choose");
-				$(".contentLabel").addClass("takePic");
+				usersSupported = $(this).attr('users');
+				
+				if (usersSupported < users) {
+					$("#warning").empty().append("You have too many people for this image!<br/>Please select a photo with more faces.")
+					$( "#warning" ).dialog( "open" );
+				} else {
+					$("#popup-exterior-id").addClass("glow");
+					setTimeout(function(){
+						$("#popup-exterior-id").removeClass("glow");
+					},120);
+					$("#popup-interior-id").empty().prepend("Choose which<br/>photograph you want!");
+					$(".galleryImage").removeClass("selected");
+					$(".galleryImage").addClass("notselected");
+					$( this ).toggleClass("selected");
+					$( this ).removeClass("notselected");
+					$(".contentLabel").removeClass("choose");
+					$(".contentLabel").addClass("takePic");
 
-				var imageId = $(this).attr('id');
-				$(".gallery").removeClass("lit one two three four five six");
+					var imageId = $(this).attr('id');
+					$(".gallery").removeClass("lit one two three four five six");
 
 
-				$("#warning").empty().append("This picture isn't supported yet, check back soon!");
-				if (imageId == 0) {
-					$(".gallery").addClass("one");
-					settings.request.tgImageID = imageId;
-				} else if (imageId == 1) {
-					$(".gallery").addClass("two");
-					settings.request.tgImageID = imageId;
-				} else if (imageId == 2) {
-					$(".gallery").addClass("three");
-					settings.request.tgImageID = imageId;
-				} else if (imageId == 3) {
-					$(".gallery").addClass("six");
-					settings.request.tgImageID = imageId;
-				} else if (imageId == 4) {
-					$(".gallery").addClass("four");
-					settings.request.tgImageID = imageId;
-				} else if (imageId == 5) {
-					$(".gallery").addClass("five");
-					settings.request.tgImageID = imageId;
+					$("#warning").empty().append("This picture isn't supported yet, check back soon!");
+					if (imageId == 0) {
+						$(".gallery").addClass("one");
+						settings.request.tgImageID = imageId;
+					} else if (imageId == 1) {
+						$(".gallery").addClass("two");
+						settings.request.tgImageID = imageId;
+					} else if (imageId == 2) {
+						$(".gallery").addClass("three");
+						settings.request.tgImageID = imageId;
+					} else if (imageId == 3) {
+						$(".gallery").addClass("six");
+						settings.request.tgImageID = imageId;
+					} else if (imageId == 4) {
+						$(".gallery").addClass("four");
+						settings.request.tgImageID = imageId;
+					} else if (imageId == 5) {
+						$(".gallery").addClass("five");
+						settings.request.tgImageID = imageId;
+					}
+
+					checkReady();
 				}
-
-				checkReady();
+				
+				
 
 				break;
 		}
@@ -523,6 +545,7 @@ function bindClick() {
 				} else if ($( ".retake .popup-interior" ).hasClass("selected") == false){
 					picsTaken--;
 					savedPics.pop();
+					p.cam.deleteLast();
 					//$( ".retake .popup-interior" ).css("color", "#DAA520");
 					//$( ".retake .popup-interior" ).css("-webkit-text-stroke-color", "#DAA520");
 					$( ".nextBtn" ).removeClass("selected");
@@ -639,6 +662,7 @@ function flash(flashInterval) {
 		p.snap().then(function(d){
 			picsTaken++;
 			console.log("picsTaken: " + picsTaken);
+			console.log(d);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
 			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")";
 			$("#snap").css("background-image", loadUrl);
