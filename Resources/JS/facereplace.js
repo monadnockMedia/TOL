@@ -64,7 +64,7 @@ replacer = function(){
 	
 	this.watermark = function(_url){
 		dfd = when.defer();
-		child.exec('composite -gravity southeast IMAGES/watermarksm.png '+_url+" "+_url,
+		child.exec('composite -gravity southwest IMAGES/watermarksm.png '+_url+" "+_url,
 		  function (error, stdout, stderr) {
 		    console.log('stdout: ' + stdout);
 		    console.log('stderr: ' + stderr);
