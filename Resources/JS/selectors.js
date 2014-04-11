@@ -24,6 +24,7 @@ previewArr.push("5_kids");
 
 var shutterSnd;
 var confirmSnd;
+var hoverSnd;
 
 // Init
 $(function init(){
@@ -48,6 +49,10 @@ $(function init(){
 	confirmSnd = document.createElement('audio');
 	confirmSnd.setAttribute('src', 'JS/confirm.wav');
 	confirmSnd.load();
+	
+	hoverSnd = document.createElement('audio');
+	hoverSnd.setAttribute('src', 'JS/hover.wav');
+	hoverSnd.load();
 })
 
 var idleTimeout = function() {
@@ -95,7 +100,7 @@ function nextPhase (curPhase) {
 					dragFrame = jQuery('<div class="popup-exterior faceDragger"><div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div></div>');
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
-					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='184' height='184' />");
+					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='100%' height='100%' />");
 					$("img").attr("draggable", "false");
 				}
 				
@@ -117,15 +122,28 @@ function nextPhase (curPhase) {
 					draw(settings.request.tgImageID);
 				})
 				
+				
 				//Setup draggable faces and drag anchors for them to drop on
 				$(".draggable").draggable({
 					helper: "clone",
+					start : function(event, ui){
+							ui.helper.animate({
+							            width: 120,
+							            height: 120,
+										marginLeft: 30,
+										marginTop: 30
+							        });
+					    },
 					opacity: 0.7,
 					revert: true,
 					scroll: false,
 					distance: 30,
-					start: function() {},
-					stop: function() {}
+					stop: function(event, ui){
+						
+					    },
+					drag: 	function(event, ui){
+								
+						    },
 				});
 				
 				$(".snappedImage").addClass("developed");
@@ -280,6 +298,10 @@ var draw = function( id ){
 	
 	$(".dragAnchor").droppable({
 		  hoverClass: "dragAnchor-hover",
+		  over: function( event, ui ) {
+			hoverSnd.play();
+		  },
+		
 	      drop: function( event, ui ) {
 			confirmSnd.play();
 			$(".ui-draggable-dragging").remove();
