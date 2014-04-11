@@ -382,7 +382,7 @@ var validateEmailSubmit = function (){
 		wordpress.uploadAnnotated(finalURL, p).then(function(d) {
 			console.log("uploadAnnotated");
 			console.log(d);
-			emailBody = "Greetings from the National Great Lakes Museum! <br/><br/> Click this link to see your Trip of a Lifetime: " + d;
+			emailBody = "<a href='"+d+"'>I'm having the Trip of a Lifetime!</a>";
 			m.sendmail(email, emailBody);
 		});
 	    
@@ -672,7 +672,7 @@ function checkAnchored() {
 					$snap.css({
 						"background-image": "url("+d.image+")"
 					})
-					console.log("Set background-image");
+					console.log("Set watermarked background-image");
 
 					$(".dragAnchor").remove();
 				});
