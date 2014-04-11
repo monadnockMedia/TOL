@@ -44,7 +44,7 @@ var mailer = function(){
 	var options = {
 		from: "Trip of a Lifetime <photobooth@inlandseas.org>",
 		to: " ",
-		subject: "Greetings from Toledo",
+		subject: "Greetings from the National Museum of the Great Lakes",
 		text:" ",
 		html:" ",
 		generateTextFromHTML: true
