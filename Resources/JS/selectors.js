@@ -406,6 +406,7 @@ var validateGiftshopSubmit = function (){
 	return false;
   } else {
 	//Print Picture Here
+	printer.print(finalURL);
 	return true;
   }
 }
