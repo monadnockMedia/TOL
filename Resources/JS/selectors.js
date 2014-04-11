@@ -382,7 +382,7 @@ var validateEmailSubmit = function (){
 		wordpress.uploadAnnotated(finalURL, p).then(function(d) {
 			console.log("uploadAnnotated");
 			console.log(d);
-			emailBody = "<a href='"+d+"'>I'm having the Trip of a Lifetime!</a>";
+			emailBody = firstName + " " + lastName + " is having the Trip of a Lifetime at the National Museum of the Great Lakes. Click the link below to see a photo:<br/><a href='"+d+"'>I'm having the Trip of a Lifetime!</a>";
 			m.sendmail(email, emailBody);
 		});
 	    
