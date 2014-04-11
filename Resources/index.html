@@ -21,6 +21,10 @@
 		  
 		</div>
 		
+		<div class="dialog" id="nofaceDialog" title="">
+		  We weren't able to find any faces in your pictures! <br/><br/> Please take your picture again, try not to move and look straight ahead!
+		</div>
+		
 		<div id="contentFrame" class="body">
 			<div class="content flex-container-wrap">
 				<div id="popup-exterior-id" class="popup-exterior flex-item"><div id="popup-interior-id" class="popup-interior">How many people<br/>will be in your photo?</div></div>
@@ -72,6 +76,53 @@
 		      modal: true,
 		      buttons: {
 		        Okay: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+		
+			$( "#nofaceDialog" ).dialog({
+			  autoOpen: false,
+		      resizable: false,
+			  width: 400,
+		      modal: true,
+		      buttons: {
+		        Okay: function() {
+				  	p.cam.deleteAll();
+					$(".flex-drag").remove();
+					$(".snappedImage").remove();
+
+					if (oskOnScreen) {
+						$pubKeyboard.fadeOut(250);
+						$pubInput.blur();
+						$pubKeyboardTriggers.removeClass('osk-focused');
+						oskOnScreen = false;
+					}
+
+					$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
+					$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
+
+					$(".retake").remove();
+
+					var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
+					reset1.prependTo("#footer");
+
+					var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
+					reset2.appendTo(".content");
+
+					phase = 1;
+					users = 0;
+					picsTaken = 0;
+					usersSupported = 3;
+
+					bindNumUsers();
+					bindNext();
+					bindClick();
+					bindGallery();
+					savedPics.length = 0;
+					settings.request.tgImageID = null;
+
+					$("input[type=text], textarea").val("");
 		          $( this ).dialog( "close" );
 		        }
 		      }

@@ -334,6 +334,8 @@ var restartApp = function(){
 	bindGallery();
 	savedPics.length = 0;
 	settings.request.tgImageID = null;
+	
+	$("input[type=text], textarea").val("");
 }
 
 // REGULAR EXPRESSION CHECKERS \\
@@ -629,28 +631,30 @@ function checkAnchored() {
 	} else {
 		console.log("Start Photoshopping");
 		r.replace(settings.request).then(function(d){
-			console.log(".then")
-			$( ".nextBtn" ).addClass("selected");
-			$("#nextLabel-id-ext").addClass("glow");
-			setTimeout(function(){
-				$("#nextLabel-id-ext").removeClass("glow");
-			},120);
+			console.log("r.replace");
+			console.log(d);
 			
-			console.log(d.processedImage);
-			
-			r.watermark(d.processedImage).then(function(d) {
-				finalURL = d.image;
-				clearInterval(elipsisInterval);
-				$snap = $("#snap");
-				$snap.css({
-					"background-image": "url("+d.image+")"
-				})
-				console.log("Set background-image");
-				
-				$(".dragAnchor").remove();
-			});
-			
-			
+			if (d.sources[0].error == "no face found") {
+				$( "#nofaceDialog" ).dialog( "open" );
+			} else {
+				$( ".nextBtn" ).addClass("selected");
+				$("#nextLabel-id-ext").addClass("glow");
+				setTimeout(function(){
+					$("#nextLabel-id-ext").removeClass("glow");
+				},120);
+
+				r.watermark(d.processedImage).then(function(d) {
+					finalURL = d.image;
+					clearInterval(elipsisInterval);
+					$snap = $("#snap");
+					$snap.css({
+						"background-image": "url("+d.image+")"
+					})
+					console.log("Set background-image");
+
+					$(".dragAnchor").remove();
+				});
+			}
 		});
 	}
 }
