@@ -64,4 +64,21 @@ var mailer = function(){
 	}
 
 }
+var printer = {};
+
+	
+	printer.print = function(_url){
+		dfd = when.defer();
+		child.exec('lp '+_url,
+		  function (error, stdout, stderr) {
+		    console.log('stdout: ' + stdout);
+		    console.log('stderr: ' + stderr);
+		    if (error !== null) {
+		      console.log('exec error: ' + error);
+		    }
+			dfd.resolve({"status":"success"})
+		});
+		return dfd.promise;
+	}
+
 
