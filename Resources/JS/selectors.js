@@ -173,7 +173,7 @@ function nextPhase (curPhase) {
 			$(".flex-drag").empty();
 			
 			//Add giftshop and email buttons
-			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive giftshop"><div class="popup-exterior"><div class="popup-interior">Giftshop</div></div></div>');
+			var shareButtons = jQuery('<div class="contentLabel-Interactive email"><div class="popup-exterior"><div class="popup-interior">Email</div></div></div><div class="contentLabel-Interactive giftshop"><div class="popup-exterior"><div class="popup-interior">Buy A Print</div></div></div>');
 			shareButtons.prependTo(".flex-drag");
 			
 			$(".contentLabel-Interactive").css("margin-left", 40);
@@ -206,6 +206,8 @@ function nextPhase (curPhase) {
 					$(".nextBtn").addClass("selected");
 					emailing = false;
 					
+					$("#warning").empty().append("Your email has been sent successfully!");
+				    $( "#warning" ).dialog( "open" );
 					
 				} else {
 					console.log("email fail");
@@ -226,6 +228,9 @@ function nextPhase (curPhase) {
 					$(".selected").removeClass("selected");
 					$(".nextBtn").addClass("selected");
 					giftshopping = false;
+					
+					$("#warning").empty().append("Your photo is printing in the giftshop!");
+				    $( "#warning" ).dialog( "open" );
 				} else {
 					console.log("giftshop fail");
 				}

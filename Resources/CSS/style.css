@@ -76,6 +76,13 @@ body {
 	color:#DAA520;
 }
 
+#popup-exterior-id{
+	background: transparent;
+	-webkit-box-shadow: 0px 0px 14px 0px rgba(255,255,186,0);
+	-moz-box-shadow: 0px 0px 14px 0px rgba(255,255,186,0);
+	box-shadow: 0px 0px 14px 0px rgba(255,255,186,0);
+}
+
 .popup-exterior {
 	margin-top:-20px;
     display:inline-block;
@@ -591,8 +598,8 @@ input:focus {
 /* Buttons */
 .nextBtn {
   pointer-events:all;
-  height:164px; /* 128 x 128 */
-  width:164px;
+  height:175px; /* 128 x 128 */
+  width:175px;
   margin:0px;
   font-size:2.2em;
   color:#4D3A03;
@@ -600,12 +607,14 @@ input:focus {
   background-repeat:none;
   background-position:center;
   background-image:url('../IMAGES/button_UP.png');
+  background-size:260px 260px;
+  overflow:visible;
 }
 
 .nextBtn.selected {
   background-repeat:none;
   background-position:center;
-  background-image:url('../IMAGES/button_DOWN.png');
+  background-image:url('../IMAGES/button_DOWN2.png');
 }
 
 .numUsersBtn {
