@@ -4,12 +4,12 @@ var when = require("when")
 
 w = new wp();
 var wordpress = {};
-
+var pID = 1225;
 wordpress.upload = function(url, name){
 	var dfd = when.defer();
 	fs.readFile(url, function(err,data){
 		if(err) throw err;
-		w.postIMGRPC(name, data, 1).then(function(d){dfd.resolve(d)})
+		w.postIMGRPC(name, data, 1225).then(function(d){dfd.resolve(d)})
 	})
 	return dfd.promise;
 }
