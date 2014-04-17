@@ -13,6 +13,10 @@
 	</HEAD>
 	
 	<BODY>
+		<div class="dialog" id="idleD" title="">
+		  Are you still there?
+		</div>
+		
 		<div class="dialog" id="warning" title="">
 		  This picture isn't supported yet, check back soon!
 		</div>
@@ -80,6 +84,21 @@
 		        }
 		      }
 		    });
+		
+			$( "#idleD" ).dialog({
+				autoOpen: false,
+				width: 400,
+				modal: true,
+				resizable: false,
+				buttons: {
+				  	"Yes": function()
+					{
+				    	$( this ).dialog( "close" );
+						startTimer();
+				  	}
+				}
+			});
+		
 		
 			$( "#nofaceDialog" ).dialog({
 			  autoOpen: false,

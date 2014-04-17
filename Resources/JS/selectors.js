@@ -26,11 +26,10 @@ var shutterSnd;
 var confirmSnd;
 var hoverSnd;
 
+var idleTimer;
+
 // Init
-$(function init(){
-	
-	console.log("init");
-	
+$(function init(){	
 	bindNext();
 	bindNumUsers();
 	bindGallery();
@@ -53,11 +52,31 @@ $(function init(){
 	hoverSnd = document.createElement('audio');
 	hoverSnd.setAttribute('src', 'JS/hover.wav');
 	hoverSnd.load();
+	startTimer();
 })
 
-var idleTimeout = function() {
-	//setInterval(restartApp);
+function startTimer() {
+	clearInterval(idleTimer);
+	idleTimer = setInterval(promptIdleUser, 10000); // 30000
 }
+
+var promptIdleUser = function() {
+	clearInterval(idleTimer);
+  	idleTimer = setInterval(idleRestart, 5000);
+
+	$( "#idleD" ).dialog("open");
+}
+
+$(document.body).click(function(e) {
+	startTimer();
+})
+
+var idleRestart = function() {
+	p.cam.deleteAll();
+	require('nw.gui').Window.get().reload(3);
+}
+
+
 
 // MAIN Function controlling app's behavior
 function nextPhase (curPhase) {
