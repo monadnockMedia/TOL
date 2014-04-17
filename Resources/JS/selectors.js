@@ -376,6 +376,9 @@ var validateEmailSubmit = function (){
   var firstName = $("input[name='firstname']").val();
   var lastName = $("input[name='lastname']").val();
   var emailBody = $("input[name='firstname']").val() + " " + $("input[name='lastname']").val();
+  var mailingList = $("input[name='mailinglist']").is(':checked');
+  console.log("Mailing List: ");
+  console.log(mailingList);
 
   //Make sure there are no empty fields, if not check email syntax and send the email
   if (firstName.length == 0 || lastName.length == 0 || email.length == 0) {
@@ -383,7 +386,7 @@ var validateEmailSubmit = function (){
     $( "#warning" ).dialog( "open" );
   } else {
 	if (validateEmailText(email)) {
-		var p = {first:firstName, last:lastName, email:email};
+		var p = {first:firstName, last:lastName, email:email, mailinglist:mailingList};
 		wordpress.uploadAnnotated(finalURL, p).then(function(d) {
 			console.log("uploadAnnotated");
 			console.log(d);

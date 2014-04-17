@@ -65,7 +65,8 @@ var photo = function(){
 	
 	//Setup the camera
 	with (this.cam){  //with changes the scope, all functions or props in the brackets are cam's
-		powerOn()
+		powerOn();
+		stopCapture();
 	    mode = "photo";
 	//    beepOff();
 	    photoResolution = "5mpm"
