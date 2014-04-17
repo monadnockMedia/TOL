@@ -58,8 +58,6 @@ body {
     padding:10px;
     text-align:center;
     color:rgba(68,45,13,1);
-	-webkit-text-stroke-width: 2px;
-	-webkit-text-stroke-color: rgba(68,45,13,1);
     
     -webkit-box-shadow: inset 0px 0px 10px 0px     rgba(90,45,19,1);
     -moz-box-shadow: inset 0px 0px 10px 0px rgba(90,45,19,1);
@@ -71,8 +69,6 @@ body {
 }
 
 .popup-interior.selected {
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color:rgba(68,45,13,1);
 	color:#DAA520;
 }
 
@@ -587,6 +583,46 @@ input:focus {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+}
+
+.cancel {
+	
+	font-family:"timesNGL";
+    background-color:#7e6546;
+    font-size:24px;
+    border:2px solid rgba(90,45,19,1);
+    display:inline-block;
+    padding:10px;
+    padding-left:25px;
+    padding-right:25px;
+    text-align:right;
+	margin-top:10px;
+    color:rgb(242, 238, 233);
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: rgba(242, 238, 233,1);
+    
+    -webkit-box-shadow: inset 0px 0px 10px 0px     rgba(90,45,19,1);
+    -moz-box-shadow: inset 0px 0px 10px 0px rgba(90,45,19,1);
+    box-shadow: inset 0px 0px 10px 0px rgba(90,45,19,1);
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.cancel:active {
+	background-color:rgb(197,177,151);
+    font-size:24px;
+    border:1px solid rgba(90,45,19,1);
+    display:inline-block;
+    padding:10px;
+    padding-left:25px;
+    padding-right:25px;
+	margin-top:10px;q
+    text-align:right;
+    color:rgba(68,45,13,1);
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: rgba(68,45,13,1);
 }
 
 .inputIndent {

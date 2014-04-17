@@ -35,6 +35,7 @@ $(function init(){
 	bindGallery();
 	
 	p = new photo();
+	p.cam.deleteAll();
 	
 	r = new replacer();
 	r.open();
@@ -58,12 +59,14 @@ $(function init(){
 function startTimer() {
 	clearInterval(idleTimer);
 	idleTimer = setInterval(promptIdleUser, 90000); // 30000
+	console.log("idle Start timer");
 }
 
 var promptIdleUser = function() {
 	clearInterval(idleTimer);
   	idleTimer = setInterval(idleRestart, 10000);
 
+	console.log("idle Warn");
 	$( "#idleD" ).dialog("open");
 }
 
@@ -72,8 +75,31 @@ $(document.body).click(function(e) {
 })
 
 var idleRestart = function() {
-	p.cam.deleteAll();
+	clearInterval(idleTimer);
+	
+	console.log("idle Restart app");
+	
+	if (oskOnScreen) {
+		$pubKeyboard.fadeOut(250);
+		$pubInput.blur();
+		$pubKeyboardTriggers.removeClass('osk-focused');
+		oskOnScreen = false;
+	}
+	
+	phase = 1;
+	users = 0;
+	picsTaken = 0;
+	usersSupported = 3;
+	
+	bindNumUsers();
+	bindNext();
+	bindClick();
+	bindGallery();
+	savedPics.length = 0;
+	settings.request.tgImageID = null;
+	
 	require('nw.gui').Window.get().reload(3);
+	
 }
 
 
@@ -632,6 +658,7 @@ function bindClick() {
 				}
 				break;
 			case 4:
+				bindCancel();
 				//Add Email and Giftshop submission forms to screen
 				if ($( this ).hasClass("giftshop")) {
 					$(".nextBtn").addClass("selected");
@@ -671,6 +698,41 @@ function bindClick() {
 					giftshopping = false;
 				}
 				break;
+		}
+	});
+}
+
+function bindCancel() {
+	$('.cancel').on('click', function (e) {
+		//Add Email and Giftshop submission forms to screen
+		if (emailing) {
+			$(".nextBtn").addClass("selected");
+			$(".contentLabel-Interactive .popup-interior").removeClass("selected");
+		
+			if (oskOnScreen) {
+				$pubKeyboard.fadeOut(250);
+				$pubInput.blur();
+				$pubKeyboardTriggers.removeClass('osk-focused');
+				oskOnScreen = false;
+			}
+
+			$(".inputForm").css("top" , "200%");
+			$(".inputForm").css("left" , "250%");
+			emailing = false;
+		} else if (giftshopping) {
+			$(".nextBtn").addClass("selected");
+			$(".contentLabel-Interactive .popup-interior").removeClass("selected");
+		
+			if (oskOnScreen) {
+				$pubKeyboard.fadeOut(250);
+				$pubInput.blur();
+				$pubKeyboardTriggers.removeClass('osk-focused');
+				oskOnScreen = false;
+			}
+
+			$(".inputForm-gift").css("top" , "200%");
+			$(".inputForm-gift").css("left" , "250%");
+			giftshopping = false;
 		}
 	});
 }
