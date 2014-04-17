@@ -57,12 +57,12 @@ $(function init(){
 
 function startTimer() {
 	clearInterval(idleTimer);
-	idleTimer = setInterval(promptIdleUser, 10000); // 30000
+	idleTimer = setInterval(promptIdleUser, 90000); // 30000
 }
 
 var promptIdleUser = function() {
 	clearInterval(idleTimer);
-  	idleTimer = setInterval(idleRestart, 5000);
+  	idleTimer = setInterval(idleRestart, 10000);
 
 	$( "#idleD" ).dialog("open");
 }
