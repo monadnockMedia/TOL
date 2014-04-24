@@ -85,6 +85,7 @@ var photo = function(){
 		this.cam.startCapture().then(
 			function(d)
 			{
+				self.cam.stopCapture();
 				//hate hate hate timeouts, but it is necessary to ensure that the image has been saved to memory.
 				window.setTimeout(
 					self.loadImage
