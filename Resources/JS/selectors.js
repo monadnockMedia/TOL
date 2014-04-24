@@ -374,7 +374,6 @@ var draw = function( id ){
 }
 
 var restartApp = function(){
-	//require('nw.gui').Window.get().reload(3);
 	p.cam.deleteAll();
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
@@ -389,7 +388,7 @@ var restartApp = function(){
 	$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
 	$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
 	
-	var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
+	var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4" users="3">Image4</div><div class="galleryImage" id="5" users="3">Image5</div><div class="galleryImage" id="3" users="3">Image6</div><div class="galleryImage" id="0" users="1">Image1</div><div class="galleryImage" id="1" users="2">Image2</div><div class="galleryImage" id="2" users="2">Image3</div></div>');
 	reset1.prependTo("#footer");
 	
 	var reset2 = jQuery('<div id="popup-exterior-id" class="popup-exterior flex-item"><div id="popup-interior-id" class="popup-interior">How many people<br/>will be in your photo?</div></div><div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
@@ -399,15 +398,19 @@ var restartApp = function(){
 	users = 0;
 	picsTaken = 0;
 	usersSupported = 3;
+	console.log("usersSupported");
+	console.log(usersSupported);
+	
+	savedPics.length = 0;
+	settings.request.tgImageID = null;
+	
+	$("input[type=text], textarea").val("");
 	
 	bindNumUsers();
 	bindNext();
 	bindClick();
 	bindGallery();
-	savedPics.length = 0;
-	settings.request.tgImageID = null;
 	
-	$("input[type=text], textarea").val("");
 }
 
 // REGULAR EXPRESSION CHECKERS \\
@@ -499,7 +502,7 @@ var bindNumUsers = function() {
 				}
 				
 				if (usersSupported < users) {
-					$("#warning").empty().append("You have too many people for this image!<br/><br/>Please select a photo with more faces.")
+					$("#warning").empty().append("You have too many people for this image!<br/><br/><br/>Please select a photo with more faces.");
 					$( "#warning" ).dialog( "open" );
 					users = pastUsers;
 				} else {
@@ -554,7 +557,8 @@ var bindGallery = function(){
 	$(".galleryImage").click(function(e) {
 		switch (phase) {
 			case 1:
-				usersSupported = $(this).attr('users');
+				usersSupported = parseInt($(this).attr('users'));
+				
 				
 				if (usersSupported < users) {
 					$("#warning").empty().append("You have too many people for this image!<br/>Please select a photo with more faces.")
@@ -854,6 +858,8 @@ var nwKiosk = function(){
 	//setInterval(focus_window,5000);
 
 	var win = gui.Window.get();
+	this.win = win;
+	this.gui = gui;
 	
 	this.setup = function(){$(document).keypress(function(d){
 		switch(d.keyCode)

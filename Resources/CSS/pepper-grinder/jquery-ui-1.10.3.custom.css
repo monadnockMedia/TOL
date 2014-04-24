@@ -196,7 +196,7 @@
 .ui-button {
 	display: inline-block;
 	position: relative;
-	padding: 0;
+	padding: 25px;
 	line-height: normal;
 	margin-right: .1em;
 	cursor: pointer;
@@ -520,7 +520,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
 	float: right;
-	margin-right:7.5em;
+	margin-right: 6em;
 }
 .ui-dialog .ui-dialog-buttonpane button {
 	margin: .5em .4em .5em 0;
