@@ -83,6 +83,7 @@
 		      buttons: {
 		        Okay: function() {
 		          $( this ).dialog( "close" );
+				  clickSnd.play();
 		        }
 		      }
 		    });
@@ -97,6 +98,7 @@
 					{
 				    	$( this ).dialog( "close" );
 						startTimer();
+						clickSnd.play();
 				  	}
 				}
 			});
@@ -109,6 +111,7 @@
 		      modal: true,
 		      buttons: {
 		        Okay: function() {
+					clickSnd.play();
 				  	p.cam.deleteAll();
 					$(".flex-drag").remove();
 					$(".snappedImage").remove();
@@ -156,6 +159,7 @@
 		      modal: true,
 		      buttons: {
 		        Okay: function() {
+					clickSnd.play();
 				  	var flashInterval = setInterval(function(){
 								flash(flashInterval);
 							}, 3000);

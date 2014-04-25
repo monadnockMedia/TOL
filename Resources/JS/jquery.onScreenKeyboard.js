@@ -7,8 +7,13 @@ var $pubKeyboard;
 var $pubInput;
 var $pubKeyboardTriggers;
 var oskOnScreen = false;
+var keyStrokeSnd;
 
 (function ($) {
+	
+	keyStrokeSnd = document.createElement('audio');
+	keyStrokeSnd.setAttribute('src', 'JS/keystroke.wav');
+	keyStrokeSnd.load();
 
 	'use strict';
 
@@ -122,6 +127,8 @@ var oskOnScreen = false;
 		});
 
 		$keyboard.on('click', 'li', function () {
+			keyStrokeSnd.play();
+			
 			var $key      = $(this),
 				character = $key.html(),
 				inputValue,

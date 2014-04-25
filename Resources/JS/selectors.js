@@ -25,11 +25,34 @@ previewArr.push("5_kids");
 var shutterSnd;
 var confirmSnd;
 var hoverSnd;
+var clickSnd;
+var bigClickSnd;
 
 var idleTimer;
 
 // Init
 $(function init(){	
+	shutterSnd = document.createElement('audio');
+	shutterSnd.setAttribute('src', 'JS/shutter.wav');
+	shutterSnd.load();
+	
+	confirmSnd = document.createElement('audio');
+	confirmSnd.setAttribute('src', 'JS/confirm.wav');
+	confirmSnd.load();
+	
+	hoverSnd = document.createElement('audio');
+	hoverSnd.setAttribute('src', 'JS/hover.wav');
+	hoverSnd.load();
+	
+	clickSnd = document.createElement('audio');
+	clickSnd.setAttribute('src', 'JS/click.wav');
+	clickSnd.load();
+	
+	bigClickSnd = document.createElement('audio');
+	bigClickSnd.setAttribute('src', 'JS/bigbutton.wav');
+	bigClickSnd.load();
+	
+	
 	bindNext();
 	bindNumUsers();
 	bindGallery();
@@ -42,17 +65,8 @@ $(function init(){
 	
 	m = new mailer();
 	
-	shutterSnd = document.createElement('audio');
-	shutterSnd.setAttribute('src', 'JS/shutter.wav');
-	shutterSnd.load();
+
 	
-	confirmSnd = document.createElement('audio');
-	confirmSnd.setAttribute('src', 'JS/confirm.wav');
-	confirmSnd.load();
-	
-	hoverSnd = document.createElement('audio');
-	hoverSnd.setAttribute('src', 'JS/hover.wav');
-	hoverSnd.load();
 	startTimer();
 })
 
@@ -471,8 +485,8 @@ var validateGiftshopSubmit = function (){
 function bindNext() {
 	$(".nextBtn").click(function(e) {
 		//nextBtn will only be selected once the visitor has done everything needed on screen
-		
 		if ($(".nextBtn").hasClass("selected")) {
+			bigClickSnd.play();
 			if (emailing) {
 				nextPhase(phase);
 			} else if (giftshopping) {
@@ -481,14 +495,13 @@ function bindNext() {
 				$( this ).toggleClass("selected");
 				nextPhase(phase);
 			}
-			
-			
 		}
 	});
 }
 
 var bindNumUsers = function() {
 	$(".numUsersBtn").click(function(e) {
+		clickSnd.play();
 		switch (phase) {
 			case 1:
 				//Checks which number of users was clicked, check against capacity of chosen photo
@@ -555,6 +568,7 @@ var bindNumUsers = function() {
 //Sets up image choosing gallery in phase 1
 var bindGallery = function(){
 	$(".galleryImage").click(function(e) {
+		clickSnd.play();
 		switch (phase) {
 			case 1:
 				usersSupported = parseInt($(this).attr('users'));
@@ -626,7 +640,9 @@ function checkReady() {
 }
 
 function bindClick() {
+	
 	$('div.contentLabel-Interactive').on('click', function (e) {
+		clickSnd.play();
 		switch (phase) {
 			case 2:
 				$(".contentLabel-Interactive").removeClass("selected");
@@ -707,7 +723,9 @@ function bindClick() {
 }
 
 function bindCancel() {
+	
 	$('.cancel').on('click', function (e) {
+		clickSnd.play();
 		//Add Email and Giftshop submission forms to screen
 		if (emailing) {
 			$(".nextBtn").addClass("selected");
