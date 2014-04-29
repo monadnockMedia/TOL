@@ -64,13 +64,20 @@ var photo = function(){
 	var client = dg.createSocket("udp4");
 	
 	//Setup the camera
-	with (this.cam){  //with changes the scope, all functions or props in the brackets are cam's
+/*	with (this.cam){  //with changes the scope, all functions or props in the brackets are cam's
 		powerOn();
 		stopCapture();
 	    mode = "photo";
 	//    beepOff();
 	    photoResolution = "5mpm"
-	}
+	}*/
+	
+	this.cam.powerOn().then(
+		self.cam.stopCapture().then(function(){
+			self.cam.mode = "photo";
+			self.cam.photoResolution = "5mp";}
+			)
+	)
 	
 	//METHODS
 	this.snap = function(){
@@ -110,9 +117,7 @@ var photo = function(){
 				lastUrl = camHost+imgDir+lastImg.name;
 
 				//get the image and then load it in to the image div
-				self.getImage(lastUrl).then(function(d){
-				//	dfd.resolve(d);
-				});
+				self.getImage(lastUrl);
 
 			}),
 			//then() second arg is a callback for error handling
@@ -141,6 +146,7 @@ var photo = function(){
 			rq(camUrl).pipe(fs.createWriteStream(tmpName)).on('close', function(){
 				//resolve to return the path of the file we created.
 				//cam.deleteLast();
+				self.cam.deleteLast();
 				var options = settings.ezoption(tmpName, tmpName);
 				
 				ezi.crop( options, function(e,i){
@@ -148,7 +154,7 @@ var photo = function(){
 						console.log("error");
 						console.log(e);
 					//	throw(e);
-				
+					
 					console.log(i);
 					self.main_dfd.resolve(settings.request);
 				})
