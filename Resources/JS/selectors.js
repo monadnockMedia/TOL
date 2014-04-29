@@ -30,45 +30,79 @@ var bigClickSnd;
 
 var idleTimer;
 
+var initHTML;
+
+var initiated;
+
 // Init
 $(function init(){	
-	shutterSnd = document.createElement('audio');
-	shutterSnd.setAttribute('src', 'JS/shutter.wav');
-	shutterSnd.load();
-	
-	confirmSnd = document.createElement('audio');
-	confirmSnd.setAttribute('src', 'JS/confirm.wav');
-	confirmSnd.load();
-	
-	hoverSnd = document.createElement('audio');
-	hoverSnd.setAttribute('src', 'JS/hover.wav');
-	hoverSnd.load();
-	
-	clickSnd = document.createElement('audio');
-	clickSnd.setAttribute('src', 'JS/click.wav');
-	clickSnd.load();
-	
-	bigClickSnd = document.createElement('audio');
-	bigClickSnd.setAttribute('src', 'JS/bigbutton.wav');
-	bigClickSnd.load();
-	
-	
-	bindNext();
-	bindNumUsers();
-	bindGallery();
-	
-	p = new photo();
-	p.cam.deleteAll();
-	
-	r = new replacer();
-	r.open();
-	
-	m = new mailer();
-	
+	if (!initiated) {
+		initiated = true;
+		initHTML = $(document.body).html();
 
+		shutterSnd = document.createElement('audio');
+		shutterSnd.setAttribute('src', 'JS/shutter.wav');
+		shutterSnd.load();
+
+		confirmSnd = document.createElement('audio');
+		confirmSnd.setAttribute('src', 'JS/confirm.wav');
+		confirmSnd.load();
+
+		hoverSnd = document.createElement('audio');
+		hoverSnd.setAttribute('src', 'JS/hover.wav');
+		hoverSnd.load();
+
+		clickSnd = document.createElement('audio');
+		clickSnd.setAttribute('src', 'JS/click.wav');
+		clickSnd.load();
+
+		bigClickSnd = document.createElement('audio');
+		bigClickSnd.setAttribute('src', 'JS/bigbutton.wav');
+		bigClickSnd.load();
+
+
+		bindNext();
+		bindNumUsers();
+		bindGallery();
+
+		p = new photo();
+		p.cam.deleteAll();
+
+		r = new replacer();
+		r.open();
+
+		m = new mailer();
+
+		startTimer();	
+	}
 	
-	startTimer();
 })
+
+function hardReset() {
+	$(document.body).empty().append(initHTML);
+	
+	if (oskOnScreen) {
+		$pubKeyboard.fadeOut(250);
+		$pubInput.blur();
+		$pubKeyboardTriggers.removeClass('osk-focused');
+		oskOnScreen = false;
+	}
+	
+	phase = 1;
+	users = 0;
+	picsTaken = 0;
+	usersSupported = 3;
+	
+	savedPics.length = 0;
+	settings.request.tgImageID = null;
+	
+	$("input[type=text], textarea").val("");
+	
+	bindNumUsers();
+	bindNext();
+	bindClick();
+	bindGallery();
+}
 
 function startTimer() {
 	clearInterval(idleTimer);
@@ -93,26 +127,7 @@ var idleRestart = function() {
 	
 	console.log("idle Restart app");
 	
-	if (oskOnScreen) {
-		$pubKeyboard.fadeOut(250);
-		$pubInput.blur();
-		$pubKeyboardTriggers.removeClass('osk-focused');
-		oskOnScreen = false;
-	}
-	
-	phase = 1;
-	users = 0;
-	picsTaken = 0;
-	usersSupported = 3;
-	
-	bindNumUsers();
-	bindNext();
-	bindClick();
-	bindGallery();
-	savedPics.length = 0;
-	settings.request.tgImageID = null;
-	
-	require('nw.gui').Window.get().reload(3);
+	hardReset();
 	
 }
 

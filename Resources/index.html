@@ -70,117 +70,118 @@
 			<div class="cancel">Cancel</div>
 		</div></div>
 		
-		<script src="JS/jquery.onScreenKeyboard.js"></script>
-		<script>
-		 $(function() {
-			$(".inputIndent").onScreenKeyboard({'rewireTab' : true});
-			
-		    $( "#warning" ).dialog({
-			  autoOpen: false,
-		      resizable: false,
-			  width: 400,
-		      modal: true,
-		      buttons: {
-		        Okay: function() {
-		          $( this ).dialog( "close" );
-				  clickSnd.play();
-		        }
-		      }
-		    });
 		
-			$( "#idleD" ).dialog({
-				autoOpen: false,
-				width: 400,
-				modal: true,
-				resizable: false,
-				buttons: {
-				  	"Yes": function()
-					{
-				    	$( this ).dialog( "close" );
-						startTimer();
-						clickSnd.play();
-				  	}
-				}
-			});
-		
-		
-			$( "#nofaceDialog" ).dialog({
-			  autoOpen: false,
-		      resizable: false,
-			  width: 400,
-		      modal: true,
-		      buttons: {
-		        Okay: function() {
-					clickSnd.play();
-					$(".flex-drag").remove();
-					$(".snappedImage").remove();
-
-					if (oskOnScreen) {
-						$pubKeyboard.fadeOut(250);
-						$pubInput.blur();
-						$pubKeyboardTriggers.removeClass('osk-focused');
-						oskOnScreen = false;
-					}
-
-					$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
-					$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
-
-					$(".retake").remove();
-
-					var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
-					reset1.prependTo("#footer");
-
-					var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
-					reset2.appendTo(".content");
-
-					phase = 1;
-					users = 0;
-					picsTaken = 0;
-					usersSupported = 3;
-
-					bindNumUsers();
-					bindNext();
-					bindClick();
-					bindGallery();
-					savedPics.length = 0;
-					settings.request.tgImageID = null;
-
-					$("input[type=text], textarea").val("");
-		            $( this ).dialog( "close" );
-		        }
-		      }
-		    });
-		
-			$( "#readyDialog" ).dialog({
-			  autoOpen: false,
-		      resizable: false,
-			  width: 400,
-		      modal: true,
-		      buttons: {
-		        Okay: function() {
-					clickSnd.play();
-				  	var flashInterval = setInterval(function(){
-								flash(flashInterval);
-							}, 3000);
-					$(".flex-item").animate({
-						opacity: 0
-					  }, 250, function() {
-						$(".galleryImage").removeClass("selected");
-						$('.numUsersBtn').remove();
-						$(".snappedImage").remove();
-						$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
-						$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
-						$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
-						$(".flex-gallery").animate({opacity: 0}, 250, function() {});
-					  });
-					
-		          $( this ).dialog( "close" );
-		        }
-		      }
-		    });
-		  });
-		</script>
-		<script type="text/javascript" src="JS/selectors.js"></script>
 		
 	</BODY>
+	<script src="JS/jquery.onScreenKeyboard.js"></script>
+	<script>
+	 $(function() {
+		$(".inputIndent").onScreenKeyboard({'rewireTab' : true});
+		
+	    $( "#warning" ).dialog({
+		  autoOpen: false,
+	      resizable: false,
+		  width: 400,
+	      modal: true,
+	      buttons: {
+	        Okay: function() {
+	          $( this ).dialog( "close" );
+			  clickSnd.play();
+	        }
+	      }
+	    });
+	
+		$( "#idleD" ).dialog({
+			autoOpen: false,
+			width: 400,
+			modal: true,
+			resizable: false,
+			buttons: {
+			  	"Yes": function()
+				{
+			    	$( this ).dialog( "close" );
+					startTimer();
+					clickSnd.play();
+			  	}
+			}
+		});
+	
+	
+		$( "#nofaceDialog" ).dialog({
+		  autoOpen: false,
+	      resizable: false,
+		  width: 400,
+	      modal: true,
+	      buttons: {
+	        Okay: function() {
+				clickSnd.play();
+				$(".flex-drag").remove();
+				$(".snappedImage").remove();
+
+				if (oskOnScreen) {
+					$pubKeyboard.fadeOut(250);
+					$pubInput.blur();
+					$pubKeyboardTriggers.removeClass('osk-focused');
+					oskOnScreen = false;
+				}
+
+				$("#popup-interior-id").empty().prepend("How many people<br/>will be in your photo?");
+				$("#nextLabel-id").empty().prepend("Next<br/><div class='nextBtn'></div>");
+
+				$(".retake").remove();
+
+				var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
+				reset1.prependTo("#footer");
+
+				var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
+				reset2.appendTo(".content");
+
+				phase = 1;
+				users = 0;
+				picsTaken = 0;
+				usersSupported = 3;
+
+				bindNumUsers();
+				bindNext();
+				bindClick();
+				bindGallery();
+				savedPics.length = 0;
+				settings.request.tgImageID = null;
+
+				$("input[type=text], textarea").val("");
+	            $( this ).dialog( "close" );
+	        }
+	      }
+	    });
+	
+		$( "#readyDialog" ).dialog({
+		  autoOpen: false,
+	      resizable: false,
+		  width: 400,
+	      modal: true,
+	      buttons: {
+	        Okay: function() {
+				clickSnd.play();
+			  	var flashInterval = setInterval(function(){
+							flash(flashInterval);
+						}, 3000);
+				$(".flex-item").animate({
+					opacity: 0
+				  }, 250, function() {
+					$(".galleryImage").removeClass("selected");
+					$('.numUsersBtn').remove();
+					$(".snappedImage").remove();
+					$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
+					$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
+					$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
+					$(".flex-gallery").animate({opacity: 0}, 250, function() {});
+				  });
+				
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	    });
+	  });
+	</script>
+	<script type="text/javascript" src="JS/selectors.js"></script>
 </HTML>
