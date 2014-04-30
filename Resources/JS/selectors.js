@@ -66,7 +66,7 @@ $(function init(){
 		bindGallery();
 
 		p = new photo();
-		p.cam.deleteAll();
+	//	p.cam.deleteAll();
 
 		r = new replacer();
 		r.open();
@@ -403,7 +403,7 @@ var draw = function( id ){
 }
 
 var restartApp = function(){
-	p.cam.deleteAll();
+//p.cam.deleteAll();
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
 	
@@ -675,7 +675,7 @@ function bindClick() {
 				} else if ($( ".retake .popup-interior" ).hasClass("selected") == false){
 					picsTaken--;
 					savedPics.pop();
-					p.cam.deleteLast();
+			//		p.cam.deleteLast();
 					//$( ".retake .popup-interior" ).css("color", "#DAA520");
 					//$( ".retake .popup-interior" ).css("-webkit-text-stroke-color", "#DAA520");
 					$( ".nextBtn" ).removeClass("selected");
