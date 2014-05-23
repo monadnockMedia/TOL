@@ -323,7 +323,7 @@ var userReady = function() {
 	if (users == 1) {
 		$("#readyDialog").empty().append("When you are ready,<br/> press 'Okay'.");
 	} else {
-		$("#readyDialog").empty().append("When visitor " + activeUser + " is ready,<br/> press 'Okay'.");
+		$("#readyDialog").empty().append("Please have only one visitor's face in the frame.<br/><br/>We will take a picture of each of your faces individually,<br/>then combine them all at the end!<br/><br/>When visitor " + activeUser + " is ready,<br/> press 'Okay'.");
 	}
 	
     $( "#readyDialog" ).dialog( "open" );
@@ -385,6 +385,9 @@ var draw = function( id ){
 			confirmSnd.play();
 			$(".ui-draggable-dragging").remove();
 			ui.draggable.draggable( 'disable' );
+			
+			console.log($(ui.draggable));
+			$(ui.draggable).html(" ");
 			
 			$this = $(this);
 	        $this.addClass("anchored");
