@@ -151,12 +151,12 @@ var photo = function(){
 				
 				ezi.crop( options, function(e,i){
 					
-						console.log("error");
-						console.log(e);
-					//	throw(e);
+						console.log("error",e);
+						//self.main_dfd.reject(e)
+				
+						self.main_dfd.resolve(settings.request);
 					
-					console.log(i);
-					self.main_dfd.resolve(settings.request);
+					
 				})
 
 			});
