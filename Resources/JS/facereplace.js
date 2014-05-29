@@ -12,15 +12,17 @@ function focus_window(){
 replacer = function(){
 	var self = this;
 	this.dfd =  null;
-	this.startCVServer = true;
-	var socket = null;
+	this.startCVServer = false;
+	this.socket = null;
 	this.serverAppPath = "/Applications/tol_face_replaceDebug.app"
-	
+	this.currentRequest;
 	this.open = function(){
 		if(this.startCVServer){
 			startServer();
 		}else{
-			openSocket();
+			this.openSocket();
+			focus_window();
+			win.enterKioskMode();
 		}
 	}
 	
@@ -32,33 +34,48 @@ replacer = function(){
 		setTimeout(openSocket,2000);
 	}
 	
-	var openSocket = function(){
-		focus_window();
-		win.enterKioskMode();
+	this.openSocket = function(){
+		
 		
 		console.log("opening");
-		socket = new WebSocket("ws://localhost:9092");
-		socket.onmessage = function(e){
-			console.log("e.data.error");
-			console.log(e.data.error);
-			if(e.data){
-				mess = JSON.parse(e.data);
-				self.dfd.resolve( mess );
-			}
-		}
+		this.socket = new WebSocket("ws://localhost:9092");
+		this.socket.onmessage = this.message;
 
-		socket.onopen = function(e){
+		this.socket.onopen = function(e){
 			console.log("OPEN");
-			$("#go").click(function(){
-				sendImage(o);
-				console.log("sending Image object");
-			})
+		}
+	}
+	
+	this.message = function(e){
+		console.log("Server Response");
+		console.log(e);
+		if(e.data){
+			mess = JSON.parse(e.data);
+			self.dfd.resolve( mess );
 		}
 	}
 	
 	this.replace = function( _req ){
 		this.dfd = when.defer();
-		socket.send(JSON.stringify(_req));
+		this.currentRequest = _req;
+		console.log("ATTEMPTING REPLACE", self.socket.readyState);
+		if(self.socket.readyState === 1){
+			console.log("SOCKET OPEN", 	this.currentRequest);
+			
+			self.socket.send(JSON.stringify(this.currentRequest));
+			
+			
+		}else{
+			console.log("SOCKET CLOSED");
+			self.socket = new WebSocket("ws://localhost:9092");
+			self.socket.onmessage = self.message;
+			self.socket.onopen = function(){
+				console.log("attempting again ", self.currentRequest);
+				self.socket.send(JSON.stringify(self.currentRequest));
+			}
+			
+		
+		}
 		return this.dfd.promise;
 	}
 	

@@ -151,7 +151,7 @@ var photo = function(){
 				
 				ezi.crop( options, function(e,i){
 					
-						console.log("error",e);
+						//console.log("error",e);
 						//self.main_dfd.reject(e)
 				
 						self.main_dfd.resolve(settings.request);
