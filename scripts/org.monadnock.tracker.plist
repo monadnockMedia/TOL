@@ -7,7 +7,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>org.monadnock.startup</string>
+	<string>org.monadnock.tracker</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/Applications/tol_face_replaceDebug.app/Contents/MacOS/tol_face_replaceDebug</string>
