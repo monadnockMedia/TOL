@@ -321,7 +321,7 @@ var userReady = function() {
 	var activeUser = picsTaken + 1;
 	
 	if (users == 1) {
-		$("#readyDialog").empty().append("When you are ready,<br/> press 'Okay'.");
+		$("#readyDialog").empty().append("<b><u>Please have only one visitor's face in the frame.</u></b><br/><br/>When you are ready,<br/> press 'Okay'.");
 	} else {
 		$("#readyDialog").empty().append("<b><u>Please have only one visitor's face in the frame.</u></b><p style='text-align:left !important;'>We will take a picture of each of your faces individually, then combine them all at the end! <br/> <br/> When visitor " + activeUser + " is ready, press 'Okay'.</p>");
 	}
