@@ -53,7 +53,7 @@ var photo = function(){
 	//CONSTRUCTOR
 	//Some basic vars
 	var camHost = "http://10.5.5.9:8080"
-	var imgDir ="/videos/DCIM/100GOPRO/";
+	var imgDir ="/videos/DCIM/101GOPRO/";
 	var lastImg;
 	var lastUrl;
 	
