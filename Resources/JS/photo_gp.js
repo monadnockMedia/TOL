@@ -113,9 +113,10 @@ var photo = function(){
 				console.log(d);
 				//console.log(dfd);  //inspect the deferred object	
 				//when the deferred is resolved, get the string uri of the last image taken.
+			
 				lastImg = d[d.length-1];
 				lastUrl = camHost+imgDir+lastImg.name;
-
+				console.log("Getting Image",lastUrl);
 				//get the image and then load it in to the image div
 				self.getImage(lastUrl);
 
@@ -146,6 +147,7 @@ var photo = function(){
 			rq(camUrl).pipe(fs.createWriteStream(tmpName)).on('close', function(){
 				//resolve to return the path of the file we created.
 				//cam.deleteLast();
+				consol.log("Creating Image File",tmpName);
 				self.cam.deleteLast();
 				var options = settings.ezoption(tmpName, tmpName);
 				
