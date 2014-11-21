@@ -109,7 +109,7 @@ replacer.prototype.replace = function(_req){
 		}
 		
 		
-		dfd.resolve(cnv);
+		dfd.resolve(cnv.toDataURL());
 	}
 	function clone(_src, _tg){
 	
@@ -170,7 +170,7 @@ replacer.prototype.replace = function(_req){
 		}
 		
 		
-		dfd.resolve(cnv);
+		dfd.resolve(cnv.toDataURL());
 	}
 	
 		

@@ -5,7 +5,7 @@ var lw = require('lwip');
 var fs = require('fs');
 var debug = false;
 var savedPics = new Array();
-var exp = 16;
+var exp = 32;
 var blur_amt = 12;
 
 //note new node requisites
@@ -82,7 +82,7 @@ function do_cv(_f){
 		cropped = img.crop(dw/2, dh/2, dimen, dimen);
 		var crop_path = _f+"_crop.png"
 		cropped.save(crop_path);
-		
+		var crop_data;
 		
 		//detect face object using the cascade xml
 		cropped.detectObject(cv.FACE_CASCADE, {}, function(err, faces){  
@@ -92,20 +92,24 @@ function do_cv(_f){
 				
 				
 				else{
-				mask = new cv.Matrix.Ones(dimen,dimen);
-				debug = new cv.Matrix(dimen,dimen);
-			
-						var f = faces[0];
-						var fm = transformFace(faces[0]);
-						debugger;
-						res.face = f;
-						mask.ellipse(	fm.x + fm.width/2, 	fm.y + fm.height/2, 
-										fm.width/2, fm.height/2, 
-										[255,255 ,255],-1);
-									
+					mask = new cv.Matrix.Ones(dimen,dimen);
+					debug = new cv.Matrix(dimen,dimen);
+					
+					loadImage(crop_path).then(function(ctx){
+						crop_data = ctx.canvas.toDataURL();
+					})
+					
+					var f = faces[0];
+					var fm = transformFace(faces[0]);
+					debugger;
+					res.face = f;
+					mask.ellipse(	fm.x + fm.width/2, 	fm.y + fm.height/2, 
+									fm.width/2, fm.height/2, 
+									[255,255 ,255],-1);
+								
 
 					
-						debug.ellipse(f.x + f.width/2, f.y + f.height/2, f.width/2, f.height/2, [255,0,0],-255);
+					debug.ellipse(f.x + f.width/2, f.y + f.height/2, f.width/2, f.height/2, [255,0,0],-255);
 				
 					var debug_path = _f+"_debug.png";
 					var mask_path = _f+"_mask.png";
@@ -182,6 +186,7 @@ function do_cv(_f){
 							imgData.data[i+3]=luma(i, maskData.data);
 						  }
 						ctx.putImageData(imgData,0,0);
+						res.cropped_face = crop_data;
 						res.masked_face = cnv.toDataURL();
 						dfd.resolve(res);
 					}
@@ -260,10 +265,13 @@ Photo.prototype.snap = function(){
 			//call the cv function to id faces and mask image
 			do_cv(tmpName).then(function(d){
 				proc.kill("SIGINT");
+				debugger;
 				settings.request.sources.push(
 					{ 	
+						
 						faceID: null, 
 						face:d.masked_face,
+						image:d.cropped_face,
 						rect:d.face,
 						mask:d.mask
 					}
