@@ -219,3 +219,5 @@ node-webkit.app
 TOL.nw
 
 *.nw
+
+node_modules/**/*
