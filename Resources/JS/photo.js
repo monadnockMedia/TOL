@@ -256,10 +256,10 @@ Photo.prototype.snap = function(){
 		var proc = ex(cmd, function(err,so,se){
 			if(err){
 				console.log("snap error");
-				dfd.reject(err);
+				//dfd.reject(err);
 			}else if(se){
 				console.log("standard error");
-				dfd.reject(se);
+				//dfd.reject(se);
 			}
 			
 			//call the cv function to id faces and mask image
