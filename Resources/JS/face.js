@@ -29,7 +29,7 @@ replacer.prototype.replace = function(_req){
 	var sources = _req.sources;
 	
 	var cnv,ctx;
-	iTg.src = "./img/"+target.img_uri;
+	iTg.src = "./IMAGES/"+target.img_uri;
 	
 	
 	function clone_loop(){

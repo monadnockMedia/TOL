@@ -7,11 +7,14 @@ var p, r, m;
 var elipsisInterval;
 var emailing = false;
 var giftshopping = false;
+var settings = {};
+settings.request = {};
 
 var canvas;
-var data;
+var data = require("./JS/targets.json");
 var usersSupported = 3;
 var finalURL;
+var locTargetImgID;
 
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
@@ -65,11 +68,14 @@ $(function init(){
 		bindNumUsers();
 		bindGallery();
 
-		p = new photo();
+
+	
+	//	p = new photo();
 	//	p.cam.deleteAll();
 
-		r = new replacer();
-		r.open();
+
+		r = new replacer(data);
+	//	r.open();
 
 		m = new mailer();
 
@@ -79,6 +85,7 @@ $(function init(){
 })
 
 function hardReset() {
+	$.get("http://localhost:2999/snap?reset=true");
 	$(document.body).empty().append(initHTML);
 	
 	if (oskOnScreen) {
@@ -94,7 +101,7 @@ function hardReset() {
 	usersSupported = 3;
 	
 	savedPics.length = 0;
-	settings.request.tgImageID = null;
+	locTargetImgID = null;
 	
 	$("input[type=text], textarea").val("");
 	
@@ -174,7 +181,7 @@ function nextPhase (curPhase) {
 					dragFrame = jQuery('<div class="popup-exterior faceDragger"><div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div></div>');
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
-					$(".dragFrame:last").append("<img src='" + settings.getImageURL(i) + "' width='100%' height='100%' />");
+					$(".dragFrame:last").append("<img src='" + settings.request.sources[picsTaken-1].image + "' width='100%' height='100%' />");
 					$("img").attr("draggable", "false");
 				}
 				
@@ -189,12 +196,12 @@ function nextPhase (curPhase) {
 				})*/
 				
 				//Get coordinates for anchors based on image ID
-				$.getJSON("JS/targets.json",function(d){
-					data = d;
-					console.log("Get JSON");
-					console.log(d);
+			//	$.getJSON("JS/targets.json",function(d){
+				//	data = d;
+				//	console.log("Get JSON");
+				//	console.log(d);
 					draw(settings.request.tgImageID);
-				})
+			//	})
 				
 				
 				//Setup draggable faces and drag anchors for them to drop on
@@ -330,31 +337,34 @@ var userReady = function() {
 }
 
 var draw = function( id ){
+	var scale;
 	thisData = data[id];
 	
-	var l = thisData.length;
+	var l = thisData.faces.length;
 	$c = $("#snap");
 	
 	//width: thisData[0].img_size.width,
 	//height: thisData[0].img_size.height
 	
 	//Checks for landscape or portrait orientation and sets appropriate scaling
-	if (thisData[0].img_size.height > thisData[0].img_size.width) {
+	if (thisData.img_size.height > thisData.img_size.width) {
 		$c.css({
-			"background-image":"url(IMAGES/"+thisData[0].img_uri+")",
+			"background-image":"url(IMAGES/"+thisData.img_uri+")",
 			width: 550,
 			height: 550,
 			"background-size": "auto 100%",
 			"margin-left":"14%"
 		})
+		scale = 550/thisData.img_size.height;
 	} else {
 		$c.css({
-			"background-image":"url(IMAGES/"+thisData[0].img_uri+")",
+			"background-image":"url(IMAGES/"+thisData.img_uri+")",
 			width: 550,
 			height: 550,
 			"background-size": "100% auto",
 			"margin-top":"14%"
 		})
+		scale = 550/thisData.img_size.width;
 	}
 	
 	for(var i = 0; i<l;i++){
@@ -367,10 +377,10 @@ var draw = function( id ){
 		//Add anchor points here
 		$t.addClass("dragAnchor");
 		$t.css({
-			width: thisData[i].boundary.width,
-			height: thisData[i].boundary.width,
-			left: thisData[i].boundary.x,
-			top: thisData[i].boundary.y,
+			width: thisData.faces[i].width * scale,
+			height: thisData.faces[i].width * scale,
+			left: thisData.faces[i].x * scale,
+			top: thisData.faces[i].y * scale,
 		}).attr("faceID", i);
 		console.log(i)
 	})
@@ -396,6 +406,7 @@ var draw = function( id ){
 			var faceID = $(event.target).attr("faceID");
 			
 			var srcID = +$dropped.attr("srcid");
+			
 			savedPics[srcID].faceID = faceID;
 			settings.request.sources = savedPics;
 			
@@ -407,6 +418,7 @@ var draw = function( id ){
 
 var restartApp = function(){
 //p.cam.deleteAll();
+	$.get("http://localhost:2999/snap?reset=true");
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
 	
@@ -615,22 +627,28 @@ var bindGallery = function(){
 					$("#warning").empty().append("This picture isn't supported yet, check back soon!");
 					if (imageId == 0) {
 						$(".gallery").addClass("one");
-						settings.request.tgImageID = imageId;
+						//settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					} else if (imageId == 1) {
 						$(".gallery").addClass("two");
-						settings.request.tgImageID = imageId;
+					//	settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					} else if (imageId == 2) {
 						$(".gallery").addClass("three");
-						settings.request.tgImageID = imageId;
+					//	settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					} else if (imageId == 3) {
 						$(".gallery").addClass("six");
-						settings.request.tgImageID = imageId;
+					//	settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					} else if (imageId == 4) {
 						$(".gallery").addClass("four");
-						settings.request.tgImageID = imageId;
+						//settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					} else if (imageId == 5) {
 						$(".gallery").addClass("five");
-						settings.request.tgImageID = imageId;
+						//settings.request.tgImageID = imageId;
+						locTargetImgID = imageId;
 					}
 
 					checkReady();
@@ -645,7 +663,7 @@ var bindGallery = function(){
 
 //Make sure an image and number of users has been selected
 function checkReady() {
-	if (settings.request.tgImageID != null && $(".numUsersBtn").hasClass("selected")) {
+	if (locTargetImgID != null && $(".numUsersBtn").hasClass("selected")) {
 		
 		$( ".nextBtn" ).addClass("selected");
 			$("#nextLabel-id-ext").addClass("glow");
@@ -785,28 +803,29 @@ function checkAnchored() {
 		r.replace(settings.request).then(function(d){
 			console.log("r.replace");
 			console.log(d);
+			//debugger;
+			$( ".nextBtn" ).addClass("selected");
+			$("#nextLabel-id-ext").addClass("glow");
+			setTimeout(function(){
+				$("#nextLabel-id-ext").removeClass("glow");
+			},120);
 			
-			if (d.sources[0].error == "no face found") {
-				$( "#nofaceDialog" ).dialog( "open" );
-			} else {
-				$( ".nextBtn" ).addClass("selected");
-				$("#nextLabel-id-ext").addClass("glow");
-				setTimeout(function(){
-					$("#nextLabel-id-ext").removeClass("glow");
-				},120);
+			clearInterval(elipsisInterval);
+			$snap = $("#snap");
+			$snap.css({
+				"background-image": "url("+d+")"
+			})
+			
+			
+			$(".dragAnchor").remove();
+			
+		/*	r.watermark(d.processedImage).then(function(d) {
+				
+				console.log("Set watermarked background-image");
 
-				r.watermark(d.processedImage).then(function(d) {
-					finalURL = d.image;
-					clearInterval(elipsisInterval);
-					$snap = $("#snap");
-					$snap.css({
-						"background-image": "url("+d.image+")"
-					})
-					console.log("Set watermarked background-image");
-
-					$(".dragAnchor").remove();
-				});
-			}
+				
+			});*/
+			
 		});
 	}
 }
@@ -838,12 +857,14 @@ function flash(flashInterval) {
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
 		
-		p.snap().then(function(d){
+		$.get( "http://localhost:2999/snap", function( d ) {
+			settings.request = d;
+			settings.request.tgImageID = locTargetImgID;
 			picsTaken++;
 			console.log("picsTaken: " + picsTaken);
 			console.log(d);
 			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
-			var loadUrl = "url("+settings.getImageURL(picsTaken-1)+")"; // picsTaken-1
+			var loadUrl = "url("+d.sources[picsTaken-1].image+")"; // picsTaken-1
 			$("#snap").css("background-image", loadUrl);
 			$(".snappedImage .indent").remove();
 			$(".elipsis").remove();

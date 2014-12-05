@@ -170,7 +170,6 @@ function do_cv(_f){
 						var srcData = src.getImageData(0,0,w,h);
 						var maskData = mask.getImageData(0,0,w,h);
 
-					
 
 						var cnv = new Canvas(w, h);
 						var ctx = cnv.getContext('2d');
