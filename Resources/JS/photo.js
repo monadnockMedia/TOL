@@ -5,7 +5,7 @@ var lw = require('lwip');
 var fs = require('fs');
 var debug = false;
 var savedPics = new Array();
-var exp = 32;
+var exp = 48;
 var blur_amt = 12;
 
 //note new node requisites
@@ -101,7 +101,7 @@ function do_cv(_f){
 					
 					var f = faces[0];
 					var fm = transformFace(faces[0]);
-					debugger;
+					
 					res.face = f;
 					mask.ellipse(	fm.x + fm.width/2, 	fm.y + fm.height/2, 
 									fm.width/2, fm.height/2, 
@@ -170,6 +170,7 @@ function do_cv(_f){
 						var srcData = src.getImageData(0,0,w,h);
 						var maskData = mask.getImageData(0,0,w,h);
 
+					
 
 						var cnv = new Canvas(w, h);
 						var ctx = cnv.getContext('2d');
@@ -264,7 +265,7 @@ Photo.prototype.snap = function(){
 			//call the cv function to id faces and mask image
 			do_cv(tmpName).then(function(d){
 				proc.kill("SIGINT");
-				debugger;
+				
 				settings.request.sources.push(
 					{ 	
 						
@@ -277,7 +278,7 @@ Photo.prototype.snap = function(){
 				);
 				dfd.resolve(settings.request);
 			}).catch(function(e){
-				debugger;
+				
 				dfd.reject(e);
 				})
 		
