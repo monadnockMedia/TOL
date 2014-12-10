@@ -1,6 +1,7 @@
 [
   {
     "img_uri": "0_lifering.jpg",
+	"paint_uri": "0_lifering_paint.png",
     "img_size": {
       "width": 768,
       "height": 1024
@@ -16,6 +17,7 @@
   },
   {
     "img_uri": "1_fishing.jpg",
+ 	"paint_uri": "1_fishing_paint.png",
     "img_size": {
       "width": 768,
       "height": 1280
@@ -37,6 +39,7 @@
   },
   {
     "img_uri": "2_crew.jpg",
+	"paint_uri": "2_crew_paint.png",
     "img_size": {
       "width": 768,
       "height": 1216
@@ -58,6 +61,7 @@
   },
   {
     "img_uri": "3_walk.jpg",
+"paint_uri": "3_walk_paint.png",
     "img_size": {
       "width": 1024,
       "height": 768
@@ -91,6 +95,7 @@
   },
   {
     "img_uri": "4_couples.jpg",
+	"paint_uri": "4_couples_paint.png",
     "img_size": {
       "width": 955,
       "height": 768
@@ -124,6 +129,7 @@
   },
   {
     "img_uri": "5_kids.jpg",
+	"paint_uri": "5_kids_paint.png",
     "img_size": {
       "width": 768,
       "height": 960
