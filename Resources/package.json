@@ -18,7 +18,9 @@
     "request": "~2.21.0",
     "cheerio": "~0.11.0",
     "easyimage": "~0.1.3",
-    "tmp": "~0.0.23"
+    "tmp": "~0.0.23",
+    "canvas": "^1.1.6",
+    "tmp": "0.0.24",
   },
   "webkit": {
     "plugin": true,
