@@ -85,7 +85,7 @@ $(function init(){
 })
 
 function hardReset() {
-	$.get("http://localhost:2999/snap?reset=true");
+	$.get(apiURL + "/snap?reset=true");
 	$(document.body).empty().append(initHTML);
 	
 	if (oskOnScreen) {
@@ -181,7 +181,8 @@ function nextPhase (curPhase) {
 					dragFrame = jQuery('<div class="popup-exterior faceDragger"><div srcid = "'+i+'" class="dragFrame ui-widget-content draggable"></div></div>');
 				    dragFrame.appendTo(".flex-drag");
 					//WRN added settings function to get img id.
-					$(".dragFrame:last").append("<img src='" + settings.request.sources[picsTaken-1].image + "' width='100%' height='100%' />");
+					console.log("Set Drag Frame Image", picsTaken);
+					$(".dragFrame:last").append("<img src='" + settings.request.sources[i].image + "' width='100%' height='100%' />");
 					$("img").attr("draggable", "false");
 				}
 				
@@ -418,7 +419,7 @@ var draw = function( id ){
 
 var restartApp = function(){
 //p.cam.deleteAll();
-	$.get("http://localhost:2999/snap?reset=true");
+	$.get(apiURL + "/snap?reset=true");
 	$(".flex-drag").remove();
 	$(".snappedImage").remove();
 	
@@ -445,7 +446,12 @@ var restartApp = function(){
 	console.log("usersSupported");
 	console.log(usersSupported);
 	
-	savedPics.length = 0;
+	
+	
+	if (savedPics) {
+		savedPics.length = 0;
+	}
+	
 	settings.request.tgImageID = null;
 	
 	$("input[type=text], textarea").val("");
@@ -813,8 +819,10 @@ function checkAnchored() {
 			clearInterval(elipsisInterval);
 			$snap = $("#snap");
 			$snap.css({
-				"background-image": "url("+d+")"
+				"background-image": "url("+d.dataURL+")"
 			})
+			
+			finalURL = d.path;
 			
 			
 			$(".dragAnchor").remove();
@@ -857,17 +865,23 @@ function flash(flashInterval) {
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
 		
-		$.get( "http://localhost:2999/snap", function( d ) {
-			settings.request = d;
-			settings.request.tgImageID = locTargetImgID;
-			picsTaken++;
-			console.log("picsTaken: " + picsTaken);
-			console.log(d);
-			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
-			var loadUrl = "url("+d.sources[picsTaken-1].image+")"; // picsTaken-1
-			$("#snap").css("background-image", loadUrl);
-			$(".snappedImage .indent").remove();
-			$(".elipsis").remove();
+		$.get( apiURL + "/snap", function( d ) {
+			if (d.error) {
+				$("#nofaceDialog").empty().append("We couldn't find your face!");
+				$( "#nofaceDialog" ).dialog( "open" );
+			} else {
+				settings.request = d;
+
+
+				settings.request.tgImageID = locTargetImgID;
+				picsTaken++;
+				console.log("picsTaken: " + picsTaken);
+				console.log(d);
+				savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
+				var loadUrl = "url("+d.sources[picsTaken-1].image+")"; // picsTaken-1
+				$("#snap").css("background-image", loadUrl);
+				$(".snappedImage .indent").remove();
+				$(".elipsis").remove();
 				$("#snap").animate({opacity: 1}, 250, function() {
 					$( ".nextBtn" ).toggleClass("selected");
 					$("#nextLabel-id-ext").addClass("glow");
@@ -877,8 +891,10 @@ function flash(flashInterval) {
 					clearInterval(elipsisInterval);
 					bindNext();
 					bindClick();
-					
+
 				});
+			}
+			
 		});
 		
 		shutterSnd.play();

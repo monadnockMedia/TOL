@@ -1,6 +1,8 @@
- var replacer = function(_targets){
+var apiURL = "http://ray.local:2999";
+
+var replacer = function(_targets){
 	var self = this;
-	this.imgDir = "./img/"
+	this.imgDir = "IMAGES/";
 	this.targets = _targets;
 	this.targets.forEach(function(t,i){
 		t.paint = new Image();
@@ -40,7 +42,7 @@ replacer.prototype.replace = function(_req){
 	$(iTg).load(dfd_tg.resolve);
 	$(iWm).load(dfd_wm.resolve);
 	
-
+	
 	
 	var sources = _req.sources;
 	
@@ -90,7 +92,7 @@ replacer.prototype.replace = function(_req){
 			}
 			
 		
-			$.post("http://localhost:2999/saveimg",res).done(function(d){
+			$.post(apiURL + "/saveimg",res).done(function(d){
 				loop_dfd.resolve(d);
 			});
 			

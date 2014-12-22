@@ -116,7 +116,11 @@
 	      buttons: {
 	        Okay: function() {
 				clickSnd.play();
-				$(".flex-drag").remove();
+				$( this ).dialog( "close" );
+				idleRestart();
+				
+				
+				/*$(".flex-drag").remove();
 				$(".snappedImage").remove();
 
 				if (oskOnScreen) {
@@ -133,7 +137,7 @@
 
 				var reset1 = jQuery('<div class="gallery flex-gallery"><div class="galleryImage" id="4">Image4</div><div class="galleryImage" id="5">Image5</div><div class="galleryImage" id="3">Image6</div><div class="galleryImage" id="0">Image1</div><div class="galleryImage" id="1">Image2</div><div class="galleryImage" id="2">Image3</div></div>');
 				reset1.prependTo("#footer");
-
+				
 				var reset2 = jQuery('<div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
 				reset2.appendTo(".content");
 
@@ -150,7 +154,8 @@
 				locTargetImgID = null;
 
 				$("input[type=text], textarea").val("");
-	            $( this ).dialog( "close" );
+				$(".elipsis").empty();*/
+	            
 	        }
 	      }
 	    });
