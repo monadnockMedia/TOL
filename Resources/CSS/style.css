@@ -316,7 +316,7 @@ body {
 .dragAnchor {
 	width:200px;
 	height:200px;
-	position:relative;
+	position:absolute;
 	-moz-border-radius: 100px;
 	border-radius: 100px;
 	-webkit-box-shadow: 0px 0px 9px 3px rgba(0,238,255,0.75);
@@ -406,6 +406,7 @@ body {
 	width:550px;
 	height:550px;
 	background-repeat:no-repeat;
+	position:relative;
 	
 	-webkit-transition: all 0.12s ease-in-out;
 	  -o-transition: all 0.12s ease-in-out;

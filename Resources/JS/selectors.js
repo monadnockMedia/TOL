@@ -100,7 +100,7 @@ function hardReset() {
 	picsTaken = 0;
 	usersSupported = 3;
 	
-	savedPics.length = 0;
+	savedPics = [];
 	locTargetImgID = null;
 	
 	$("input[type=text], textarea").val("");
@@ -354,7 +354,7 @@ var draw = function( id ){
 			width: 550,
 			height: 550,
 			"background-size": "auto 100%",
-			"margin-left":"14%"
+			"margin-left":"7%"
 		})
 		scale = 550/thisData.img_size.height;
 	} else {
@@ -363,7 +363,7 @@ var draw = function( id ){
 			width: 550,
 			height: 550,
 			"background-size": "100% auto",
-			"margin-top":"14%"
+			"margin-top":"7%"
 		})
 		scale = 550/thisData.img_size.width;
 	}
@@ -927,7 +927,7 @@ var nwKiosk = function(){
 	var mouseHidden =true;
 	var kioskMode=true;
 	var devTools=true;
-	var gui =require('nw.gui');
+	var gui=require('nw.gui');
 	//setInterval(focus_window,5000);
 
 	var win = gui.Window.get();
@@ -953,6 +953,12 @@ var nwKiosk = function(){
 
 
 	})}
+	
+	this.goKiosk = function() {
+		win.enterKioskMode();
+		kioskMode = true;
+	}
+	
 	this.hideMouse = function(){
 		$("body").css("cursor","none")
 	}
@@ -962,6 +968,8 @@ var nwKiosk = function(){
 	
 }
 $(function(){nwK = new nwKiosk();
-nwK.hideMouse();
-nwK.setup();})
+	nwK.hideMouse();
+	nwK.setup();
+	nwK.goKiosk();
+})
 

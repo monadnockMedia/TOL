@@ -1,4 +1,4 @@
-var apiURL = "http://ray.local:2999";
+var apiURL = "http://localhost:2999";
 
 var replacer = function(_targets){
 	var self = this;
