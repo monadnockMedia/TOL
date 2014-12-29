@@ -695,13 +695,14 @@ function bindClick() {
 				//Keep picture or retake?
 				if ($( this ).hasClass("keep")) {
 					$( ".nextBtn" ).addClass("selected");
-					$("#nextLabel-id-ext").addClass("glow");
+					$("#nextLabel-id-ext").addClass ("glow");
 					setTimeout(function(){
 						$("#nextLabel-id-ext").removeClass("glow");
 					},120);
 				} else if ($( ".retake .popup-interior" ).hasClass("selected") == false){
 					picsTaken--;
 					savedPics.pop();
+					$.get(apiURL + "/snap?reset=last");
 			//		p.cam.deleteLast();
 					//$( ".retake .popup-interior" ).css("color", "#DAA520");
 					//$( ".retake .popup-interior" ).css("-webkit-text-stroke-color", "#DAA520");
