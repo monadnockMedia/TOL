@@ -28,11 +28,11 @@ replacer = function(){
 	
 	
 	
-	var startServer = function(){
+/*	var startServer = function(){
 		var command = "open "+self.serverAppPath;
 		open = child.exec(command, function(e,sout,serr){});
 		setTimeout(openSocket,2000);
-	}
+	}*/
 	
 	this.openSocket = function(){
 		

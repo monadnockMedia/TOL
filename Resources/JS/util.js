@@ -1,6 +1,7 @@
 var fs = require('fs');
 var wp = require("wpmedia");
 var when = require("when")
+var child = require("child_process");
 
 w = new wp();
 var wordpress = {};
@@ -65,6 +66,7 @@ var mailer = function(){
 
 }
 var printer = {};
+
 
 	
 	printer.print = function(_url){
