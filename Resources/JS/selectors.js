@@ -16,6 +16,8 @@ var usersSupported = 3;
 var finalURL;
 var locTargetImgID;
 
+var firstTouch = false;
+
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
 previewArr.push("0_lifering");
@@ -127,6 +129,10 @@ var promptIdleUser = function() {
 
 $(document.body).click(function(e) {
 	startTimer();
+	if (!firstTouch) {
+		firstTouch = true;
+		$.get(apiURL + "/calibrate");
+	}
 })
 
 var idleRestart = function() {
