@@ -16,7 +16,7 @@ var usersSupported = 3;
 var finalURL;
 var locTargetImgID;
 
-var firstTouch = false;
+var firstTouch;
 
 //This array holds the filename for each possible image selection
 var previewArr = new Array();
@@ -42,6 +42,7 @@ var initiated;
 // Init
 $(function init(){	
 	if (!initiated) {
+		firstTouch = false;
 		initiated = true;
 		initHTML = $(document.body).html();
 
@@ -82,7 +83,11 @@ $(function init(){
 		m = new mailer();
 
 		startTimer();	
+	} else {
+		firstTouch = true;
 	}
+	
+	
 	
 })
 
@@ -128,10 +133,12 @@ var promptIdleUser = function() {
 }
 
 $(document.body).click(function(e) {
+	
 	startTimer();
 	if (!firstTouch) {
 		firstTouch = true;
 		$.get(apiURL + "/calibrate");
+		console.log("get /calibrate");
 	}
 })
 
