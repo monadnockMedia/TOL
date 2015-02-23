@@ -168,18 +168,18 @@
 	      buttons: {
 	        Okay: function() {
 				clickSnd.play();
-			  	var flashInterval = setInterval(function(){
+			  	/*var flashInterval = setInterval(function(){
 							flash(flashInterval);
-						}, 3000);
+						}, 3000);*/
+				startCountdown();
 				$(".flex-item").animate({
 					opacity: 0
 				  }, 250, function() {
 					$(".galleryImage").removeClass("selected");
 					$('.numUsersBtn').remove();
 					$(".snappedImage").remove();
-					$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
+					$("#popup-interior-id").empty().prepend("3");
 					$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
-					$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
 					$(".flex-gallery").animate({opacity: 0}, 250, function() {});
 				  });
 				
