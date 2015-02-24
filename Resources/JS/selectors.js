@@ -36,13 +36,14 @@ var bigClickSnd;
 var idleTimer;
 
 var initHTML;
-
+var calibrating;
 var initiated;
 
 // Init
 $(function init(){	
 	if (!initiated) {
 		firstTouch = false;
+		calibrating = false;
 		initiated = true;
 		initHTML = $(document.body).html();
 
@@ -137,7 +138,14 @@ $(document.body).click(function(e) {
 	startTimer();
 	if (!firstTouch) {
 		firstTouch = true;
-		$.get(apiURL + "/calibrate");
+		calibrating = true;
+		//$.get(apiURL + "/calibrate");
+		
+		$.get( apiURL + "/calibrate", function( d ) {
+			console.log("Calibration Complete");
+			calibrating = false;
+		});
+		
 		console.log("get /calibrate");
 	}
 })
@@ -536,11 +544,12 @@ function bindNext() {
 		//nextBtn will only be selected once the visitor has done everything needed on screen
 		if ($(".nextBtn").hasClass("selected")) {
 			bigClickSnd.play();
+			
 			if (emailing) {
 				nextPhase(phase);
 			} else if (giftshopping) {
 				nextPhase(phase);
-			} else {
+			} else if (calibrating != true) {
 				$( this ).toggleClass("selected");
 				nextPhase(phase);
 			}
