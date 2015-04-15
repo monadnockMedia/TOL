@@ -116,8 +116,25 @@
 	      buttons: {
 	        Okay: function() {
 				clickSnd.play();
-				$( this ).dialog( "close" );
-				idleRestart();
+			  	var flashInterval = setInterval(function(){
+							flash(flashInterval);
+						}, flashTime);
+				var snapInterval = setInterval(function(){
+							snapPicture(snapInterval);
+						}, snapTime);
+				$(".flex-item").animate({
+					opacity: 0
+				  }, 250, function() {
+					$(".galleryImage").removeClass("selected");
+					$('.numUsersBtn').remove();
+					$(".snappedImage").remove();
+					$("#popup-interior-id").empty().prepend("Look into the mirror.<br/>Smile!");
+					$("#popup-exterior-id").animate({opacity: 1}, 250, function() {});
+					$("#popup-interior-id").animate({opacity: 1}, 250, function() {});
+					$(".flex-gallery").animate({opacity: 0}, 250, function() {});
+				  });
+				
+	          $( this ).dialog( "close" );
 				
 				
 				/*$(".flex-drag").remove();
@@ -170,7 +187,10 @@
 				clickSnd.play();
 			  	var flashInterval = setInterval(function(){
 							flash(flashInterval);
-						}, 3000);
+						}, flashTime);
+				var snapInterval = setInterval(function(){
+							snapPicture(snapInterval);
+						}, snapTime);
 				$(".flex-item").animate({
 					opacity: 0
 				  }, 250, function() {

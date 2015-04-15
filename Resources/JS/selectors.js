@@ -10,6 +10,9 @@ var giftshopping = false;
 var settings = {};
 settings.request = {};
 
+var flashTime = 3000;
+var snapTime = 3000;
+
 var canvas;
 var data = require("./JS/targets.json");
 var usersSupported = 3;
@@ -95,6 +98,7 @@ $(function init(){
 function hardReset() {
 	$.get(apiURL + "/snap?reset=true");
 	$(document.body).empty().append(initHTML);
+	clearInterval(elipsisInterval);
 	
 	if (oskOnScreen) {
 		$pubKeyboard.fadeOut(250);
@@ -152,7 +156,7 @@ $(document.body).click(function(e) {
 
 var idleRestart = function() {
 	clearInterval(idleTimer);
-	
+	clearInterval(elipsisInterval);
 	console.log("idle Restart app");
 	
 	hardReset();
@@ -459,6 +463,8 @@ var restartApp = function(){
 	
 	var reset2 = jQuery('<div id="popup-exterior-id" class="popup-exterior flex-item"><div id="popup-interior-id" class="popup-interior">How many people<br/>will be in your photo?</div></div><div class="numUsersBtn two flex-item"></div><div class="numUsersBtn three flex-item"></div><div class="numUsersBtn one flex-item"></div>');
 	reset2.appendTo(".content");
+	
+	clearInterval(elipsisInterval);
 	
 	phase = 1;
 	users = 0;
@@ -878,7 +884,7 @@ function flash(flashInterval) {
 		$(".gallery").css("width", 0);
 		//$("#nextLabel-id-ext").css("margin-left", "152px");
 		
-		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent">Developing Photo<span class="elipsis"></span></div><div width="550" height="550" id = "snap"></div></div>');
+		var snappedImage = jQuery('<div class="snappedImage flex-item"><div class="indent" style="font-size:1em;">Developing Photo<span class="elipsis"></span></div><div width="550" height="550" id = "snap"></div></div>');
 		snappedImage.appendTo(".content");
 		elipsisTimer();
 		
@@ -888,43 +894,50 @@ function flash(flashInterval) {
 		
 		$("#nextLabel-id").empty().prepend("Keep<br/><div class='nextBtn'></div>");
 		
-		$.get( apiURL + "/snap", function( d ) {
-			if (d.error) {
-				$("#nofaceDialog").empty().append("We couldn't find your face!");
-				$( "#nofaceDialog" ).dialog( "open" );
-			} else {
-				settings.request = d;
-
-
-				settings.request.tgImageID = locTargetImgID;
-				picsTaken++;
-				console.log("picsTaken: " + picsTaken);
-				console.log(d);
-				savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
-				var loadUrl = "url("+d.sources[picsTaken-1].image+")"; // picsTaken-1
-				$("#snap").css("background-image", loadUrl);
-				$(".snappedImage .indent").remove();
-				$(".elipsis").remove();
-				$("#snap").animate({opacity: 1}, 250, function() {
-					$( ".nextBtn" ).toggleClass("selected");
-					$("#nextLabel-id-ext").addClass("glow");
-					setTimeout(function(){
-						$("#nextLabel-id-ext").removeClass("glow");
-					},120);
-					clearInterval(elipsisInterval);
-					bindNext();
-					bindClick();
-
-				});
-			}
-			
-		});
+		//snapPicture();
 		
 		shutterSnd.play();
 				
 		$(".overlay").animate({opacity: 0}, 350, function() {
 			$(".overlay").remove();
 		});
+	});
+}
+
+function snapPicture(snapInterval) {
+	clearInterval(snapInterval);
+	clearInterval(elipsisInterval);
+	$.get( apiURL + "/snap", function( d ) {
+		if (d.error) {
+			$("#nofaceDialog").empty().append("We couldn't find your face! Press OK to take another photo.");
+			$( "#nofaceDialog" ).dialog( "open" );
+			clearInterval(elipsisInterval);
+		} else {
+			settings.request = d;
+
+
+			settings.request.tgImageID = locTargetImgID;
+			picsTaken++;
+			console.log("picsTaken: " + picsTaken);
+			console.log(d);
+			savedPics = d.sources; //WRN => if you are keeping a "local" copy, make sure to keep it in sync with settings.request;
+			var loadUrl = "url("+d.sources[picsTaken-1].image+")"; // picsTaken-1
+			$("#snap").css("background-image", loadUrl);
+			$(".snappedImage .indent").remove();
+			$(".elipsis").remove();
+			$("#snap").animate({opacity: 1}, 250, function() {
+				$( ".nextBtn" ).toggleClass("selected");
+				$("#nextLabel-id-ext").addClass("glow");
+				setTimeout(function(){
+					$("#nextLabel-id-ext").removeClass("glow");
+				},120);
+				clearInterval(elipsisInterval);
+				bindNext();
+				bindClick();
+
+			});
+		}
+		
 	});
 }
 

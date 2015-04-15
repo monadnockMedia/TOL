@@ -403,6 +403,14 @@ var keyStrokeSnd;
 				'</li>' +
 				'<li class="osk-hide osk-last-item">Hide Keyboard</li>' +
 				'<li class="osk-space osk-last-item">Space</li>' +
+				'<li class="osk-symbol" style="margin-left:10px;">' +
+					'<span class="osk-off">@</span>' +
+					'<span class="osk-on">\'</span>' +
+				'</li>' +
+				'<li class="osk-symbol" style="margin-left:10px;">' +
+					'<span class="osk-off">_</span>' +
+					'<span class="osk-on">-</span>' +
+				'</li>' +
 			'</ul>'
 		);
 
